@@ -27,10 +27,10 @@ jobs:
       - name: Run pipeline
         run: python src/main.py
 
-      - name: Commit generated data and artifacts
+      - name: Commit generated data, artifacts and dashboard
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add data/*.csv artifacts/*.csv
-          git commit -m "Update pipeline outputs" || echo "No changes to commit"
+          git add data/*.csv artifacts/*.csv docs/index.html
+          git commit -m "Update pipeline outputs and dashboard" || echo "No changes to commit"
           git push
