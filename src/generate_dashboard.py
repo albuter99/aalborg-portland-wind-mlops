@@ -137,12 +137,12 @@ def main():
             max-width: 720px;
         }}
 
-        .hero-subtitle {
+        .hero-subtitle {{
             margin-top: 18px !important;
             font-size: 17px !important;
             opacity: 0.86;
             max-width: 760px;
-        }
+        }}
 
         .hero-card {{
             background: rgba(25, 0, 15, 0.55);
