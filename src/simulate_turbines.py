@@ -52,6 +52,9 @@ def main():
     weather_df = pd.read_csv("data/weather_data.csv")
     demand_df = pd.read_csv("data/demand_profile.csv")
 
+    weather_df["time"] = pd.to_datetime(weather_df["time"])
+    demand_df["time"] = pd.to_datetime(demand_df["time"])
+
     df = weather_df.merge(demand_df, on="time")
 
     for turbine_name, turbine_specs in TURBINES.items():
