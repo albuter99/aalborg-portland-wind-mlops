@@ -135,7 +135,7 @@ def main():
             color: white;
             background:
                 linear-gradient(rgba(92, 0, 38, 0.76), rgba(92, 0, 38, 0.84)),
-                url("wind-hero.png");
+                url("wind-hero.jpg");
             background-size: cover;
             background-position: center;
             display: grid;
