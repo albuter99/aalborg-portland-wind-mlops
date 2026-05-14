@@ -137,6 +137,13 @@ def main():
             max-width: 720px;
         }}
 
+        .hero-subtitle {
+            margin-top: 18px !important;
+            font-size: 17px !important;
+            opacity: 0.86;
+            max-width: 760px;
+        }
+
         .hero-card {{
             background: rgba(25, 0, 15, 0.55);
             border-radius: 12px;
@@ -378,12 +385,16 @@ def main():
                 How much of Aalborg Portland's electricity demand could be covered
                 by different wind turbine scenarios?
             </p>
+            <p class="hero-subtitle">
+                Wind-energy self-sufficiency estimation using real weather data
+                and synthetic industrial demand modelling.
+            </p>
         </div>
 
         <div class="hero-card">
-            <small>Best scenario</small>
+            <small>Single-turbine contribution</small>
             <h2>{best_turbine}</h2>
-            <small>can cover</small>
+            <small>can supply up to</small>
             <div class="big">{best_coverage:.1f}%</div>
             <small>of annual electricity demand</small>
         </div>
@@ -404,7 +415,7 @@ def main():
             <div class="card kpi">
                 <div class="icon">≈</div>
                 <div>
-                    <div class="kpi-label">Best coverage</div>
+                    <div class="kpi-label">Single-turbine contribution</div>
                     <div class="kpi-value">{best_coverage:.1f}%</div>
                     <div class="kpi-note">{best_turbine}</div>
                 </div>
