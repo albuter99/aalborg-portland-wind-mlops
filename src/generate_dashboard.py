@@ -15,6 +15,8 @@ def main():
     summary_df = pd.read_csv("artifacts/turbine_summary.csv")
     simulation_df = pd.read_csv("data/turbine_simulation_results.csv")
 
+    simulation_df["time"] = pd.to_datetime(simulation_df["time"])
+
     best = summary_df.sort_values(
         "coverage_ratio_percent",
         ascending=False
@@ -25,8 +27,11 @@ def main():
     best_generation = best["annual_generation_mwh"]
     best_coverage = best["coverage_ratio_percent"]
 
+    best_generation_col = best_turbine + " generation_mw"
+
     table_rows = ""
     bar_items = ""
+    chart_points = ""
 
     max_coverage = summary_df["coverage_ratio_percent"].max()
 
@@ -49,7 +54,7 @@ def main():
         </tr>
         """
 
-        height = max(8, (coverage / max_coverage) * 180)
+        height = max(8, (coverage / max_coverage) * 170)
 
         bar_items += f"""
         <div class="bar-item">
@@ -57,6 +62,23 @@ def main():
             <div class="bar" style="height:{height}px;"></div>
             <div class="bar-label">{turbine.replace(" ", "<br>")}</div>
         </div>
+        """
+
+    chart_df = simulation_df.head(24 * 14).copy()
+    max_value = max(
+        chart_df["demand_mw"].max(),
+        chart_df[best_generation_col].max(),
+        1
+    )
+
+    for i, row in chart_df.iterrows():
+        x = (i / (len(chart_df) - 1)) * 100
+        demand_y = 100 - ((row["demand_mw"] / max_value) * 100)
+        generation_y = 100 - ((row[best_generation_col] / max_value) * 100)
+
+        chart_points += f"""
+        <circle class="demand-point" cx="{x:.2f}%" cy="{demand_y:.2f}%" r="1.2"></circle>
+        <circle class="generation-point" cx="{x:.2f}%" cy="{generation_y:.2f}%" r="1.2"></circle>
         """
 
     html = f"""
@@ -87,7 +109,7 @@ def main():
         .top-brand {{
             background: linear-gradient(90deg, #78002e, #b00046);
             color: white;
-            padding: 24px 60px;
+            padding: 22px 60px;
         }}
 
         .brand-name {{
@@ -108,16 +130,17 @@ def main():
         }}
 
         .hero {{
-            min-height: 330px;
-            padding: 70px 70px;
+            min-height: 390px;
+            padding: 70px 70px 92px 70px;
             color: white;
             background:
-                linear-gradient(rgba(90, 0, 38, 0.86), rgba(90, 0, 38, 0.86)),
-                radial-gradient(circle at 65% 30%, rgba(255,255,255,0.18), transparent 30%),
-                linear-gradient(135deg, #6f002b, #b00046);
+                linear-gradient(rgba(92, 0, 38, 0.76), rgba(92, 0, 38, 0.84)),
+                url("wind-hero.png");
+            background-size: cover;
+            background-position: center;
             display: grid;
-            grid-template-columns: 1.4fr 0.8fr;
-            gap: 40px;
+            grid-template-columns: 1.35fr 0.8fr;
+            gap: 42px;
             align-items: center;
         }}
 
@@ -138,12 +161,13 @@ def main():
         .hero-subtitle {{
             margin-top: 18px !important;
             font-size: 17px !important;
-            opacity: 0.86;
+            opacity: 0.9;
             max-width: 760px;
+            font-weight: 600;
         }}
 
         .hero-card {{
-            background: rgba(18, 0, 10, 0.72);
+            background: rgba(18, 0, 10, 0.74);
             border-radius: 12px;
             padding: 34px;
             box-shadow: 0 18px 40px rgba(0,0,0,0.25);
@@ -163,14 +187,15 @@ def main():
         }}
 
         .hero-card .big {{
-            font-size: 82px;
-            font-weight: 800;
+            font-size: 68px;
+            font-weight: 850;
             margin: 10px 0;
+            color: #ff2b7a;
         }}
 
         .container {{
-            max-width: 1360px;
-            margin: -40px auto 0 auto;
+            max-width: 1500px;
+            margin: -50px auto 0 auto;
             padding: 0 28px 40px 28px;
         }}
 
@@ -192,18 +217,19 @@ def main():
             display: flex;
             gap: 18px;
             align-items: center;
+            min-height: 118px;
         }}
 
         .icon {{
-            width: 58px;
-            height: 58px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: var(--brand);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 27px;
+            font-size: 25px;
             font-weight: bold;
             flex-shrink: 0;
         }}
@@ -215,10 +241,10 @@ def main():
         }}
 
         .kpi-value {{
-            font-size: 42px;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -1px;
+            font-size: 28px;
+            font-weight: 850;
+            line-height: 1.05;
+            letter-spacing: -0.5px;
             margin-top: 4px;
         }}
 
@@ -230,7 +256,7 @@ def main():
 
         .main-grid {{
             display: grid;
-            grid-template-columns: 1.45fr 1fr;
+            grid-template-columns: 1.35fr 0.85fr 1.1fr;
             gap: 24px;
             margin-bottom: 24px;
         }}
@@ -271,7 +297,7 @@ def main():
         }}
 
         .bars {{
-            height: 260px;
+            height: 250px;
             display: flex;
             align-items: flex-end;
             justify-content: space-around;
@@ -307,6 +333,54 @@ def main():
             color: #555;
             margin-top: 10px;
             line-height: 1.25;
+        }}
+
+        .time-chart {{
+            height: 250px;
+            border-left: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            background:
+                linear-gradient(to top, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 100% 50px;
+        }}
+
+        .time-chart svg {{
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }}
+
+        .demand-point {{
+            fill: var(--brand);
+            opacity: 0.9;
+        }}
+
+        .generation-point {{
+            fill: #9a9a9a;
+            opacity: 0.65;
+        }}
+
+        .legend {{
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            margin-bottom: 14px;
+            color: #555;
+        }}
+
+        .legend span::before {{
+            content: "";
+            display: inline-block;
+            width: 18px;
+            height: 3px;
+            margin-right: 6px;
+            vertical-align: middle;
+            background: var(--brand);
+        }}
+
+        .legend .generation::before {{
+            background: #9a9a9a;
         }}
 
         .pipeline-card {{
@@ -396,16 +470,7 @@ def main():
             font-weight: 300;
         }}
 
-        @media (max-width: 900px) {{
-            .hero {{
-                grid-template-columns: 1fr;
-                padding: 50px 30px;
-            }}
-
-            .hero h1 {{
-                font-size: 42px;
-            }}
-
+        @media (max-width: 1100px) {{
             .kpi-grid,
             .main-grid,
             .pipeline-grid,
@@ -415,6 +480,17 @@ def main():
 
             .container {{
                 margin-top: 20px;
+            }}
+        }}
+
+        @media (max-width: 900px) {{
+            .hero {{
+                grid-template-columns: 1fr;
+                padding: 50px 30px;
+            }}
+
+            .hero h1 {{
+                font-size: 42px;
             }}
         }}
     </style>
@@ -513,6 +589,20 @@ def main():
                 <div class="sub">Share of annual electricity demand covered by each turbine</div>
                 <div class="bars">
                     {bar_items}
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Demand vs wind generation</h2>
+                <div class="sub">Hourly comparison for the first 14 days of 2025</div>
+                <div class="legend">
+                    <span>Demand MW</span>
+                    <span class="generation">{best_turbine} MW</span>
+                </div>
+                <div class="time-chart">
+                    <svg>
+                        {chart_points}
+                    </svg>
                 </div>
             </div>
         </section>
