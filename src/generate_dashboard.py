@@ -24,8 +24,6 @@ def main():
     best_turbine = best["turbine"]
     best_generation = best["annual_generation_mwh"]
     best_coverage = best["coverage_ratio_percent"]
-    best_capacity = best["capacity_factor_percent"]
-    surplus_hours = best["surplus_hours"]
 
     table_rows = ""
     bar_items = ""
@@ -207,6 +205,7 @@ def main():
             justify-content: center;
             font-size: 27px;
             font-weight: bold;
+            flex-shrink: 0;
         }}
 
         .kpi-label {{
@@ -310,6 +309,49 @@ def main():
             line-height: 1.25;
         }}
 
+        .pipeline-card {{
+            margin-bottom: 24px;
+        }}
+
+        .pipeline-grid {{
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }}
+
+        .pipeline-step {{
+            background: #faf7f8;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 18px;
+        }}
+
+        .pipeline-step strong {{
+            display: block;
+            font-size: 15px;
+            margin: 10px 0 6px 0;
+        }}
+
+        .pipeline-step p {{
+            margin: 0;
+            color: var(--brand);
+            font-weight: 800;
+        }}
+
+        .status-dot {{
+            width: 13px;
+            height: 13px;
+            background: #1fa463;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 5px rgba(31,164,99,0.12);
+        }}
+
+        .status-dot.automated {{
+            background: var(--accent);
+            box-shadow: 0 0 0 5px rgba(228,0,90,0.12);
+        }}
+
         .info-grid {{
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -366,6 +408,7 @@ def main():
 
             .kpi-grid,
             .main-grid,
+            .pipeline-grid,
             .info-grid {{
                 grid-template-columns: 1fr;
             }}
@@ -387,8 +430,8 @@ def main():
         <div>
             <h1>Wind energy for<br>Aalborg Portland</h1>
             <p>
-                How much of Aalborg Portland's electricity demand could be covered
-                by different wind turbine scenarios?
+                How much of Aalborg Portland's electricity demand could be supplied
+                by individual wind turbine scenarios?
             </p>
             <p class="hero-subtitle">
                 Wind-energy self-sufficiency estimation using real weather data
@@ -470,6 +513,43 @@ def main():
                 <div class="sub">Share of annual electricity demand covered by each turbine</div>
                 <div class="bars">
                     {bar_items}
+                </div>
+            </div>
+        </section>
+
+        <section class="card pipeline-card">
+            <h2>Pipeline status</h2>
+            <div class="sub">Automated MLOps workflow generated through GitHub Actions</div>
+
+            <div class="pipeline-grid">
+                <div class="pipeline-step">
+                    <span class="status-dot"></span>
+                    <strong>Weather API</strong>
+                    <p>Active</p>
+                </div>
+
+                <div class="pipeline-step">
+                    <span class="status-dot"></span>
+                    <strong>Demand modelling</strong>
+                    <p>Active</p>
+                </div>
+
+                <div class="pipeline-step">
+                    <span class="status-dot"></span>
+                    <strong>Turbine simulation</strong>
+                    <p>Active</p>
+                </div>
+
+                <div class="pipeline-step">
+                    <span class="status-dot"></span>
+                    <strong>Dashboard generation</strong>
+                    <p>Active</p>
+                </div>
+
+                <div class="pipeline-step">
+                    <span class="status-dot automated"></span>
+                    <strong>GitHub Actions</strong>
+                    <p>Automated</p>
                 </div>
             </div>
         </section>
