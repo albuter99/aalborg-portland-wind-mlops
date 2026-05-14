@@ -145,10 +145,12 @@ def main():
         }}
 
         .hero-card {{
-            background: rgba(25, 0, 15, 0.55);
+            background: rgba(18, 0, 10, 0.72);
             border-radius: 12px;
             padding: 34px;
             box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
         }}
 
         .hero-card small {{
@@ -163,7 +165,7 @@ def main():
         }}
 
         .hero-card .big {{
-            font-size: 56px;
+            font-size: 82px;
             font-weight: 800;
             margin: 10px 0;
         }}
@@ -214,8 +216,11 @@ def main():
         }}
 
         .kpi-value {{
-            font-size: 25px;
-            font-weight: 800;
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -1px;
+            margin-top: 4px;
         }}
 
         .kpi-note {{
