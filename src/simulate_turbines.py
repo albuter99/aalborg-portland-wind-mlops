@@ -5,26 +5,26 @@ TURBINES = {
     "Vestas V136 4.5 MW": {
         "rated_power_mw": 4.5,
         "cut_in": 3,
-        "rated_speed": 12,
-        "cut_out": 25
+        "rated_speed": 11.3,
+        "cut_out": 32
     },
     "Siemens Gamesa SG 5.0-145": {
         "rated_power_mw": 5.0,
         "cut_in": 3,
         "rated_speed": 12,
-        "cut_out": 25
+        "cut_out": 27
     },
     "Nordex N149 5.X": {
-        "rated_power_mw": 5.5,
+        "rated_power_mw": 5.7,
         "cut_in": 3,
         "rated_speed": 12,
         "cut_out": 26
     },
     "Enercon E-138 EP3": {
         "rated_power_mw": 4.26,
-        "cut_in": 3,
-        "rated_speed": 12,
-        "cut_out": 25
+        "cut_in": 2.5,
+        "rated_speed": 12.1,
+        "cut_out": 28
     }
 }
 
