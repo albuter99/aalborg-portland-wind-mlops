@@ -23,7 +23,7 @@ def main():
         "wind_speed_100m": data["hourly"]["wind_speed_100m"],
         "temperature_2m": data["hourly"]["temperature_2m"]
     })
-
+    df["wind_speed_100m"] = df["wind_speed_100m"] / 3.6
     df.to_csv("data/weather_data.csv", index=False)
 
     print(df.head())
