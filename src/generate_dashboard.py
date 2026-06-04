@@ -524,6 +524,7 @@ def main():
     <section class="nav-bar">
         <a href="index.html" class="active">Overview</a>
         <a href="advanced.html">Advanced Analytics</a>
+        <a href="forecasting.html">Forecasting</a>
         <a href="economics.html">Economics</a>
     </section>
 
