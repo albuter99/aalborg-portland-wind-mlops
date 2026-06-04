@@ -47,22 +47,22 @@
         }
 
         .nav-bar {
-            background:#5c0026;
-            padding:14px 60px;
-            display:flex;
-            gap:40px;
+            background: #5c0026;
+            padding: 14px 60px;
+            display: flex;
+            gap: 40px;
         }
 
         .nav-bar a {
-            color:white;
-            text-decoration:none;
-            font-weight:600;
-            letter-spacing:0.3px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }
 
         .nav-bar a:hover,
         .nav-bar a.active {
-            color:#ff2b7a;
+            color: #ff2b7a;
         }
 
         .page-hero {
@@ -137,7 +137,7 @@
 
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-bottom: 24px;
         }
@@ -164,37 +164,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 24px;
             margin-bottom: 24px;
-        }
-
-        .mini-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 24px;
-        }
-
-        .mini-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
-
-        .mini-card h3 {
-            margin: 0 0 12px 0;
-            color: #222;
-            font-size: 17px;
-        }
-
-        .mini-card p {
-            color: var(--brand);
-            font-size: 26px;
-            font-weight: 900;
-            margin: 0;
-        }
-
-        .mini-card small {
-            color: #777;
         }
 
         h2 {
@@ -256,7 +225,7 @@
 
         .result {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
             margin-top: 18px;
         }
@@ -270,7 +239,7 @@
         .result-card strong {
             display: block;
             color: var(--brand);
-            font-size: 28px;
+            font-size: 26px;
             margin-top: 6px;
         }
 
@@ -308,12 +277,43 @@
             .page-hero-grid,
             .kpi-grid,
             .grid,
-            .mini-grid,
             .result {
                 grid-template-columns: 1fr;
             }
+
             .container {
                 margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .top-brand {
+                padding: 22px 30px;
+            }
+
+            .page-hero {
+                padding: 46px 30px 70px 30px;
+            }
+
+            .page-hero h1 {
+                font-size: 42px;
+            }
+
+            .page-hero p {
+                font-size: 18px;
+            }
+
+            .nav-bar {
+                padding: 14px 30px;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .footer {
+                padding: 28px 30px;
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
             }
         }
     </style>
@@ -344,11 +344,11 @@
             </div>
 
             <div class="hero-panel">
-                <small>Best forecasting model</small>
-                <h2>Random Forest</h2>
-                <small>test MAE</small>
-                <div class="big">0.000</div>
-                <small>MW average absolute error</small>
+                <small>Expected 7-day generation</small>
+                <h2>Siemens Gamesa SG 5.0-145</h2>
+                <small>10 turbines</small>
+                <div class="big">1.118</div>
+                <small>MWh in the maximum generation scenario</small>
             </div>
         </div>
     </section>
@@ -357,62 +357,74 @@
 
         <section class="kpi-grid">
             <div class="card">
+                <div class="kpi-label">Best generation scenario</div>
+                <div class="kpi-value">1.118 MWh</div>
+                <div class="kpi-note">
+                    10 turbines, Siemens Gamesa SG 5.0-145
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="kpi-label">Average scenario coverage</div>
+                <div class="kpi-value">7.99%</div>
+                <div class="kpi-note">Across all turbine and deployment scenarios</div>
+            </div>
+
+            <div class="card">
                 <div class="kpi-label">Forecast horizon</div>
                 <div class="kpi-value">7 days</div>
-                <div class="kpi-note">168 hourly observations</div>
-            </div>
-
-            <div class="card">
-                <div class="kpi-label">Best model</div>
-                <div class="kpi-value">Random Forest</div>
-                <div class="kpi-note">Selected by lowest MAE</div>
-            </div>
-
-            <div class="card">
-                <div class="kpi-label">Max scenario</div>
-                <div class="kpi-value">1.047 MWh</div>
-                <div class="kpi-note">10 turbines, Siemens Gamesa SG 5.0-145</div>
-            </div>
-
-            <div class="card">
-                <div class="kpi-label">Decision tool</div>
-                <div class="kpi-value">Interactive</div>
-                <div class="kpi-note">Select turbine model and turbine count</div>
+                <div class="kpi-note">168 hourly forecast observations</div>
             </div>
         </section>
 
-        <section class="mini-grid">
-            
-        <div class="mini-card">
-            <h3>Vestas V136 4.5 MW</h3>
-            <p>89 MWh</p>
-            <small>Forecast generation for one turbine over the next 7 days</small>
-        </div>
+        <section class="card" style="margin-bottom: 24px;">
+            <h2>Turbine forecast comparison</h2>
+            <div class="sub">
+                Expected 7-day generation and demand coverage for one installed turbine.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Turbine model</th>
+                        <th>7-day generation</th>
+                        <th>7-day demand coverage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td><strong>Vestas V136 4.5 MW</strong></td>
+            <td>90 MWh</td>
+            <td>1.88%</td>
+        </tr>
         
-        <div class="mini-card">
-            <h3>Siemens Gamesa SG 5.0-145</h3>
-            <p>105 MWh</p>
-            <small>Forecast generation for one turbine over the next 7 days</small>
-        </div>
+        <tr>
+            <td><strong>Siemens Gamesa SG 5.0-145</strong></td>
+            <td>112 MWh</td>
+            <td>2.33%</td>
+        </tr>
         
-        <div class="mini-card">
-            <h3>Nordex N149 5.X</h3>
-            <p>99 MWh</p>
-            <small>Forecast generation for one turbine over the next 7 days</small>
-        </div>
+        <tr>
+            <td><strong>Nordex N149 5.X</strong></td>
+            <td>90 MWh</td>
+            <td>1.87%</td>
+        </tr>
         
-        <div class="mini-card">
-            <h3>Enercon E-138 EP3</h3>
-            <p>79 MWh</p>
-            <small>Forecast generation for one turbine over the next 7 days</small>
-        </div>
+        <tr>
+            <td><strong>Enercon E-138 EP3</strong></td>
+            <td>73 MWh</td>
+            <td>1.53%</td>
+        </tr>
         
+                </tbody>
+            </table>
         </section>
 
         <section class="grid">
             <div class="card">
                 <h2>Interactive stakeholder calculator</h2>
-                <div class="sub">Estimate 7-day generation and demand coverage</div>
+                <div class="sub">Estimate 7-day generation, demand coverage and remaining grid dependency</div>
 
                 <div class="interactive-box">
                     <label for="turbineSelect">Turbine model</label>
@@ -432,6 +444,11 @@
                         <div class="result-card">
                             <span>7-day demand coverage</span>
                             <strong id="coverageResult">-</strong>
+                        </div>
+
+                        <div class="result-card">
+                            <span>Grid electricity required</span>
+                            <strong id="gridResult">-</strong>
                         </div>
                     </div>
                 </div>
@@ -475,6 +492,11 @@
         
                     </tbody>
                 </table>
+
+                <p class="sub" style="margin-top: 18px;">
+                    Best model: <strong>Random Forest</strong>. Model quality is reported separately from
+                    the business KPIs to keep the page focused on industrial decision support.
+                </p>
             </div>
         </section>
 
@@ -512,7 +534,7 @@
     </footer>
 
     <script>
-        const scenarios = [{"turbine":"Vestas V136 4.5 MW","number_of_turbines":1,"forecast_generation_mwh":88.62,"estimated_7d_demand_mwh":4787.43,"coverage_percent":1.85},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":2,"forecast_generation_mwh":177.23,"estimated_7d_demand_mwh":4787.43,"coverage_percent":3.7},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":3,"forecast_generation_mwh":265.85,"estimated_7d_demand_mwh":4787.43,"coverage_percent":5.55},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":5,"forecast_generation_mwh":443.08,"estimated_7d_demand_mwh":4787.43,"coverage_percent":9.25},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":10,"forecast_generation_mwh":886.15,"estimated_7d_demand_mwh":4787.43,"coverage_percent":18.51},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":1,"forecast_generation_mwh":104.7,"estimated_7d_demand_mwh":4787.43,"coverage_percent":2.19},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":2,"forecast_generation_mwh":209.41,"estimated_7d_demand_mwh":4787.43,"coverage_percent":4.37},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":3,"forecast_generation_mwh":314.11,"estimated_7d_demand_mwh":4787.43,"coverage_percent":6.56},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":5,"forecast_generation_mwh":523.52,"estimated_7d_demand_mwh":4787.43,"coverage_percent":10.94},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":10,"forecast_generation_mwh":1047.04,"estimated_7d_demand_mwh":4787.43,"coverage_percent":21.87},{"turbine":"Nordex N149 5.X","number_of_turbines":1,"forecast_generation_mwh":98.52,"estimated_7d_demand_mwh":4787.43,"coverage_percent":2.06},{"turbine":"Nordex N149 5.X","number_of_turbines":2,"forecast_generation_mwh":197.03,"estimated_7d_demand_mwh":4787.43,"coverage_percent":4.12},{"turbine":"Nordex N149 5.X","number_of_turbines":3,"forecast_generation_mwh":295.55,"estimated_7d_demand_mwh":4787.43,"coverage_percent":6.17},{"turbine":"Nordex N149 5.X","number_of_turbines":5,"forecast_generation_mwh":492.58,"estimated_7d_demand_mwh":4787.43,"coverage_percent":10.29},{"turbine":"Nordex N149 5.X","number_of_turbines":10,"forecast_generation_mwh":985.16,"estimated_7d_demand_mwh":4787.43,"coverage_percent":20.58},{"turbine":"Enercon E-138 EP3","number_of_turbines":1,"forecast_generation_mwh":78.68,"estimated_7d_demand_mwh":4787.43,"coverage_percent":1.64},{"turbine":"Enercon E-138 EP3","number_of_turbines":2,"forecast_generation_mwh":157.35,"estimated_7d_demand_mwh":4787.43,"coverage_percent":3.29},{"turbine":"Enercon E-138 EP3","number_of_turbines":3,"forecast_generation_mwh":236.03,"estimated_7d_demand_mwh":4787.43,"coverage_percent":4.93},{"turbine":"Enercon E-138 EP3","number_of_turbines":5,"forecast_generation_mwh":393.38,"estimated_7d_demand_mwh":4787.43,"coverage_percent":8.22},{"turbine":"Enercon E-138 EP3","number_of_turbines":10,"forecast_generation_mwh":786.75,"estimated_7d_demand_mwh":4787.43,"coverage_percent":16.43}];
+        const scenarios = [{"turbine":"Vestas V136 4.5 MW","number_of_turbines":1,"forecast_generation_mwh":90.12,"estimated_7d_demand_mwh":4787.29,"coverage_percent":1.88},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":2,"forecast_generation_mwh":180.24,"estimated_7d_demand_mwh":4787.29,"coverage_percent":3.76},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":3,"forecast_generation_mwh":270.36,"estimated_7d_demand_mwh":4787.29,"coverage_percent":5.65},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":5,"forecast_generation_mwh":450.6,"estimated_7d_demand_mwh":4787.29,"coverage_percent":9.41},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":10,"forecast_generation_mwh":901.2,"estimated_7d_demand_mwh":4787.29,"coverage_percent":18.82},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":1,"forecast_generation_mwh":111.77,"estimated_7d_demand_mwh":4787.29,"coverage_percent":2.33},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":2,"forecast_generation_mwh":223.54,"estimated_7d_demand_mwh":4787.29,"coverage_percent":4.67},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":3,"forecast_generation_mwh":335.31,"estimated_7d_demand_mwh":4787.29,"coverage_percent":7.0},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":5,"forecast_generation_mwh":558.85,"estimated_7d_demand_mwh":4787.29,"coverage_percent":11.67},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":10,"forecast_generation_mwh":1117.7,"estimated_7d_demand_mwh":4787.29,"coverage_percent":23.35},{"turbine":"Nordex N149 5.X","number_of_turbines":1,"forecast_generation_mwh":89.53,"estimated_7d_demand_mwh":4787.29,"coverage_percent":1.87},{"turbine":"Nordex N149 5.X","number_of_turbines":2,"forecast_generation_mwh":179.07,"estimated_7d_demand_mwh":4787.29,"coverage_percent":3.74},{"turbine":"Nordex N149 5.X","number_of_turbines":3,"forecast_generation_mwh":268.6,"estimated_7d_demand_mwh":4787.29,"coverage_percent":5.61},{"turbine":"Nordex N149 5.X","number_of_turbines":5,"forecast_generation_mwh":447.67,"estimated_7d_demand_mwh":4787.29,"coverage_percent":9.35},{"turbine":"Nordex N149 5.X","number_of_turbines":10,"forecast_generation_mwh":895.35,"estimated_7d_demand_mwh":4787.29,"coverage_percent":18.7},{"turbine":"Enercon E-138 EP3","number_of_turbines":1,"forecast_generation_mwh":73.08,"estimated_7d_demand_mwh":4787.29,"coverage_percent":1.53},{"turbine":"Enercon E-138 EP3","number_of_turbines":2,"forecast_generation_mwh":146.17,"estimated_7d_demand_mwh":4787.29,"coverage_percent":3.05},{"turbine":"Enercon E-138 EP3","number_of_turbines":3,"forecast_generation_mwh":219.25,"estimated_7d_demand_mwh":4787.29,"coverage_percent":4.58},{"turbine":"Enercon E-138 EP3","number_of_turbines":5,"forecast_generation_mwh":365.42,"estimated_7d_demand_mwh":4787.29,"coverage_percent":7.63},{"turbine":"Enercon E-138 EP3","number_of_turbines":10,"forecast_generation_mwh":730.83,"estimated_7d_demand_mwh":4787.29,"coverage_percent":15.27}];
 
         function formatNumber(value) {
             return Math.round(value).toLocaleString("de-DE");
@@ -529,12 +551,16 @@
             const generation = oneTurbineScenario.forecast_generation_mwh * count;
             const demand = oneTurbineScenario.estimated_7d_demand_mwh;
             const coverage = generation / demand * 100;
+            const gridRequired = Math.max(demand - generation, 0);
 
             document.getElementById("generationResult").textContent =
                 formatNumber(generation) + " MWh";
 
             document.getElementById("coverageResult").textContent =
                 coverage.toFixed(2) + "%";
+
+            document.getElementById("gridResult").textContent =
+                formatNumber(gridRequired) + " MWh";
         }
 
         document.getElementById("turbineSelect").addEventListener("change", updateCalculator);
