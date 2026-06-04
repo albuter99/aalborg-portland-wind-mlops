@@ -36,16 +36,22 @@ def main():
         </tr>
         """
 
-    turbine_options = ""
     turbine_table_rows = ""
+    turbine_mix_inputs = ""
 
     for turbine in scenario_df["turbine"].unique():
-        turbine_options += f'<option value="{turbine}">{turbine}</option>'
-
         one_turbine = scenario_df[
             (scenario_df["turbine"] == turbine)
             & (scenario_df["number_of_turbines"] == 1)
         ].iloc[0]
+
+        safe_id = (
+            turbine
+            .replace(" ", "_")
+            .replace(".", "")
+            .replace("-", "_")
+            .replace("/", "_")
+        )
 
         turbine_table_rows += f"""
         <tr>
@@ -53,6 +59,24 @@ def main():
             <td>{format_number(one_turbine["forecast_generation_mwh"])} MWh</td>
             <td>{one_turbine["coverage_percent"]:.2f}%</td>
         </tr>
+        """
+
+        turbine_mix_inputs += f"""
+        <div class="mix-row">
+            <div>
+                <label for="{safe_id}">{turbine}</label>
+                <small>{format_number(one_turbine["forecast_generation_mwh"])} MWh per turbine</small>
+            </div>
+            <input
+                id="{safe_id}"
+                class="turbine-count"
+                type="number"
+                min="0"
+                max="50"
+                value="0"
+                data-turbine="{turbine}"
+            >
+        </div>
         """
 
     scenario_json = scenario_df.to_json(orient="records")
@@ -155,6 +179,13 @@ def main():
             max-width: 760px;
         }}
 
+        .hero-note {{
+            margin-top: 18px !important;
+            font-size: 16px !important;
+            font-weight: 700;
+            opacity: 0.9;
+        }}
+
         .hero-panel {{
             background: rgba(18, 0, 10, 0.72);
             border-radius: 14px;
@@ -170,8 +201,9 @@ def main():
 
         .hero-panel h2 {{
             color: white;
-            font-size: 30px;
-            margin: 0 0 8px 0;
+            font-size: 24px;
+            margin: 18px 0 8px 0;
+            line-height: 1.25;
         }}
 
         .hero-panel .big {{
@@ -269,7 +301,7 @@ def main():
         label {{
             font-weight: 800;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }}
 
         select,
@@ -278,15 +310,27 @@ def main():
             padding: 13px;
             border-radius: 8px;
             border: 1px solid #ddd;
-            margin-bottom: 18px;
             font-size: 15px;
+        }}
+
+        .mix-row {{
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 18px;
+            align-items: center;
+            margin-bottom: 16px;
+        }}
+
+        .mix-row small {{
+            color: #777;
+            font-size: 12px;
         }}
 
         .result {{
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
-            margin-top: 18px;
+            margin-top: 22px;
         }}
 
         .result-card {{
@@ -300,6 +344,58 @@ def main():
             color: var(--brand);
             font-size: 26px;
             margin-top: 6px;
+        }}
+
+        .chart-box {{
+            background: #faf7f8;
+            border-radius: 12px;
+            padding: 22px;
+            border: 1px solid #eee;
+            min-height: 365px;
+        }}
+
+        .bar-row {{
+            margin-bottom: 18px;
+        }}
+
+        .bar-row-header {{
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }}
+
+        .bar-track {{
+            height: 18px;
+            background: #eee;
+            border-radius: 999px;
+            overflow: hidden;
+        }}
+
+        .bar-fill {{
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #8b0037, #e4005a);
+            border-radius: 999px;
+            transition: width 0.25s ease;
+        }}
+
+        .placeholder-chart {{
+            height: 250px;
+            border-left: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            text-align: center;
+            padding: 24px;
+            background:
+                linear-gradient(to right, rgba(160,0,63,0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(160,0,63,0.06) 1px, transparent 1px);
+            background-size: 42px 42px;
+            border-radius: 10px;
         }}
 
         .tag {{
@@ -368,6 +464,11 @@ def main():
                 flex-wrap: wrap;
             }}
 
+            .mix-row {{
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }}
+
             .footer {{
                 padding: 28px 30px;
                 flex-direction: column;
@@ -398,16 +499,23 @@ def main():
                 <h1>7-day wind<br>generation forecast</h1>
                 <p>
                     Estimate the electricity Aalborg Portland could generate over the next 7 days
-                    under different turbine models and turbine-count scenarios.
+                    under different turbine deployment scenarios.
+                </p>
+                <p class="hero-note">
+                    Forecast generated using {best_model["model"]} and translated into industrial energy-planning indicators.
                 </p>
             </div>
 
             <div class="hero-panel">
                 <small>Expected 7-day generation</small>
-                <h2>{best_scenario["turbine"]}</h2>
-                <small>{int(best_scenario["number_of_turbines"])} turbines</small>
                 <div class="big">{format_number(best_scenario["forecast_generation_mwh"])}</div>
-                <small>MWh in the maximum generation scenario</small>
+                <small>MWh under the maximum generation scenario</small>
+
+                <h2>Forecast generated using {best_model["model"]}</h2>
+                <small>
+                    Model quality is reported below, but the main dashboard focuses on energy planning,
+                    demand coverage and grid dependency.
+                </small>
             </div>
         </div>
     </section>
@@ -459,16 +567,12 @@ def main():
         <section class="grid">
             <div class="card">
                 <h2>Interactive stakeholder calculator</h2>
-                <div class="sub">Estimate 7-day generation, demand coverage and remaining grid dependency</div>
+                <div class="sub">
+                    Combine several turbine models and estimate generation, demand coverage and grid dependency.
+                </div>
 
                 <div class="interactive-box">
-                    <label for="turbineSelect">Turbine model</label>
-                    <select id="turbineSelect">
-                        {turbine_options}
-                    </select>
-
-                    <label for="turbineCount">Number of turbines</label>
-                    <input id="turbineCount" type="number" min="1" max="50" value="1">
+                    {turbine_mix_inputs}
 
                     <div class="result">
                         <div class="result-card">
@@ -490,8 +594,43 @@ def main():
             </div>
 
             <div class="card">
-                <h2>Model comparison</h2>
-                <div class="sub">Forecasting models evaluated on historical turbine generation</div>
+                <h2>Generation mix contribution</h2>
+                <div class="sub">
+                    Visual contribution of each selected turbine model to the total forecasted wind generation.
+                </div>
+
+                <div class="chart-box" id="mixChart">
+                    <div class="placeholder-chart">
+                        Select turbine quantities in the calculator to display the generation contribution by turbine model.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card" style="margin-bottom: 24px;">
+            <h2>7-day forecast profile</h2>
+            <div class="sub">
+                Prepared placeholder for the next improvement: hourly forecast generation versus estimated industrial demand.
+            </div>
+
+            <div class="placeholder-chart">
+                Next step: add a 168-hour line chart comparing forecasted wind generation and estimated demand.
+                This will make the forecasting page visually closer to an operational energy-planning dashboard.
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <h2>Forecast methodology</h2>
+                <div class="sub">
+                    Machine-learning models evaluated on historical turbine generation.
+                </div>
+
+                <p>
+                    The operational forecast is generated using <strong>{best_model["model"]}</strong>,
+                    which achieved the lowest forecasting error among the tested models. The model comparison is kept
+                    separate from the business KPIs so that the dashboard remains focused on industrial decision support.
+                </p>
 
                 <table>
                     <thead>
@@ -506,27 +645,23 @@ def main():
                         {model_rows}
                     </tbody>
                 </table>
-
-                <p class="sub" style="margin-top: 18px;">
-                    Best model: <strong>{best_model["model"]}</strong>. Model quality is reported separately from
-                    the business KPIs to keep the page focused on industrial decision support.
-                </p>
             </div>
-        </section>
 
-        <section class="grid">
             <div class="card">
                 <h2>Academic interpretation</h2>
                 <p>
                     The forecasting module transforms the project from a descriptive dashboard into an operational
                     decision-support tool. Instead of only reporting annual generation, stakeholders can estimate
-                    expected short-term production under different deployment scenarios.
+                    expected short-term production under single-turbine and mixed-turbine deployment scenarios.
                 </p>
                 <span class="tag">Forecasting</span>
                 <span class="tag">Decision support</span>
                 <span class="tag">Industrial planning</span>
+                <span class="tag">Grid dependency</span>
             </div>
+        </section>
 
+        <section class="grid">
             <div class="card">
                 <h2>LSTM feasibility</h2>
                 <p>
@@ -537,6 +672,18 @@ def main():
                 <span class="tag">LSTM considered</span>
                 <span class="tag">GitHub Actions constraint</span>
                 <span class="tag">Future work</span>
+            </div>
+
+            <div class="card">
+                <h2>Next development step</h2>
+                <p>
+                    The next improvement should add an hourly 168-observation chart comparing forecasted wind generation
+                    with estimated industrial demand. This would make short-term surplus, deficit and grid-dependency
+                    periods easier to interpret.
+                </p>
+                <span class="tag">168-hour profile</span>
+                <span class="tag">Demand comparison</span>
+                <span class="tag">Operational dashboard</span>
             </div>
         </section>
 
@@ -554,31 +701,98 @@ def main():
             return Math.round(value).toLocaleString("de-DE");
         }}
 
-        function updateCalculator() {{
-            const turbine = document.getElementById("turbineSelect").value;
-            const count = Number(document.getElementById("turbineCount").value);
-
-            const oneTurbineScenario = scenarios.find(row =>
+        function getOneTurbineScenario(turbine) {{
+            return scenarios.find(row =>
                 row.turbine === turbine && row.number_of_turbines === 1
             );
+        }}
 
-            const generation = oneTurbineScenario.forecast_generation_mwh * count;
-            const demand = oneTurbineScenario.estimated_7d_demand_mwh;
-            const coverage = generation / demand * 100;
-            const gridRequired = Math.max(demand - generation, 0);
+        function updateCalculator() {{
+            const inputs = document.querySelectorAll(".turbine-count");
+
+            let totalGeneration = 0;
+            let demand = null;
+            let contributions = [];
+
+            inputs.forEach(input => {{
+                const turbine = input.dataset.turbine;
+                const count = Number(input.value) || 0;
+                const scenario = getOneTurbineScenario(turbine);
+
+                if (!scenario) {{
+                    return;
+                }}
+
+                if (demand === null) {{
+                    demand = scenario.estimated_7d_demand_mwh;
+                }}
+
+                const generation = scenario.forecast_generation_mwh * count;
+                totalGeneration += generation;
+
+                contributions.push({{
+                    turbine: turbine,
+                    count: count,
+                    generation: generation
+                }});
+            }});
+
+            if (demand === null) {{
+                demand = 0;
+            }}
+
+            const coverage = demand > 0 ? totalGeneration / demand * 100 : 0;
+            const gridRequired = Math.max(demand - totalGeneration, 0);
 
             document.getElementById("generationResult").textContent =
-                formatNumber(generation) + " MWh";
+                formatNumber(totalGeneration) + " MWh";
 
             document.getElementById("coverageResult").textContent =
                 coverage.toFixed(2) + "%";
 
             document.getElementById("gridResult").textContent =
                 formatNumber(gridRequired) + " MWh";
+
+            updateMixChart(contributions, totalGeneration);
         }}
 
-        document.getElementById("turbineSelect").addEventListener("change", updateCalculator);
-        document.getElementById("turbineCount").addEventListener("input", updateCalculator);
+        function updateMixChart(contributions, totalGeneration) {{
+            const chart = document.getElementById("mixChart");
+
+            if (totalGeneration <= 0) {{
+                chart.innerHTML = `
+                    <div class="placeholder-chart">
+                        Select turbine quantities in the calculator to display the generation contribution by turbine model.
+                    </div>
+                `;
+                return;
+            }}
+
+            let html = "";
+
+            contributions.forEach(item => {{
+                const share = totalGeneration > 0 ? item.generation / totalGeneration * 100 : 0;
+                const width = Math.max(share, item.generation > 0 ? 3 : 0);
+
+                html += `
+                    <div class="bar-row">
+                        <div class="bar-row-header">
+                            <strong>${{item.turbine}}</strong>
+                            <span>${{item.count}} turbines · ${{formatNumber(item.generation)}} MWh · ${{share.toFixed(1)}}%</span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:${{width}}%;"></div>
+                        </div>
+                    </div>
+                `;
+            }});
+
+            chart.innerHTML = html;
+        }}
+
+        document.querySelectorAll(".turbine-count").forEach(input => {{
+            input.addEventListener("input", updateCalculator);
+        }});
 
         updateCalculator();
     </script>
