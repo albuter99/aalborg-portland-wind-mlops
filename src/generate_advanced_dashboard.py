@@ -24,53 +24,96 @@ def main():
     best_season_turbine = best_season_row["turbine"]
     best_season_coverage = best_season_row["seasonal_coverage_percent"]
 
-    seasonal_rows = ""
-    for _, row in seasonal_df.iterrows():
-        highlight = "highlight" if (
-            row["season"] == best_season and row["turbine"] == best_season_turbine
-        ) else ""
+    best_sensitivity_row = sensitivity_df.sort_values(
+        "coverage_percent",
+        ascending=False
+    ).iloc[0]
 
-        seasonal_rows += f"""
+    min_sensitivity = sensitivity_df["coverage_percent"].min()
+    max_sensitivity = sensitivity_df["coverage_percent"].max()
+
+    season_order = ["Winter", "Spring", "Summer", "Autumn"]
+
+    season_summary = (
+        seasonal_df
+        .groupby("season")
+        .agg(
+            average_coverage=("seasonal_coverage_percent", "mean"),
+            total_generation=("seasonal_generation_mwh", "sum")
+        )
+        .reindex(season_order)
+        .reset_index()
+    )
+
+    best_turbine_seasonal = seasonal_df[
+        seasonal_df["turbine"] == best_season_turbine
+    ].set_index("season").reindex(season_order).reset_index()
+
+    seasonal_summary_rows = ""
+    for _, row in season_summary.iterrows():
+        highlight = "highlight" if row["season"] == best_season else ""
+
+        seasonal_summary_rows += f"""
         <tr class="{highlight}">
             <td>{row["season"]}</td>
-            <td>{row["turbine"]}</td>
+            <td>{format_number(row["total_generation"])} MWh</td>
+            <td>{row["average_coverage"]:.2f}%</td>
+        </tr>
+        """
+
+    best_turbine_rows = ""
+    for _, row in best_turbine_seasonal.iterrows():
+        highlight = "highlight" if row["season"] == best_season else ""
+
+        best_turbine_rows += f"""
+        <tr class="{highlight}">
+            <td>{row["season"]}</td>
             <td>{format_number(row["seasonal_generation_mwh"])} MWh</td>
             <td>{row["seasonal_coverage_percent"]:.2f}%</td>
         </tr>
         """
 
+    max_season_coverage = season_summary["average_coverage"].max()
+
+    seasonal_bars = ""
+    for _, row in season_summary.iterrows():
+        height = max(10, row["average_coverage"] / max_season_coverage * 190)
+
+        seasonal_bars += f"""
+        <div class="bar-item">
+            <div class="bar-value">{row["average_coverage"]:.2f}%</div>
+            <div class="bar" style="height:{height}px;"></div>
+            <div class="bar-label">{row["season"]}</div>
+        </div>
+        """
+
+    best_turbine_sensitivity = sensitivity_df[
+        sensitivity_df["turbine"] == best_season_turbine
+    ]
+
     sensitivity_rows = ""
-    for _, row in sensitivity_df.iterrows():
+    sensitivity_bars = ""
+
+    max_sensitivity_for_best = best_turbine_sensitivity["coverage_percent"].max()
+
+    for _, row in best_turbine_sensitivity.iterrows():
         highlight = "highlight" if "Base" in row["scenario"] else ""
 
         sensitivity_rows += f"""
         <tr class="{highlight}">
             <td>{row["scenario"]}</td>
-            <td>{row["turbine"]}</td>
             <td>{format_number(row["scenario_demand_mwh"])} MWh</td>
             <td>{row["coverage_percent"]:.2f}%</td>
         </tr>
         """
 
-    season_order = ["Winter", "Spring", "Summer", "Autumn"]
-    season_summary = (
-        seasonal_df
-        .groupby("season")["seasonal_coverage_percent"]
-        .mean()
-        .reindex(season_order)
-        .reset_index()
-    )
+        height = max(10, row["coverage_percent"] / max_sensitivity_for_best * 190)
 
-    max_season_coverage = season_summary["seasonal_coverage_percent"].max()
-
-    seasonal_bars = ""
-    for _, row in season_summary.iterrows():
-        height = max(8, row["seasonal_coverage_percent"] / max_season_coverage * 180)
-        seasonal_bars += f"""
+        sensitivity_bars += f"""
         <div class="bar-item">
-            <div class="bar-value">{row["seasonal_coverage_percent"]:.2f}%</div>
+            <div class="bar-value">{row["coverage_percent"]:.2f}%</div>
             <div class="bar" style="height:{height}px;"></div>
-            <div class="bar-label">{row["season"]}</div>
+            <div class="bar-label">{row["scenario"].replace(" ", "<br>")}</div>
         </div>
         """
 
@@ -80,6 +123,7 @@ def main():
 <head>
     <meta charset="UTF-8">
     <title>Aalborg Portland Advanced Analytics</title>
+
     <style>
         :root {{
             --brand: {BRAND_COLOR};
@@ -88,7 +132,9 @@ def main():
             --light: {LIGHT_BG};
         }}
 
-        * {{ box-sizing: border-box; }}
+        * {{
+            box-sizing: border-box;
+        }}
 
         body {{
             margin: 0;
@@ -109,7 +155,9 @@ def main():
             letter-spacing: -1px;
         }}
 
-        .brand-name span {{ font-weight: 300; }}
+        .brand-name span {{
+            font-weight: 300;
+        }}
 
         .brand-subtitle {{
             font-size: 11px;
@@ -137,78 +185,80 @@ def main():
             color:#ff2b7a;
         }}
 
-        .hero {{
-            min-height: 390px;
-            padding: 70px 70px 92px 70px;
-            color: white;
+        .page-hero {{
             background:
-                linear-gradient(rgba(92, 0, 38, 0.76), rgba(92, 0, 38, 0.84)),
-                url("wind-hero.jpg");
-            background-size: cover;
-            background-position: center;
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12), transparent 26%),
+                linear-gradient(135deg, #70002e, #b00046);
+            color: white;
+            padding: 58px 70px 105px 70px;
+        }}
+
+        .page-hero-grid {{
+            max-width: 1500px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: 1.35fr 0.8fr;
-            gap: 42px;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 48px;
             align-items: center;
         }}
 
-        .hero h1 {{
-            font-size: 58px;
-            line-height: 1.05;
-            margin: 0 0 22px 0;
+        .page-hero h1 {{
+            font-size: 56px;
+            line-height: 1.04;
+            margin: 0 0 18px 0;
             letter-spacing: -2px;
         }}
 
-        .hero p {{
-            font-size: 22px;
-            line-height: 1.4;
+        .page-hero p {{
+            font-size: 21px;
+            line-height: 1.42;
             margin: 0;
             max-width: 760px;
         }}
 
-        .hero-subtitle {{
-            margin-top: 18px !important;
-            font-size: 17px !important;
+        .hero-note {{
+            margin-top: 16px !important;
+            font-size: 16px !important;
+            font-weight: 700;
             opacity: 0.9;
-            font-weight: 600;
         }}
 
-        .hero-card {{
-            background: rgba(18, 0, 10, 0.74);
-            border-radius: 12px;
-            padding: 34px;
+        .hero-panel {{
+            background: rgba(18, 0, 10, 0.72);
+            border-radius: 14px;
+            padding: 32px;
             box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.08);
         }}
 
-        .hero-card small {{
+        .hero-panel small {{
             display: block;
             font-size: 14px;
             margin-bottom: 10px;
         }}
 
-        .hero-card h2 {{
-            font-size: 34px;
+        .hero-panel h2 {{
+            color: white;
+            font-size: 30px;
             margin: 0 0 8px 0;
         }}
 
-        .hero-card .big {{
+        .hero-panel .big {{
             font-size: 58px;
-            font-weight: 850;
-            margin: 10px 0;
+            font-weight: 900;
+            margin: 8px 0;
             color: #ff2b7a;
         }}
 
         .container {{
             max-width: 1500px;
-            margin: -50px auto 0 auto;
-            padding: 0 28px 40px 28px;
+            margin: -58px auto 0 auto;
+            padding: 0 28px 44px 28px;
         }}
 
         .card {{
             background: white;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 24px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }}
@@ -248,8 +298,8 @@ def main():
         }}
 
         .kpi-value {{
-            font-size: 28px;
-            font-weight: 850;
+            font-size: 29px;
+            font-weight: 900;
             line-height: 1.05;
             letter-spacing: -0.5px;
         }}
@@ -260,7 +310,26 @@ def main():
             margin-top: 6px;
         }}
 
-        .advanced-grid {{
+        .section-title {{
+            margin: 34px 0 16px 0;
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+        }}
+
+        .section-title h2 {{
+            margin: 0;
+            font-size: 28px;
+        }}
+
+        .section-title p {{
+            margin: 6px 0 0 0;
+            color: #666;
+            max-width: 780px;
+        }}
+
+        .analysis-grid {{
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 24px;
@@ -306,17 +375,17 @@ def main():
 
         tr.highlight td {{
             color: var(--brand);
-            font-weight: 800;
+            font-weight: 900;
         }}
 
         .bars {{
-            height: 250px;
+            height: 270px;
             display: flex;
             align-items: flex-end;
             justify-content: space-around;
             border-left: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
-            padding: 0 12px 10px 12px;
+            padding: 0 12px 12px 12px;
         }}
 
         .bar-item {{
@@ -329,16 +398,16 @@ def main():
         }}
 
         .bar {{
-            width: 58px;
+            width: 62px;
             background: linear-gradient(180deg, #e4005a, #8b0037);
-            border-radius: 6px 6px 0 0;
+            border-radius: 7px 7px 0 0;
         }}
 
         .bar-value {{
-            font-weight: 800;
+            font-weight: 900;
             color: var(--brand);
             margin-bottom: 8px;
-            font-size: 14px;
+            font-size: 15px;
         }}
 
         .bar-label {{
@@ -348,11 +417,25 @@ def main():
             line-height: 1.25;
         }}
 
-        .method-card p,
-        .extension-card p,
-        .text-card p {{
+        .insight-box {{
+            background: #faf7f8;
+            border-left: 5px solid var(--brand);
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }}
+
+        .insight-box strong {{
+            color: var(--brand);
+        }}
+
+        .module-card {{
+            min-height: 215px;
+        }}
+
+        .module-card p {{
             color: #555;
-            line-height: 1.45;
+            line-height: 1.5;
         }}
 
         .tag {{
@@ -365,6 +448,16 @@ def main():
             border-radius: 999px;
             font-size: 12px;
             margin: 4px 4px 0 0;
+        }}
+
+        .status-pill {{
+            display: inline-block;
+            background: rgba(228,0,90,0.10);
+            color: var(--brand);
+            font-weight: 900;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 13px;
         }}
 
         .footer {{
@@ -381,11 +474,14 @@ def main():
             font-weight: 700;
         }}
 
-        .footer .logo span {{ font-weight: 300; }}
+        .footer .logo span {{
+            font-weight: 300;
+        }}
 
         @media (max-width: 1100px) {{
+            .page-hero-grid,
             .kpi-grid,
-            .advanced-grid,
+            .analysis-grid,
             .three-grid {{
                 grid-template-columns: 1fr;
             }}
@@ -396,18 +492,18 @@ def main():
         }}
 
         @media (max-width: 900px) {{
-            .hero {{
-                grid-template-columns: 1fr;
-                padding: 50px 30px;
+            .page-hero {{
+                padding: 46px 30px 70px 30px;
             }}
 
-            .hero h1 {{
+            .page-hero h1 {{
                 font-size: 42px;
             }}
 
             .nav-bar {{
                 padding: 14px 30px;
                 gap: 20px;
+                flex-wrap: wrap;
             }}
         }}
     </style>
@@ -426,24 +522,26 @@ def main():
         <a href="economics.html">Economics</a>
     </section>
 
-    <section class="hero">
-        <div>
-            <h1>Advanced wind<br>energy analytics</h1>
-            <p>
-                Seasonal performance, demand sensitivity and future forecasting scenarios
-                for Aalborg Portland.
-            </p>
-            <p class="hero-subtitle">
-                Additional analytical modules built on top of the automated wind-energy pipeline.
-            </p>
-        </div>
+    <section class="page-hero">
+        <div class="page-hero-grid">
+            <div>
+                <h1>Advanced wind<br>energy analytics</h1>
+                <p>
+                    Seasonal performance, demand sensitivity and forecasting roadmap
+                    for Aalborg Portland's wind-energy self-sufficiency assessment.
+                </p>
+                <p class="hero-note">
+                    This page extends the main dashboard from annual reporting to scenario-based industrial decision support.
+                </p>
+            </div>
 
-        <div class="hero-card">
-            <small>Best seasonal scenario</small>
-            <h2>{best_season_turbine}</h2>
-            <small>{best_season}</small>
-            <div class="big">{best_season_coverage:.2f}%</div>
-            <small>seasonal electricity coverage</small>
+            <div class="hero-panel">
+                <small>Best seasonal scenario</small>
+                <h2>{best_season_turbine}</h2>
+                <small>{best_season}</small>
+                <div class="big">{best_season_coverage:.2f}%</div>
+                <small>seasonal electricity coverage</small>
+            </div>
         </div>
     </section>
 
@@ -460,20 +558,20 @@ def main():
             </div>
 
             <div class="card kpi">
-                <div class="icon">±</div>
+                <div class="icon">↕</div>
                 <div>
-                    <div class="kpi-label">Demand sensitivity</div>
-                    <div class="kpi-value">±10%</div>
-                    <div class="kpi-note">Low, base and high demand scenarios</div>
+                    <div class="kpi-label">Coverage range</div>
+                    <div class="kpi-value">{min_sensitivity:.2f}% - {max_sensitivity:.2f}%</div>
+                    <div class="kpi-note">Across demand sensitivity scenarios</div>
                 </div>
             </div>
 
             <div class="card kpi">
-                <div class="icon">▥</div>
+                <div class="icon">±</div>
                 <div>
-                    <div class="kpi-label">Generated artifacts</div>
-                    <div class="kpi-value">2 CSV</div>
-                    <div class="kpi-note">Seasonal and sensitivity outputs</div>
+                    <div class="kpi-label">Demand sensitivity</div>
+                    <div class="kpi-value">±10%</div>
+                    <div class="kpi-note">Low, base and high demand</div>
                 </div>
             </div>
 
@@ -487,29 +585,45 @@ def main():
             </div>
         </section>
 
-        <section class="advanced-grid">
+        <div class="section-title">
+            <div>
+                <h2>Seasonal performance</h2>
+                <p>
+                    Wind generation is not constant throughout the year. This section compares seasonal production
+                    and identifies when on-site wind is most valuable for industrial electricity coverage.
+                </p>
+            </div>
+            <span class="status-pill">Seasonal analysis active</span>
+        </div>
+
+        <section class="analysis-grid">
             <div class="card">
-                <h2>Seasonal analysis</h2>
-                <div class="sub">Estimated turbine performance across winter, spring, summer and autumn</div>
+                <h2>Season summary</h2>
+                <div class="sub">Average coverage across all turbine models</div>
 
                 <table>
                     <thead>
                         <tr>
                             <th>Season</th>
-                            <th>Turbine</th>
-                            <th>Generation</th>
-                            <th>Coverage</th>
+                            <th>Total generation</th>
+                            <th>Average coverage</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {seasonal_rows}
+                        {seasonal_summary_rows}
                     </tbody>
                 </table>
+
+                <div class="insight-box">
+                    <strong>Interpretation:</strong>
+                    Winter shows the strongest seasonal performance, while summer is weaker.
+                    This supports the need for seasonal analysis instead of relying only on annual averages.
+                </div>
             </div>
 
             <div class="card">
                 <h2>Seasonal coverage comparison</h2>
-                <div class="sub">Average coverage across all turbine models by season</div>
+                <div class="sub">Average coverage by season</div>
 
                 <div class="bars">
                     {seasonal_bars}
@@ -517,16 +631,60 @@ def main():
             </div>
         </section>
 
-        <section class="advanced-grid">
+        <section class="analysis-grid">
             <div class="card">
-                <h2>Sensitivity analysis</h2>
-                <div class="sub">Impact of industrial demand uncertainty on wind-energy coverage</div>
+                <h2>Best turbine by season</h2>
+                <div class="sub">{best_season_turbine} seasonal behaviour</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Season</th>
+                            <th>Generation</th>
+                            <th>Coverage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {best_turbine_rows}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card module-card">
+                <h2>Why this matters</h2>
+                <p>
+                    A cement facility operates continuously, but wind generation varies strongly by season.
+                    Seasonal analysis helps identify periods where on-site wind generation is more likely to
+                    reduce grid dependency and periods where complementary solutions may be required.
+                </p>
+
+                <span class="tag">Industrial demand</span>
+                <span class="tag">Seasonality</span>
+                <span class="tag">Renewable variability</span>
+                <span class="tag">Decision support</span>
+            </div>
+        </section>
+
+        <div class="section-title">
+            <div>
+                <h2>Demand sensitivity</h2>
+                <p>
+                    Since the hourly load profile is synthetic, sensitivity analysis tests how robust the conclusions are
+                    when industrial electricity demand is lower or higher than the baseline assumption.
+                </p>
+            </div>
+            <span class="status-pill">±10% demand tested</span>
+        </div>
+
+        <section class="analysis-grid">
+            <div class="card">
+                <h2>{best_season_turbine} sensitivity</h2>
+                <div class="sub">Coverage under low, base and high demand assumptions</div>
 
                 <table>
                     <thead>
                         <tr>
                             <th>Scenario</th>
-                            <th>Turbine</th>
                             <th>Demand</th>
                             <th>Coverage</th>
                         </tr>
@@ -537,50 +695,44 @@ def main():
                 </table>
             </div>
 
-            <div class="card text-card">
-                <h2>Scenario robustness</h2>
-                <div class="sub">Why sensitivity analysis improves the academic quality of the project</div>
+            <div class="card">
+                <h2>Sensitivity comparison</h2>
+                <div class="sub">Coverage variation for the selected turbine</div>
 
-                <p>
-                    The demand profile is synthetic because plant-level hourly electricity consumption is not publicly available.
-                    Sensitivity analysis tests whether the conclusions remain reasonable under alternative demand assumptions.
-                </p>
-
-                <span class="tag">Demand uncertainty</span>
-                <span class="tag">Scenario analysis</span>
-                <span class="tag">Industrial robustness</span>
-                <span class="tag">Decision support</span>
+                <div class="bars">
+                    {sensitivity_bars}
+                </div>
             </div>
         </section>
 
         <section class="three-grid">
-            <div class="card method-card">
-                <h2>Methodology extension</h2>
+            <div class="card module-card">
+                <h2>Methodology value</h2>
                 <p>
-                    The advanced analytics page extends the original pipeline from annual coverage estimation
-                    to scenario-based industrial energy analysis.
+                    The advanced analytics layer improves the project by moving beyond single annual KPIs
+                    and introducing scenario-based assessment.
                 </p>
-                <span class="tag">Seasonality</span>
-                <span class="tag">Sensitivity</span>
-                <span class="tag">Artifacts</span>
+                <span class="tag">Scenario analysis</span>
+                <span class="tag">Robustness</span>
+                <span class="tag">Academic value</span>
             </div>
 
-            <div class="card extension-card">
+            <div class="card module-card">
                 <h2>Future forecasting</h2>
                 <p>
-                    A future module can use 7-day weather forecasts to estimate expected wind generation
-                    and short-term electricity demand coverage.
+                    The next extension can use 7-day weather forecasts to estimate short-term wind generation
+                    and expected industrial coverage.
                 </p>
                 <span class="tag">7-day forecast</span>
-                <span class="tag">Weather prediction</span>
-                <span class="tag">Planning</span>
+                <span class="tag">Operational planning</span>
+                <span class="tag">Weather API</span>
             </div>
 
-            <div class="card extension-card">
+            <div class="card module-card">
                 <h2>Model comparison</h2>
                 <p>
-                    Linear Regression, Random Forest and XGBoost can be compared to evaluate whether
-                    machine learning improves generation forecasting.
+                    Linear Regression, Random Forest and XGBoost can be compared to assess whether machine learning
+                    improves short-term wind generation forecasting.
                 </p>
                 <span class="tag">Baseline model</span>
                 <span class="tag">Random Forest</span>
