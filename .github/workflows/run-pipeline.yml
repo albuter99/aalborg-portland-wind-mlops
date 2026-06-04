@@ -31,6 +31,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add data/*.csv artifacts/*.csv docs/*.html docs/*.jpg docs/*.png
+          git add data/*.csv artifacts/*.csv docs/*.html docs/*.jpg 
           git commit -m "Update pipeline outputs and dashboard" || echo "No changes to commit"
           git push
