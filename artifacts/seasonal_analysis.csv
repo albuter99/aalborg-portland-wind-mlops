@@ -1,17 +1,17 @@
 season,turbine,seasonal_demand_mwh,seasonal_generation_mwh,seasonal_coverage_percent
-Autumn,Vestas V136 4.5 MW,62308.69,2668.17,4.28
-Autumn,Siemens Gamesa SG 5.0-145,62308.69,2501.5,4.01
-Autumn,Nordex N149 5.X,62308.69,2851.71,4.58
-Autumn,Enercon E-138 EP3,62308.69,2199.67,3.53
-Spring,Vestas V136 4.5 MW,62819.36,2022.21,3.22
-Spring,Siemens Gamesa SG 5.0-145,62819.36,1866.05,2.97
-Spring,Nordex N149 5.X,62819.36,2127.29,3.39
-Spring,Enercon E-138 EP3,62819.36,1660.74,2.64
-Summer,Vestas V136 4.5 MW,62859.29,1905.04,3.03
-Summer,Siemens Gamesa SG 5.0-145,62859.29,1760.18,2.8
-Summer,Nordex N149 5.X,62859.29,2006.61,3.19
-Summer,Enercon E-138 EP3,62859.29,1573.87,2.5
-Winter,Vestas V136 4.5 MW,61649.63,2893.41,4.69
-Winter,Siemens Gamesa SG 5.0-145,61649.63,2740.66,4.45
-Winter,Nordex N149 5.X,61649.63,3124.35,5.07
-Winter,Enercon E-138 EP3,61649.63,2398.81,3.89
+Autumn,Vestas V136 4.5 MW,62208.89,2668.17,4.29
+Autumn,Siemens Gamesa SG 5.0-145,62208.89,2501.5,4.02
+Autumn,Nordex N149 5.X,62208.89,2851.71,4.58
+Autumn,Enercon E-138 EP3,62208.89,2199.67,3.54
+Spring,Vestas V136 4.5 MW,62831.21,2022.21,3.22
+Spring,Siemens Gamesa SG 5.0-145,62831.21,1866.05,2.97
+Spring,Nordex N149 5.X,62831.21,2127.29,3.39
+Spring,Enercon E-138 EP3,62831.21,1660.74,2.64
+Summer,Vestas V136 4.5 MW,62897.7,1905.04,3.03
+Summer,Siemens Gamesa SG 5.0-145,62897.7,1760.18,2.8
+Summer,Nordex N149 5.X,62897.7,2006.61,3.19
+Summer,Enercon E-138 EP3,62897.7,1573.87,2.5
+Winter,Vestas V136 4.5 MW,61704.83,2893.41,4.69
+Winter,Siemens Gamesa SG 5.0-145,61704.83,2740.66,4.44
+Winter,Nordex N149 5.X,61704.83,3124.35,5.06
+Winter,Enercon E-138 EP3,61704.83,2398.81,3.89
