@@ -189,6 +189,53 @@ def train_and_compare_models():
     return best_model_name, best_model, features
 
 
+def generate_hourly_profile(forecast_output, seven_day_demand_mwh):
+    hourly_demand_mwh = seven_day_demand_mwh / len(forecast_output)
+
+    hourly_profile = forecast_output[[
+        "time",
+        "best_model_generation_mw"
+    ]].copy()
+
+    hourly_profile = hourly_profile.rename(columns={
+        "time": "timestamp",
+        "best_model_generation_mw": "forecast_generation_mwh"
+    })
+
+    hourly_profile["estimated_demand_mwh"] = hourly_demand_mwh
+
+    hourly_profile["coverage_percent"] = (
+        hourly_profile["forecast_generation_mwh"] /
+        hourly_profile["estimated_demand_mwh"] * 100
+    )
+
+    hourly_profile["grid_required_mwh"] = (
+        hourly_profile["estimated_demand_mwh"] -
+        hourly_profile["forecast_generation_mwh"]
+    ).clip(lower=0)
+
+    hourly_profile["forecast_generation_mwh"] = hourly_profile[
+        "forecast_generation_mwh"
+    ].round(4)
+
+    hourly_profile["estimated_demand_mwh"] = hourly_profile[
+        "estimated_demand_mwh"
+    ].round(4)
+
+    hourly_profile["coverage_percent"] = hourly_profile[
+        "coverage_percent"
+    ].round(2)
+
+    hourly_profile["grid_required_mwh"] = hourly_profile[
+        "grid_required_mwh"
+    ].round(4)
+
+    hourly_profile.to_csv(
+        "artifacts/forecast_hourly_profile.csv",
+        index=False
+    )
+
+
 def generate_7_day_forecast():
     best_model_name, best_model, features = train_and_compare_models()
 
@@ -224,11 +271,16 @@ def generate_7_day_forecast():
 
     forecast_output.to_csv("artifacts/forecast_7d_generation.csv", index=False)
 
-    stakeholder_rows = []
-
     annual_demand_df = pd.read_csv("data/turbine_simulation_results.csv")
     annual_demand_mwh = annual_demand_df["demand_mw"].sum()
     seven_day_demand_mwh = annual_demand_mwh / 365 * 7
+
+    generate_hourly_profile(
+        forecast_output=forecast_output,
+        seven_day_demand_mwh=seven_day_demand_mwh
+    )
+
+    stakeholder_rows = []
 
     for turbine_name in TURBINES:
         generation_col = f"{turbine_name} generation_mw"
@@ -250,6 +302,7 @@ def generate_7_day_forecast():
     stakeholder_df.to_csv("artifacts/forecast_stakeholder_scenarios.csv", index=False)
 
     print("7-day forecasting module completed successfully")
+    print("Hourly forecast profile generated successfully")
 
 
 def main():
