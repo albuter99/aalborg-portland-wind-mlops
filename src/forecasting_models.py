@@ -1,3 +1,4 @@
+import os
 import requests
 import pandas as pd
 import numpy as np
@@ -81,6 +82,8 @@ def fetch_7_day_forecast():
     })
 
     forecast_df["time"] = pd.to_datetime(forecast_df["time"])
+
+    os.makedirs("data", exist_ok=True)
     forecast_df.to_csv("data/forecast_weather_7d.csv", index=False)
 
     return forecast_df
@@ -103,22 +106,13 @@ def build_features(df):
         raise ValueError("No wind speed column found.")
 
     df["wind_speed"] = df[wind_col]
-    df["wind_speed_squared"] = df["wind_speed"] ** 2
-    df["wind_speed_cubed"] = df["wind_speed"] ** 3
 
     return df
 
 
-def train_and_compare_models():
-    df = pd.read_csv("data/turbine_simulation_results.csv")
-    df = build_features(df)
-
-    target_col = "Nordex N149 5.X generation_mw"
-
-    features = [
+def get_ml_features():
+    return [
         "wind_speed",
-        "wind_speed_squared",
-        "wind_speed_cubed",
         "temperature_2m",
         "hour",
         "dayofyear",
@@ -126,15 +120,40 @@ def train_and_compare_models():
         "weekday"
     ]
 
-    df = df.dropna(subset=features + [target_col])
 
-    split_index = int(len(df) * 0.8)
+def evaluate_model(model, X, y):
+    predictions = model.predict(X)
+    predictions = np.maximum(predictions, 0)
 
-    train_df = df.iloc[:split_index]
-    test_df = df.iloc[split_index:]
+    mae = mean_absolute_error(y, predictions)
+    rmse = np.sqrt(mean_squared_error(y, predictions))
+    r2 = r2_score(y, predictions)
+
+    return mae, rmse, r2
+
+
+def train_and_compare_models():
+    df = pd.read_csv("data/turbine_simulation_results.csv")
+    df = build_features(df)
+
+    target_col = "Nordex N149 5.X generation_mw"
+    features = get_ml_features()
+
+    df = df.dropna(subset=features + [target_col]).reset_index(drop=True)
+
+    train_end = int(len(df) * 0.70)
+    validation_end = int(len(df) * 0.85)
+
+    train_df = df.iloc[:train_end]
+    validation_df = df.iloc[train_end:validation_end]
+    test_df = df.iloc[validation_end:]
 
     X_train = train_df[features]
     y_train = train_df[target_col]
+
+    X_validation = validation_df[features]
+    y_validation = validation_df[target_col]
+
     X_test = test_df[features]
     y_test = test_df[target_col]
 
@@ -143,65 +162,127 @@ def train_and_compare_models():
         "Random Forest": RandomForestRegressor(
             n_estimators=150,
             random_state=42,
-            max_depth=12
+            max_depth=8
         )
     }
 
     if XGBOOST_AVAILABLE:
         models["XGBoost"] = XGBRegressor(
             n_estimators=150,
-            max_depth=4,
+            max_depth=3,
             learning_rate=0.05,
             objective="reg:squarederror",
             random_state=42
         )
 
-    results = []
-
-    best_model_name = None
-    best_model = None
-    best_mae = float("inf")
+    validation_results = []
+    fitted_models = {}
 
     for name, model in models.items():
         model.fit(X_train, y_train)
-        predictions = model.predict(X_test)
-        predictions = np.maximum(predictions, 0)
 
-        mae = mean_absolute_error(y_test, predictions)
-        rmse = np.sqrt(mean_squared_error(y_test, predictions))
-        r2 = r2_score(y_test, predictions)
+        val_mae, val_rmse, val_r2 = evaluate_model(
+            model,
+            X_validation,
+            y_validation
+        )
 
-        results.append({
+        fitted_models[name] = model
+
+        validation_results.append({
             "model": name,
-            "mae_mw": round(mae, 4),
-            "rmse_mw": round(rmse, 4),
-            "r2_score": round(r2, 4)
+            "validation_mae_mw": val_mae,
+            "validation_rmse_mw": val_rmse,
+            "validation_r2_score": val_r2
         })
 
-        if mae < best_mae:
-            best_mae = mae
-            best_model_name = name
-            best_model = model
+    validation_results_df = pd.DataFrame(validation_results)
 
-    results_df = pd.DataFrame(results)
+    best_model_name = validation_results_df.sort_values(
+        "validation_mae_mw"
+    ).iloc[0]["model"]
+
+    best_model = models[best_model_name]
+
+    X_train_validation = pd.concat([X_train, X_validation])
+    y_train_validation = pd.concat([y_train, y_validation])
+
+    final_results = []
+
+    for name, model in models.items():
+        model.fit(X_train_validation, y_train_validation)
+
+        test_mae, test_rmse, test_r2 = evaluate_model(
+            model,
+            X_test,
+            y_test
+        )
+
+        validation_row = validation_results_df[
+            validation_results_df["model"] == name
+        ].iloc[0]
+
+        final_results.append({
+            "model": name,
+            "mae_mw": round(test_mae, 4),
+            "rmse_mw": round(test_rmse, 4),
+            "r2_score": round(test_r2, 4),
+            "validation_mae_mw": round(validation_row["validation_mae_mw"], 4),
+            "validation_rmse_mw": round(validation_row["validation_rmse_mw"], 4),
+            "validation_r2_score": round(validation_row["validation_r2_score"], 4),
+            "test_mae_mw": round(test_mae, 4),
+            "test_rmse_mw": round(test_rmse, 4),
+            "test_r2_score": round(test_r2, 4),
+            "evaluation_type": "Surrogate model approximation",
+            "target_type": "Simulated turbine generation from physical power curve"
+        })
+
+    results_df = pd.DataFrame(final_results)
+
+    os.makedirs("artifacts", exist_ok=True)
     results_df.to_csv("artifacts/forecast_model_comparison.csv", index=False)
+
+    model_note_df = pd.DataFrame([{
+        "forecasting_method": "Physical power-curve forecast",
+        "ml_role": "Machine learning models are evaluated as surrogate models.",
+        "evaluation_note": (
+            "The target variable is simulated turbine generation derived from a "
+            "physical power curve, not measured turbine production. Very high R² "
+            "values are therefore expected and should be interpreted as approximation "
+            "accuracy rather than real-world forecasting accuracy."
+        ),
+        "split_strategy": "Chronological split: 70% train, 15% validation, 15% test",
+        "selected_model": best_model_name
+    }])
+
+    model_note_df.to_csv("artifacts/forecast_model_note.csv", index=False)
+
+    best_model.fit(X_train_validation, y_train_validation)
 
     return best_model_name, best_model, features
 
 
-def generate_hourly_profile(forecast_output, seven_day_demand_mwh):
+def generate_hourly_profile(
+    forecast_output,
+    seven_day_demand_mwh,
+    reference_turbine,
+    reference_turbine_count
+):
     hourly_demand_mwh = seven_day_demand_mwh / len(forecast_output)
+
+    generation_col = f"{reference_turbine} generation_mw"
 
     hourly_profile = forecast_output[[
         "time",
-        "best_model_generation_mw"
+        generation_col
     ]].copy()
 
     hourly_profile = hourly_profile.rename(columns={
         "time": "timestamp",
-        "best_model_generation_mw": "forecast_generation_mwh"
+        generation_col: "forecast_generation_mwh"
     })
 
+    hourly_profile["forecast_generation_mwh"] *= reference_turbine_count
     hourly_profile["estimated_demand_mwh"] = hourly_demand_mwh
 
     hourly_profile["coverage_percent"] = (
@@ -213,6 +294,10 @@ def generate_hourly_profile(forecast_output, seven_day_demand_mwh):
         hourly_profile["estimated_demand_mwh"] -
         hourly_profile["forecast_generation_mwh"]
     ).clip(lower=0)
+
+    hourly_profile["reference_turbine"] = reference_turbine
+    hourly_profile["reference_turbine_count"] = reference_turbine_count
+    hourly_profile["forecast_method"] = "Physical turbine power curve"
 
     hourly_profile["forecast_generation_mwh"] = hourly_profile[
         "forecast_generation_mwh"
@@ -253,7 +338,7 @@ def generate_7_day_forecast():
         generation_col = f"{turbine_name} generation_mw"
 
         forecast_features_df[generation_col] = forecast_features_df["wind_speed"].apply(
-            lambda x: estimate_power(x, turbine_specs)
+            lambda wind_speed: estimate_power(wind_speed, turbine_specs)
         )
 
     output_columns = [
@@ -268,17 +353,14 @@ def generate_7_day_forecast():
 
     forecast_output = forecast_features_df[output_columns].copy()
     forecast_output["best_model"] = best_model_name
+    forecast_output["operational_forecast_method"] = "Physical turbine power curve"
+    forecast_output["ml_model_role"] = "Surrogate model approximation"
 
     forecast_output.to_csv("artifacts/forecast_7d_generation.csv", index=False)
 
     annual_demand_df = pd.read_csv("data/turbine_simulation_results.csv")
     annual_demand_mwh = annual_demand_df["demand_mw"].sum()
     seven_day_demand_mwh = annual_demand_mwh / 365 * 7
-
-    generate_hourly_profile(
-        forecast_output=forecast_output,
-        seven_day_demand_mwh=seven_day_demand_mwh
-    )
 
     stakeholder_rows = []
 
@@ -289,19 +371,39 @@ def generate_7_day_forecast():
         for turbine_count in [1, 2, 3, 5, 10]:
             total_generation = one_turbine_generation * turbine_count
             coverage = total_generation / seven_day_demand_mwh * 100
+            grid_required = max(seven_day_demand_mwh - total_generation, 0)
 
             stakeholder_rows.append({
                 "turbine": turbine_name,
                 "number_of_turbines": turbine_count,
                 "forecast_generation_mwh": round(total_generation, 2),
                 "estimated_7d_demand_mwh": round(seven_day_demand_mwh, 2),
-                "coverage_percent": round(coverage, 2)
+                "grid_required_mwh": round(grid_required, 2),
+                "coverage_percent": round(coverage, 2),
+                "forecast_method": "Physical turbine power curve"
             })
 
     stakeholder_df = pd.DataFrame(stakeholder_rows)
-    stakeholder_df.to_csv("artifacts/forecast_stakeholder_scenarios.csv", index=False)
+    stakeholder_df.to_csv(
+        "artifacts/forecast_stakeholder_scenarios.csv",
+        index=False
+    )
+
+    best_scenario = stakeholder_df.sort_values(
+        "forecast_generation_mwh",
+        ascending=False
+    ).iloc[0]
+
+    generate_hourly_profile(
+        forecast_output=forecast_output,
+        seven_day_demand_mwh=seven_day_demand_mwh,
+        reference_turbine=best_scenario["turbine"],
+        reference_turbine_count=int(best_scenario["number_of_turbines"])
+    )
 
     print("7-day forecasting module completed successfully")
+    print("Operational forecast method: physical turbine power curve")
+    print(f"ML model selected as surrogate approximation: {best_model_name}")
     print("Hourly forecast profile generated successfully")
 
 
