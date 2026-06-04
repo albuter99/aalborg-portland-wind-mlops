@@ -4,3 +4,5 @@ requests
 matplotlib
 streamlit
 openpyxl
+scikit-learn
+xgboost
