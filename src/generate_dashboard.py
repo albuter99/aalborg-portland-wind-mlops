@@ -14,6 +14,8 @@ def format_number(value):
 def main():
     summary_df = pd.read_csv("artifacts/turbine_summary.csv")
     simulation_df = pd.read_csv("data/turbine_simulation_results.csv")
+    demand_validation_df = pd.read_csv("artifacts/demand_model_validation.csv")
+    monthly_demand_df = pd.read_csv("artifacts/monthly_demand_profile.csv")
 
     simulation_df["time"] = pd.to_datetime(simulation_df["time"])
 
@@ -29,9 +31,15 @@ def main():
 
     best_generation_col = best_turbine + " generation_mw"
 
+    demand_validation = demand_validation_df.iloc[0]
+    reported_demand = demand_validation["reported_annual_demand_mwh"]
+    synthetic_demand = demand_validation["synthetic_annual_demand_mwh"]
+    calibration_error = demand_validation["calibration_error_percent"]
+
     table_rows = ""
     bar_items = ""
     chart_points = ""
+    monthly_demand_bars = ""
 
     max_coverage = summary_df["coverage_ratio_percent"].max()
 
@@ -79,6 +87,34 @@ def main():
         chart_points += f"""
         <circle class="demand-point" cx="{x:.2f}%" cy="{demand_y:.2f}%" r="1.2"></circle>
         <circle class="generation-point" cx="{x:.2f}%" cy="{generation_y:.2f}%" r="1.2"></circle>
+        """
+
+    month_order = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ]
+
+    monthly_demand_df["month"] = pd.Categorical(
+        monthly_demand_df["month"],
+        categories=month_order,
+        ordered=True
+    )
+
+    monthly_demand_df = monthly_demand_df.sort_values("month")
+
+    max_monthly_demand = monthly_demand_df["demand_mw"].max()
+
+    for _, row in monthly_demand_df.iterrows():
+        month_short = str(row["month"])[:3]
+        demand_mwh = row["demand_mw"]
+        height = max(8, (demand_mwh / max_monthly_demand) * 180)
+
+        monthly_demand_bars += f"""
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">{format_number(demand_mwh)}</div>
+            <div class="monthly-bar" style="height:{height}px;"></div>
+            <div class="monthly-bar-label">{month_short}</div>
+        </div>
         """
 
     html = f"""
@@ -145,7 +181,7 @@ def main():
 
         .nav-bar a:hover,
         .nav-bar a.active {{
-        color:#ff2b7a;
+            color:#ff2b7a;
         }}
 
         .hero {{
@@ -278,6 +314,85 @@ def main():
             grid-template-columns: 1.35fr 0.85fr 1.1fr;
             gap: 24px;
             margin-bottom: 24px;
+        }}
+
+        .demand-grid {{
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }}
+
+        .demand-kpi-grid {{
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }}
+
+        .demand-kpi {{
+            background: #faf7f8;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 18px;
+        }}
+
+        .demand-kpi span {{
+            display: block;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }}
+
+        .demand-kpi strong {{
+            color: var(--brand);
+            font-size: 28px;
+            display: block;
+        }}
+
+        .demand-kpi small {{
+            color: #777;
+            display: block;
+            margin-top: 6px;
+        }}
+
+        .monthly-bars {{
+            height: 270px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            border-left: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 0 12px 10px 12px;
+        }}
+
+        .monthly-bar-item {{
+            width: 7.2%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }}
+
+        .monthly-bar {{
+            width: 28px;
+            background: linear-gradient(180deg, #e4005a, #8b0037);
+            border-radius: 5px 5px 0 0;
+        }}
+
+        .monthly-bar-value {{
+            font-weight: 800;
+            color: var(--brand);
+            margin-bottom: 8px;
+            font-size: 10px;
+            transform: rotate(-28deg);
+            white-space: nowrap;
+        }}
+
+        .monthly-bar-label {{
+            font-size: 11px;
+            color: #555;
+            margin-top: 10px;
         }}
 
         h2 {{
@@ -492,6 +607,7 @@ def main():
         @media (max-width: 1100px) {{
             .kpi-grid,
             .main-grid,
+            .demand-grid,
             .pipeline-grid,
             .info-grid {{
                 grid-template-columns: 1fr;
@@ -537,7 +653,7 @@ def main():
             </p>
             <p class="hero-subtitle">
                 Wind-energy self-sufficiency estimation using real weather data
-                and synthetic industrial demand modelling.
+                and calibrated synthetic industrial demand modelling.
             </p>
         </div>
 
@@ -586,6 +702,45 @@ def main():
                     <div class="kpi-label">Analysis period</div>
                     <div class="kpi-value">2025</div>
                     <div class="kpi-note">8760 hourly observations</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demand-grid">
+            <div class="card">
+                <h2>Demand model validation</h2>
+                <div class="sub">Synthetic hourly demand calibrated to reported annual consumption</div>
+
+                <div class="demand-kpi-grid">
+                    <div class="demand-kpi">
+                        <span>Reported annual demand</span>
+                        <strong>{format_number(reported_demand)} MWh</strong>
+                        <small>Input from Aalborg Portland public reporting</small>
+                    </div>
+
+                    <div class="demand-kpi">
+                        <span>Synthetic annual demand</span>
+                        <strong>{format_number(synthetic_demand)} MWh</strong>
+                        <small>Generated hourly profile after calibration</small>
+                    </div>
+
+                    <div class="demand-kpi">
+                        <span>Calibration error</span>
+                        <strong>{calibration_error:.4f}%</strong>
+                        <small>Difference between reported and synthetic annual totals</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Monthly synthetic demand profile</h2>
+                <div class="sub">
+                    Monthly aggregation of the calibrated hourly demand profile.
+                    This makes the demand assumption visible instead of only describing it in text.
+                </div>
+
+                <div class="monthly-bars">
+                    {monthly_demand_bars}
                 </div>
             </div>
         </section>
@@ -647,7 +802,7 @@ def main():
                 <div class="pipeline-step">
                     <span class="status-dot"></span>
                     <strong>Demand modelling</strong>
-                    <p>Active</p>
+                    <p>Calibrated</p>
                 </div>
 
                 <div class="pipeline-step">
@@ -677,7 +832,7 @@ def main():
                     <h2>About the analysis</h2>
                     <p>
                         This dashboard estimates physical on-site electricity coverage using
-                        real hourly wind data and a synthetic industrial demand profile.
+                        real hourly wind data and a calibrated synthetic industrial demand profile.
                     </p>
                 </div>
             </div>
@@ -687,8 +842,8 @@ def main():
                 <div>
                     <h2>Method</h2>
                     <p>
-                        The hourly demand profile is synthetic, but calibrated to Aalborg
-                        Portland's publicly reported annual electricity consumption.
+                        The hourly demand profile is synthetic because public hourly consumption is not available,
+                        but its annual total is calibrated to Aalborg Portland's reported electricity consumption.
                     </p>
                 </div>
             </div>
