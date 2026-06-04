@@ -1,5 +1,5 @@
 turbine,annual_generation_mwh,coverage_ratio_percent,capacity_factor_percent,surplus_hours
-Vestas V136 4.5 MW,9488.82,3.8,24.07,0
-Siemens Gamesa SG 5.0-145,8868.38,3.55,20.25,0
-Nordex N149 5.X,10109.96,4.05,20.25,0
-Enercon E-138 EP3,7833.09,3.14,20.99,0
+Vestas V136 4.5 MW,9488.82,3.7,24.07,0
+Siemens Gamesa SG 5.0-145,8868.38,3.46,20.25,0
+Nordex N149 5.X,10109.96,3.95,20.25,0
+Enercon E-138 EP3,7833.09,3.06,20.99,0

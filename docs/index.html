@@ -62,7 +62,7 @@
 
         .nav-bar a:hover,
         .nav-bar a.active {
-        color:#ff2b7a;
+            color:#ff2b7a;
         }
 
         .hero {
@@ -195,6 +195,85 @@
             grid-template-columns: 1.35fr 0.85fr 1.1fr;
             gap: 24px;
             margin-bottom: 24px;
+        }
+
+        .demand-grid {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .demand-kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .demand-kpi {
+            background: #faf7f8;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .demand-kpi span {
+            display: block;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .demand-kpi strong {
+            color: var(--brand);
+            font-size: 28px;
+            display: block;
+        }
+
+        .demand-kpi small {
+            color: #777;
+            display: block;
+            margin-top: 6px;
+        }
+
+        .monthly-bars {
+            height: 270px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            border-left: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 0 12px 10px 12px;
+        }
+
+        .monthly-bar-item {
+            width: 7.2%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .monthly-bar {
+            width: 28px;
+            background: linear-gradient(180deg, #e4005a, #8b0037);
+            border-radius: 5px 5px 0 0;
+        }
+
+        .monthly-bar-value {
+            font-weight: 800;
+            color: var(--brand);
+            margin-bottom: 8px;
+            font-size: 10px;
+            transform: rotate(-28deg);
+            white-space: nowrap;
+        }
+
+        .monthly-bar-label {
+            font-size: 11px;
+            color: #555;
+            margin-top: 10px;
         }
 
         h2 {
@@ -409,6 +488,7 @@
         @media (max-width: 1100px) {
             .kpi-grid,
             .main-grid,
+            .demand-grid,
             .pipeline-grid,
             .info-grid {
                 grid-template-columns: 1fr;
@@ -454,7 +534,7 @@
             </p>
             <p class="hero-subtitle">
                 Wind-energy self-sufficiency estimation using real weather data
-                and synthetic industrial demand modelling.
+                and calibrated synthetic industrial demand modelling.
             </p>
         </div>
 
@@ -474,7 +554,7 @@
                 <div class="icon">⚡</div>
                 <div>
                     <div class="kpi-label">Annual electricity demand</div>
-                    <div class="kpi-value">249.650 MWh</div>
+                    <div class="kpi-value">256.211 MWh</div>
                     <div class="kpi-note">Synthetic hourly profile calibrated to public annual data</div>
                 </div>
             </div>
@@ -507,6 +587,117 @@
             </div>
         </section>
 
+        <section class="demand-grid">
+            <div class="card">
+                <h2>Demand model validation</h2>
+                <div class="sub">Synthetic hourly demand calibrated to reported annual consumption</div>
+
+                <div class="demand-kpi-grid">
+                    <div class="demand-kpi">
+                        <span>Reported annual demand</span>
+                        <strong>256.211 MWh</strong>
+                        <small>Input from Aalborg Portland public reporting</small>
+                    </div>
+
+                    <div class="demand-kpi">
+                        <span>Synthetic annual demand</span>
+                        <strong>256.211 MWh</strong>
+                        <small>Generated hourly profile after calibration</small>
+                    </div>
+
+                    <div class="demand-kpi">
+                        <span>Calibration error</span>
+                        <strong>0.0000%</strong>
+                        <small>Difference between reported and synthetic annual totals</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Monthly synthetic demand profile</h2>
+                <div class="sub">
+                    Monthly aggregation of the calibrated hourly demand profile.
+                    This makes the demand assumption visible instead of only describing it in text.
+                </div>
+
+                <div class="monthly-bars">
+                    
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.815</div>
+            <div class="monthly-bar" style="height:179.8712967084104px;"></div>
+            <div class="monthly-bar-label">Jan</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">19.690</div>
+            <div class="monthly-bar" style="height:162.34798986448396px;"></div>
+            <div class="monthly-bar-label">Feb</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.690</div>
+            <div class="monthly-bar" style="height:178.84178208944348px;"></div>
+            <div class="monthly-bar-label">Mar</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.110</div>
+            <div class="monthly-bar" style="height:174.0555582185559px;"></div>
+            <div class="monthly-bar-label">Apr</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.748</div>
+            <div class="monthly-bar" style="height:179.3160016085651px;"></div>
+            <div class="monthly-bar-label">May</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">20.997</div>
+            <div class="monthly-bar" style="height:173.12475845292857px;"></div>
+            <div class="monthly-bar-label">Jun</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.818</div>
+            <div class="monthly-bar" style="height:179.89419847717141px;"></div>
+            <div class="monthly-bar-label">Jul</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.655</div>
+            <div class="monthly-bar" style="height:178.54865796335204px;"></div>
+            <div class="monthly-bar-label">Aug</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.079</div>
+            <div class="monthly-bar" style="height:173.80054593408616px;"></div>
+            <div class="monthly-bar-label">Sep</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.815</div>
+            <div class="monthly-bar" style="height:179.869641600442px;"></div>
+            <div class="monthly-bar-label">Oct</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">20.965</div>
+            <div class="monthly-bar" style="height:172.86262548010666px;"></div>
+            <div class="monthly-bar-label">Nov</div>
+        </div>
+        
+        <div class="monthly-bar-item">
+            <div class="monthly-bar-value">21.831</div>
+            <div class="monthly-bar" style="height:180.0px;"></div>
+            <div class="monthly-bar-label">Dec</div>
+        </div>
+        
+                </div>
+            </div>
+        </section>
+
         <section class="main-grid">
             <div class="card">
                 <h2>Turbine comparison</h2>
@@ -526,7 +717,7 @@
         <tr class="">
             <td>Vestas V136 4.5 MW</td>
             <td>9.489 MWh</td>
-            <td>3.8%</td>
+            <td>3.7%</td>
             <td>24.1%</td>
             <td>0</td>
         </tr>
@@ -565,14 +756,14 @@
                 <div class="bars">
                     
         <div class="bar-item">
-            <div class="bar-value">3.8%</div>
-            <div class="bar" style="height:159.50617283950618px;"></div>
+            <div class="bar-value">3.7%</div>
+            <div class="bar" style="height:159.2405063291139px;"></div>
             <div class="bar-label">Vestas<br>V136<br>4.5<br>MW</div>
         </div>
         
         <div class="bar-item">
             <div class="bar-value">3.5%</div>
-            <div class="bar" style="height:149.01234567901236px;"></div>
+            <div class="bar" style="height:148.91139240506328px;"></div>
             <div class="bar-label">Siemens<br>Gamesa<br>SG<br>5.0-145</div>
         </div>
         
@@ -584,7 +775,7 @@
         
         <div class="bar-item">
             <div class="bar-value">3.1%</div>
-            <div class="bar" style="height:131.80246913580248px;"></div>
+            <div class="bar" style="height:131.69620253164558px;"></div>
             <div class="bar-label">Enercon<br>E-138<br>EP3</div>
         </div>
         
@@ -601,1013 +792,1013 @@
                 <div class="time-chart">
                     <svg>
                         
-        <circle class="demand-point" cx="0.00%" cy="16.00%" r="1.2"></circle>
-        <circle class="generation-point" cx="0.00%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="0.00%" cy="17.84%" r="1.2"></circle>
+        <circle class="generation-point" cx="0.00%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="0.30%" cy="14.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="0.30%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="0.30%" cy="18.87%" r="1.2"></circle>
+        <circle class="generation-point" cx="0.30%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="0.60%" cy="17.30%" r="1.2"></circle>
-        <circle class="generation-point" cx="0.60%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="0.60%" cy="17.60%" r="1.2"></circle>
+        <circle class="generation-point" cx="0.60%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="0.90%" cy="17.99%" r="1.2"></circle>
-        <circle class="generation-point" cx="0.90%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="0.90%" cy="16.17%" r="1.2"></circle>
+        <circle class="generation-point" cx="0.90%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="1.19%" cy="15.11%" r="1.2"></circle>
-        <circle class="generation-point" cx="1.19%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="1.19%" cy="19.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="1.19%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="1.49%" cy="16.82%" r="1.2"></circle>
-        <circle class="generation-point" cx="1.49%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="1.49%" cy="19.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="1.49%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="1.79%" cy="8.07%" r="1.2"></circle>
-        <circle class="generation-point" cx="1.79%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="1.79%" cy="8.78%" r="1.2"></circle>
+        <circle class="generation-point" cx="1.79%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="2.09%" cy="12.79%" r="1.2"></circle>
-        <circle class="generation-point" cx="2.09%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="2.09%" cy="10.22%" r="1.2"></circle>
+        <circle class="generation-point" cx="2.09%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="2.39%" cy="4.62%" r="1.2"></circle>
-        <circle class="generation-point" cx="2.39%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="2.39%" cy="8.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="2.39%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="2.69%" cy="2.42%" r="1.2"></circle>
-        <circle class="generation-point" cx="2.69%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="2.69%" cy="6.15%" r="1.2"></circle>
+        <circle class="generation-point" cx="2.69%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="2.99%" cy="4.73%" r="1.2"></circle>
-        <circle class="generation-point" cx="2.99%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="2.99%" cy="8.01%" r="1.2"></circle>
+        <circle class="generation-point" cx="2.99%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="3.28%" cy="3.95%" r="1.2"></circle>
-        <circle class="generation-point" cx="3.28%" cy="85.46%" r="1.2"></circle>
+        <circle class="demand-point" cx="3.28%" cy="8.02%" r="1.2"></circle>
+        <circle class="generation-point" cx="3.28%" cy="86.13%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="3.58%" cy="5.03%" r="1.2"></circle>
-        <circle class="generation-point" cx="3.58%" cy="88.27%" r="1.2"></circle>
+        <circle class="demand-point" cx="3.58%" cy="6.70%" r="1.2"></circle>
+        <circle class="generation-point" cx="3.58%" cy="88.81%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="3.88%" cy="1.50%" r="1.2"></circle>
-        <circle class="generation-point" cx="3.88%" cy="91.62%" r="1.2"></circle>
+        <circle class="demand-point" cx="3.88%" cy="10.71%" r="1.2"></circle>
+        <circle class="generation-point" cx="3.88%" cy="92.01%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="4.18%" cy="6.65%" r="1.2"></circle>
-        <circle class="generation-point" cx="4.18%" cy="90.15%" r="1.2"></circle>
+        <circle class="demand-point" cx="4.18%" cy="10.36%" r="1.2"></circle>
+        <circle class="generation-point" cx="4.18%" cy="90.60%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="4.48%" cy="8.02%" r="1.2"></circle>
-        <circle class="generation-point" cx="4.48%" cy="89.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="4.48%" cy="8.20%" r="1.2"></circle>
+        <circle class="generation-point" cx="4.48%" cy="90.07%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="4.78%" cy="4.49%" r="1.2"></circle>
-        <circle class="generation-point" cx="4.78%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="4.78%" cy="9.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="4.78%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="5.07%" cy="4.80%" r="1.2"></circle>
-        <circle class="generation-point" cx="5.07%" cy="85.31%" r="1.2"></circle>
+        <circle class="demand-point" cx="5.07%" cy="6.57%" r="1.2"></circle>
+        <circle class="generation-point" cx="5.07%" cy="85.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="5.37%" cy="4.21%" r="1.2"></circle>
-        <circle class="generation-point" cx="5.37%" cy="87.11%" r="1.2"></circle>
+        <circle class="demand-point" cx="5.37%" cy="8.84%" r="1.2"></circle>
+        <circle class="generation-point" cx="5.37%" cy="87.71%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="5.67%" cy="11.92%" r="1.2"></circle>
-        <circle class="generation-point" cx="5.67%" cy="98.29%" r="1.2"></circle>
+        <circle class="demand-point" cx="5.67%" cy="14.07%" r="1.2"></circle>
+        <circle class="generation-point" cx="5.67%" cy="98.37%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="5.97%" cy="7.92%" r="1.2"></circle>
-        <circle class="generation-point" cx="5.97%" cy="99.19%" r="1.2"></circle>
+        <circle class="demand-point" cx="5.97%" cy="8.98%" r="1.2"></circle>
+        <circle class="generation-point" cx="5.97%" cy="99.23%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="6.27%" cy="11.96%" r="1.2"></circle>
-        <circle class="generation-point" cx="6.27%" cy="98.84%" r="1.2"></circle>
+        <circle class="demand-point" cx="6.27%" cy="11.97%" r="1.2"></circle>
+        <circle class="generation-point" cx="6.27%" cy="98.89%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="6.57%" cy="10.66%" r="1.2"></circle>
-        <circle class="generation-point" cx="6.57%" cy="99.35%" r="1.2"></circle>
+        <circle class="demand-point" cx="6.57%" cy="11.46%" r="1.2"></circle>
+        <circle class="generation-point" cx="6.57%" cy="99.38%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="6.87%" cy="8.52%" r="1.2"></circle>
-        <circle class="generation-point" cx="6.87%" cy="99.40%" r="1.2"></circle>
+        <circle class="demand-point" cx="6.87%" cy="14.10%" r="1.2"></circle>
+        <circle class="generation-point" cx="6.87%" cy="99.43%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="7.16%" cy="14.52%" r="1.2"></circle>
-        <circle class="generation-point" cx="7.16%" cy="99.33%" r="1.2"></circle>
+        <circle class="demand-point" cx="7.16%" cy="19.54%" r="1.2"></circle>
+        <circle class="generation-point" cx="7.16%" cy="99.36%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="7.46%" cy="16.46%" r="1.2"></circle>
-        <circle class="generation-point" cx="7.46%" cy="99.45%" r="1.2"></circle>
+        <circle class="demand-point" cx="7.46%" cy="18.47%" r="1.2"></circle>
+        <circle class="generation-point" cx="7.46%" cy="99.48%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="7.76%" cy="16.12%" r="1.2"></circle>
-        <circle class="generation-point" cx="7.76%" cy="99.66%" r="1.2"></circle>
+        <circle class="demand-point" cx="7.76%" cy="20.52%" r="1.2"></circle>
+        <circle class="generation-point" cx="7.76%" cy="99.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="8.06%" cy="16.84%" r="1.2"></circle>
-        <circle class="generation-point" cx="8.06%" cy="96.78%" r="1.2"></circle>
+        <circle class="demand-point" cx="8.06%" cy="18.04%" r="1.2"></circle>
+        <circle class="generation-point" cx="8.06%" cy="96.92%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="8.36%" cy="17.47%" r="1.2"></circle>
-        <circle class="generation-point" cx="8.36%" cy="98.55%" r="1.2"></circle>
+        <circle class="demand-point" cx="8.36%" cy="19.63%" r="1.2"></circle>
+        <circle class="generation-point" cx="8.36%" cy="98.62%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="8.66%" cy="15.71%" r="1.2"></circle>
-        <circle class="generation-point" cx="8.66%" cy="98.07%" r="1.2"></circle>
+        <circle class="demand-point" cx="8.66%" cy="19.12%" r="1.2"></circle>
+        <circle class="generation-point" cx="8.66%" cy="98.16%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="8.96%" cy="10.12%" r="1.2"></circle>
-        <circle class="generation-point" cx="8.96%" cy="98.52%" r="1.2"></circle>
+        <circle class="demand-point" cx="8.96%" cy="12.64%" r="1.2"></circle>
+        <circle class="generation-point" cx="8.96%" cy="98.59%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="9.25%" cy="10.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="9.25%" cy="99.15%" r="1.2"></circle>
+        <circle class="demand-point" cx="9.25%" cy="8.30%" r="1.2"></circle>
+        <circle class="generation-point" cx="9.25%" cy="99.19%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="9.55%" cy="1.93%" r="1.2"></circle>
-        <circle class="generation-point" cx="9.55%" cy="98.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="9.55%" cy="7.18%" r="1.2"></circle>
+        <circle class="generation-point" cx="9.55%" cy="98.65%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="9.85%" cy="5.93%" r="1.2"></circle>
-        <circle class="generation-point" cx="9.85%" cy="98.64%" r="1.2"></circle>
+        <circle class="demand-point" cx="9.85%" cy="9.12%" r="1.2"></circle>
+        <circle class="generation-point" cx="9.85%" cy="98.70%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="10.15%" cy="5.25%" r="1.2"></circle>
-        <circle class="generation-point" cx="10.15%" cy="98.03%" r="1.2"></circle>
+        <circle class="demand-point" cx="10.15%" cy="5.63%" r="1.2"></circle>
+        <circle class="generation-point" cx="10.15%" cy="98.13%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="10.45%" cy="5.13%" r="1.2"></circle>
-        <circle class="generation-point" cx="10.45%" cy="97.08%" r="1.2"></circle>
+        <circle class="demand-point" cx="10.45%" cy="9.42%" r="1.2"></circle>
+        <circle class="generation-point" cx="10.45%" cy="97.22%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="10.75%" cy="3.26%" r="1.2"></circle>
-        <circle class="generation-point" cx="10.75%" cy="96.51%" r="1.2"></circle>
+        <circle class="demand-point" cx="10.75%" cy="6.77%" r="1.2"></circle>
+        <circle class="generation-point" cx="10.75%" cy="96.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="11.04%" cy="5.26%" r="1.2"></circle>
-        <circle class="generation-point" cx="11.04%" cy="96.22%" r="1.2"></circle>
+        <circle class="demand-point" cx="11.04%" cy="10.79%" r="1.2"></circle>
+        <circle class="generation-point" cx="11.04%" cy="96.40%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="11.34%" cy="2.38%" r="1.2"></circle>
-        <circle class="generation-point" cx="11.34%" cy="94.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="11.34%" cy="9.62%" r="1.2"></circle>
+        <circle class="generation-point" cx="11.34%" cy="95.16%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="11.64%" cy="2.37%" r="1.2"></circle>
-        <circle class="generation-point" cx="11.64%" cy="93.70%" r="1.2"></circle>
+        <circle class="demand-point" cx="11.64%" cy="6.79%" r="1.2"></circle>
+        <circle class="generation-point" cx="11.64%" cy="93.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="11.94%" cy="6.47%" r="1.2"></circle>
-        <circle class="generation-point" cx="11.94%" cy="95.00%" r="1.2"></circle>
+        <circle class="demand-point" cx="11.94%" cy="5.78%" r="1.2"></circle>
+        <circle class="generation-point" cx="11.94%" cy="95.23%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="12.24%" cy="5.15%" r="1.2"></circle>
-        <circle class="generation-point" cx="12.24%" cy="94.02%" r="1.2"></circle>
+        <circle class="demand-point" cx="12.24%" cy="6.84%" r="1.2"></circle>
+        <circle class="generation-point" cx="12.24%" cy="94.30%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="12.54%" cy="3.53%" r="1.2"></circle>
-        <circle class="generation-point" cx="12.54%" cy="92.66%" r="1.2"></circle>
+        <circle class="demand-point" cx="12.54%" cy="7.37%" r="1.2"></circle>
+        <circle class="generation-point" cx="12.54%" cy="93.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="12.84%" cy="10.24%" r="1.2"></circle>
-        <circle class="generation-point" cx="12.84%" cy="91.42%" r="1.2"></circle>
+        <circle class="demand-point" cx="12.84%" cy="12.11%" r="1.2"></circle>
+        <circle class="generation-point" cx="12.84%" cy="91.81%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="13.13%" cy="9.32%" r="1.2"></circle>
-        <circle class="generation-point" cx="13.13%" cy="91.52%" r="1.2"></circle>
+        <circle class="demand-point" cx="13.13%" cy="14.19%" r="1.2"></circle>
+        <circle class="generation-point" cx="13.13%" cy="91.91%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="13.43%" cy="10.18%" r="1.2"></circle>
-        <circle class="generation-point" cx="13.43%" cy="93.86%" r="1.2"></circle>
+        <circle class="demand-point" cx="13.43%" cy="12.85%" r="1.2"></circle>
+        <circle class="generation-point" cx="13.43%" cy="94.15%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="13.73%" cy="9.69%" r="1.2"></circle>
-        <circle class="generation-point" cx="13.73%" cy="94.41%" r="1.2"></circle>
+        <circle class="demand-point" cx="13.73%" cy="12.39%" r="1.2"></circle>
+        <circle class="generation-point" cx="13.73%" cy="94.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="14.03%" cy="7.42%" r="1.2"></circle>
-        <circle class="generation-point" cx="14.03%" cy="95.34%" r="1.2"></circle>
+        <circle class="demand-point" cx="14.03%" cy="9.71%" r="1.2"></circle>
+        <circle class="generation-point" cx="14.03%" cy="95.56%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="14.33%" cy="17.83%" r="1.2"></circle>
-        <circle class="generation-point" cx="14.33%" cy="97.03%" r="1.2"></circle>
+        <circle class="demand-point" cx="14.33%" cy="18.09%" r="1.2"></circle>
+        <circle class="generation-point" cx="14.33%" cy="97.17%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="14.63%" cy="15.88%" r="1.2"></circle>
-        <circle class="generation-point" cx="14.63%" cy="97.37%" r="1.2"></circle>
+        <circle class="demand-point" cx="14.63%" cy="21.52%" r="1.2"></circle>
+        <circle class="generation-point" cx="14.63%" cy="97.49%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="14.93%" cy="18.90%" r="1.2"></circle>
-        <circle class="generation-point" cx="14.93%" cy="95.47%" r="1.2"></circle>
+        <circle class="demand-point" cx="14.93%" cy="18.12%" r="1.2"></circle>
+        <circle class="generation-point" cx="14.93%" cy="95.68%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="15.22%" cy="18.48%" r="1.2"></circle>
-        <circle class="generation-point" cx="15.22%" cy="93.78%" r="1.2"></circle>
+        <circle class="demand-point" cx="15.22%" cy="19.28%" r="1.2"></circle>
+        <circle class="generation-point" cx="15.22%" cy="94.07%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="15.52%" cy="18.55%" r="1.2"></circle>
-        <circle class="generation-point" cx="15.52%" cy="86.02%" r="1.2"></circle>
+        <circle class="demand-point" cx="15.52%" cy="19.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="15.52%" cy="86.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="15.82%" cy="15.32%" r="1.2"></circle>
-        <circle class="generation-point" cx="15.82%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="15.82%" cy="17.65%" r="1.2"></circle>
+        <circle class="generation-point" cx="15.82%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="16.12%" cy="10.18%" r="1.2"></circle>
-        <circle class="generation-point" cx="16.12%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="16.12%" cy="9.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="16.12%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="16.42%" cy="7.58%" r="1.2"></circle>
-        <circle class="generation-point" cx="16.42%" cy="82.88%" r="1.2"></circle>
+        <circle class="demand-point" cx="16.42%" cy="9.93%" r="1.2"></circle>
+        <circle class="generation-point" cx="16.42%" cy="83.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="16.72%" cy="6.12%" r="1.2"></circle>
-        <circle class="generation-point" cx="16.72%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="16.72%" cy="8.71%" r="1.2"></circle>
+        <circle class="generation-point" cx="16.72%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="17.01%" cy="5.65%" r="1.2"></circle>
-        <circle class="generation-point" cx="17.01%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="17.01%" cy="7.73%" r="1.2"></circle>
+        <circle class="generation-point" cx="17.01%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="17.31%" cy="6.73%" r="1.2"></circle>
-        <circle class="generation-point" cx="17.31%" cy="88.88%" r="1.2"></circle>
+        <circle class="demand-point" cx="17.31%" cy="6.54%" r="1.2"></circle>
+        <circle class="generation-point" cx="17.31%" cy="89.39%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="17.61%" cy="7.78%" r="1.2"></circle>
-        <circle class="generation-point" cx="17.61%" cy="88.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="17.61%" cy="5.34%" r="1.2"></circle>
+        <circle class="generation-point" cx="17.61%" cy="88.93%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="17.91%" cy="0.00%" r="1.2"></circle>
-        <circle class="generation-point" cx="17.91%" cy="91.42%" r="1.2"></circle>
+        <circle class="demand-point" cx="17.91%" cy="8.04%" r="1.2"></circle>
+        <circle class="generation-point" cx="17.91%" cy="91.81%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="18.21%" cy="2.58%" r="1.2"></circle>
-        <circle class="generation-point" cx="18.21%" cy="88.51%" r="1.2"></circle>
+        <circle class="demand-point" cx="18.21%" cy="7.50%" r="1.2"></circle>
+        <circle class="generation-point" cx="18.21%" cy="89.05%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="18.51%" cy="7.47%" r="1.2"></circle>
-        <circle class="generation-point" cx="18.51%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="18.51%" cy="9.21%" r="1.2"></circle>
+        <circle class="generation-point" cx="18.51%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="18.81%" cy="5.87%" r="1.2"></circle>
-        <circle class="generation-point" cx="18.81%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="18.81%" cy="9.38%" r="1.2"></circle>
+        <circle class="generation-point" cx="18.81%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="19.10%" cy="7.24%" r="1.2"></circle>
-        <circle class="generation-point" cx="19.10%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="19.10%" cy="5.65%" r="1.2"></circle>
+        <circle class="generation-point" cx="19.10%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="19.40%" cy="3.34%" r="1.2"></circle>
-        <circle class="generation-point" cx="19.40%" cy="84.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="19.40%" cy="4.64%" r="1.2"></circle>
+        <circle class="generation-point" cx="19.40%" cy="85.29%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="19.70%" cy="5.76%" r="1.2"></circle>
-        <circle class="generation-point" cx="19.70%" cy="92.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="19.70%" cy="7.29%" r="1.2"></circle>
+        <circle class="generation-point" cx="19.70%" cy="93.26%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="20.00%" cy="9.74%" r="1.2"></circle>
-        <circle class="generation-point" cx="20.00%" cy="97.18%" r="1.2"></circle>
+        <circle class="demand-point" cx="20.00%" cy="9.80%" r="1.2"></circle>
+        <circle class="generation-point" cx="20.00%" cy="97.31%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="20.30%" cy="6.77%" r="1.2"></circle>
-        <circle class="generation-point" cx="20.30%" cy="99.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="20.30%" cy="10.94%" r="1.2"></circle>
+        <circle class="generation-point" cx="20.30%" cy="99.60%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="20.60%" cy="9.07%" r="1.2"></circle>
-        <circle class="generation-point" cx="20.60%" cy="99.50%" r="1.2"></circle>
+        <circle class="demand-point" cx="20.60%" cy="12.72%" r="1.2"></circle>
+        <circle class="generation-point" cx="20.60%" cy="99.52%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="20.90%" cy="9.09%" r="1.2"></circle>
+        <circle class="demand-point" cx="20.90%" cy="10.94%" r="1.2"></circle>
         <circle class="generation-point" cx="20.90%" cy="99.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="21.19%" cy="11.42%" r="1.2"></circle>
+        <circle class="demand-point" cx="21.19%" cy="8.86%" r="1.2"></circle>
         <circle class="generation-point" cx="21.19%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="21.49%" cy="25.10%" r="1.2"></circle>
+        <circle class="demand-point" cx="21.49%" cy="26.84%" r="1.2"></circle>
         <circle class="generation-point" cx="21.49%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="21.79%" cy="24.41%" r="1.2"></circle>
+        <circle class="demand-point" cx="21.79%" cy="24.49%" r="1.2"></circle>
         <circle class="generation-point" cx="21.79%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="22.09%" cy="30.03%" r="1.2"></circle>
-        <circle class="generation-point" cx="22.09%" cy="99.21%" r="1.2"></circle>
+        <circle class="demand-point" cx="22.09%" cy="30.62%" r="1.2"></circle>
+        <circle class="generation-point" cx="22.09%" cy="99.25%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="22.39%" cy="24.92%" r="1.2"></circle>
-        <circle class="generation-point" cx="22.39%" cy="99.08%" r="1.2"></circle>
+        <circle class="demand-point" cx="22.39%" cy="25.58%" r="1.2"></circle>
+        <circle class="generation-point" cx="22.39%" cy="99.13%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="22.69%" cy="23.42%" r="1.2"></circle>
-        <circle class="generation-point" cx="22.69%" cy="98.11%" r="1.2"></circle>
+        <circle class="demand-point" cx="22.69%" cy="26.66%" r="1.2"></circle>
+        <circle class="generation-point" cx="22.69%" cy="98.20%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="22.99%" cy="26.39%" r="1.2"></circle>
-        <circle class="generation-point" cx="22.99%" cy="97.96%" r="1.2"></circle>
+        <circle class="demand-point" cx="22.99%" cy="27.22%" r="1.2"></circle>
+        <circle class="generation-point" cx="22.99%" cy="98.05%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="23.28%" cy="17.65%" r="1.2"></circle>
-        <circle class="generation-point" cx="23.28%" cy="98.07%" r="1.2"></circle>
+        <circle class="demand-point" cx="23.28%" cy="20.27%" r="1.2"></circle>
+        <circle class="generation-point" cx="23.28%" cy="98.16%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="23.58%" cy="17.94%" r="1.2"></circle>
-        <circle class="generation-point" cx="23.58%" cy="98.11%" r="1.2"></circle>
+        <circle class="demand-point" cx="23.58%" cy="23.58%" r="1.2"></circle>
+        <circle class="generation-point" cx="23.58%" cy="98.20%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="23.88%" cy="14.82%" r="1.2"></circle>
-        <circle class="generation-point" cx="23.88%" cy="97.59%" r="1.2"></circle>
+        <circle class="demand-point" cx="23.88%" cy="16.81%" r="1.2"></circle>
+        <circle class="generation-point" cx="23.88%" cy="97.70%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="24.18%" cy="18.56%" r="1.2"></circle>
-        <circle class="generation-point" cx="24.18%" cy="97.55%" r="1.2"></circle>
+        <circle class="demand-point" cx="24.18%" cy="15.84%" r="1.2"></circle>
+        <circle class="generation-point" cx="24.18%" cy="97.66%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="24.48%" cy="13.15%" r="1.2"></circle>
-        <circle class="generation-point" cx="24.48%" cy="97.63%" r="1.2"></circle>
+        <circle class="demand-point" cx="24.48%" cy="13.97%" r="1.2"></circle>
+        <circle class="generation-point" cx="24.48%" cy="97.74%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="24.78%" cy="12.76%" r="1.2"></circle>
-        <circle class="generation-point" cx="24.78%" cy="97.96%" r="1.2"></circle>
+        <circle class="demand-point" cx="24.78%" cy="17.30%" r="1.2"></circle>
+        <circle class="generation-point" cx="24.78%" cy="98.05%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="25.07%" cy="14.91%" r="1.2"></circle>
-        <circle class="generation-point" cx="25.07%" cy="96.98%" r="1.2"></circle>
+        <circle class="demand-point" cx="25.07%" cy="17.79%" r="1.2"></circle>
+        <circle class="generation-point" cx="25.07%" cy="97.12%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="25.37%" cy="11.67%" r="1.2"></circle>
-        <circle class="generation-point" cx="25.37%" cy="98.15%" r="1.2"></circle>
+        <circle class="demand-point" cx="25.37%" cy="17.28%" r="1.2"></circle>
+        <circle class="generation-point" cx="25.37%" cy="98.23%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="25.67%" cy="15.46%" r="1.2"></circle>
-        <circle class="generation-point" cx="25.67%" cy="96.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="25.67%" cy="14.91%" r="1.2"></circle>
+        <circle class="generation-point" cx="25.67%" cy="97.07%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="25.97%" cy="16.97%" r="1.2"></circle>
-        <circle class="generation-point" cx="25.97%" cy="98.29%" r="1.2"></circle>
+        <circle class="demand-point" cx="25.97%" cy="15.89%" r="1.2"></circle>
+        <circle class="generation-point" cx="25.97%" cy="98.37%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="26.27%" cy="12.28%" r="1.2"></circle>
-        <circle class="generation-point" cx="26.27%" cy="98.32%" r="1.2"></circle>
+        <circle class="demand-point" cx="26.27%" cy="17.32%" r="1.2"></circle>
+        <circle class="generation-point" cx="26.27%" cy="98.40%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="26.57%" cy="13.94%" r="1.2"></circle>
-        <circle class="generation-point" cx="26.57%" cy="97.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="26.57%" cy="15.58%" r="1.2"></circle>
+        <circle class="generation-point" cx="26.57%" cy="97.78%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="26.87%" cy="12.33%" r="1.2"></circle>
-        <circle class="generation-point" cx="26.87%" cy="98.25%" r="1.2"></circle>
+        <circle class="demand-point" cx="26.87%" cy="16.28%" r="1.2"></circle>
+        <circle class="generation-point" cx="26.87%" cy="98.33%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="27.16%" cy="18.77%" r="1.2"></circle>
-        <circle class="generation-point" cx="27.16%" cy="98.07%" r="1.2"></circle>
+        <circle class="demand-point" cx="27.16%" cy="18.88%" r="1.2"></circle>
+        <circle class="generation-point" cx="27.16%" cy="98.16%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="27.46%" cy="18.83%" r="1.2"></circle>
-        <circle class="generation-point" cx="27.46%" cy="97.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="27.46%" cy="21.54%" r="1.2"></circle>
+        <circle class="generation-point" cx="27.46%" cy="97.78%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="27.76%" cy="19.51%" r="1.2"></circle>
-        <circle class="generation-point" cx="27.76%" cy="97.46%" r="1.2"></circle>
+        <circle class="demand-point" cx="27.76%" cy="20.94%" r="1.2"></circle>
+        <circle class="generation-point" cx="27.76%" cy="97.57%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="28.06%" cy="21.25%" r="1.2"></circle>
-        <circle class="generation-point" cx="28.06%" cy="96.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="28.06%" cy="21.04%" r="1.2"></circle>
+        <circle class="generation-point" cx="28.06%" cy="97.07%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="28.36%" cy="16.69%" r="1.2"></circle>
-        <circle class="generation-point" cx="28.36%" cy="97.76%" r="1.2"></circle>
+        <circle class="demand-point" cx="28.36%" cy="22.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="28.36%" cy="97.86%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="28.66%" cy="25.31%" r="1.2"></circle>
-        <circle class="generation-point" cx="28.66%" cy="98.42%" r="1.2"></circle>
+        <circle class="demand-point" cx="28.66%" cy="26.35%" r="1.2"></circle>
+        <circle class="generation-point" cx="28.66%" cy="98.50%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="28.96%" cy="27.04%" r="1.2"></circle>
-        <circle class="generation-point" cx="28.96%" cy="99.15%" r="1.2"></circle>
+        <circle class="demand-point" cx="28.96%" cy="26.40%" r="1.2"></circle>
+        <circle class="generation-point" cx="28.96%" cy="99.19%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="29.25%" cy="23.17%" r="1.2"></circle>
-        <circle class="generation-point" cx="29.25%" cy="99.25%" r="1.2"></circle>
+        <circle class="demand-point" cx="29.25%" cy="26.78%" r="1.2"></circle>
+        <circle class="generation-point" cx="29.25%" cy="99.29%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="29.55%" cy="24.46%" r="1.2"></circle>
-        <circle class="generation-point" cx="29.55%" cy="99.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="29.55%" cy="27.13%" r="1.2"></circle>
+        <circle class="generation-point" cx="29.55%" cy="99.60%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="29.85%" cy="22.76%" r="1.2"></circle>
-        <circle class="generation-point" cx="29.85%" cy="99.48%" r="1.2"></circle>
+        <circle class="demand-point" cx="29.85%" cy="28.86%" r="1.2"></circle>
+        <circle class="generation-point" cx="29.85%" cy="99.51%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="30.15%" cy="23.37%" r="1.2"></circle>
-        <circle class="generation-point" cx="30.15%" cy="99.19%" r="1.2"></circle>
+        <circle class="demand-point" cx="30.15%" cy="27.40%" r="1.2"></circle>
+        <circle class="generation-point" cx="30.15%" cy="99.23%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="30.45%" cy="17.76%" r="1.2"></circle>
-        <circle class="generation-point" cx="30.45%" cy="98.45%" r="1.2"></circle>
+        <circle class="demand-point" cx="30.45%" cy="20.96%" r="1.2"></circle>
+        <circle class="generation-point" cx="30.45%" cy="98.53%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="30.75%" cy="18.61%" r="1.2"></circle>
-        <circle class="generation-point" cx="30.75%" cy="96.34%" r="1.2"></circle>
+        <circle class="demand-point" cx="30.75%" cy="21.69%" r="1.2"></circle>
+        <circle class="generation-point" cx="30.75%" cy="96.51%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="31.04%" cy="11.54%" r="1.2"></circle>
-        <circle class="generation-point" cx="31.04%" cy="96.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="31.04%" cy="16.71%" r="1.2"></circle>
+        <circle class="generation-point" cx="31.04%" cy="96.56%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="31.34%" cy="14.91%" r="1.2"></circle>
-        <circle class="generation-point" cx="31.34%" cy="97.03%" r="1.2"></circle>
+        <circle class="demand-point" cx="31.34%" cy="15.76%" r="1.2"></circle>
+        <circle class="generation-point" cx="31.34%" cy="97.17%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="31.64%" cy="16.83%" r="1.2"></circle>
-        <circle class="generation-point" cx="31.64%" cy="97.72%" r="1.2"></circle>
+        <circle class="demand-point" cx="31.64%" cy="13.29%" r="1.2"></circle>
+        <circle class="generation-point" cx="31.64%" cy="97.82%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="31.94%" cy="15.78%" r="1.2"></circle>
-        <circle class="generation-point" cx="31.94%" cy="98.61%" r="1.2"></circle>
+        <circle class="demand-point" cx="31.94%" cy="16.15%" r="1.2"></circle>
+        <circle class="generation-point" cx="31.94%" cy="98.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="32.24%" cy="13.21%" r="1.2"></circle>
-        <circle class="generation-point" cx="32.24%" cy="98.29%" r="1.2"></circle>
+        <circle class="demand-point" cx="32.24%" cy="16.01%" r="1.2"></circle>
+        <circle class="generation-point" cx="32.24%" cy="98.37%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="32.54%" cy="17.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="32.54%" cy="98.49%" r="1.2"></circle>
+        <circle class="demand-point" cx="32.54%" cy="16.56%" r="1.2"></circle>
+        <circle class="generation-point" cx="32.54%" cy="98.56%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="32.84%" cy="13.35%" r="1.2"></circle>
-        <circle class="generation-point" cx="32.84%" cy="98.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="32.84%" cy="19.65%" r="1.2"></circle>
+        <circle class="generation-point" cx="32.84%" cy="98.65%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="33.13%" cy="14.31%" r="1.2"></circle>
-        <circle class="generation-point" cx="33.13%" cy="98.99%" r="1.2"></circle>
+        <circle class="demand-point" cx="33.13%" cy="16.48%" r="1.2"></circle>
+        <circle class="generation-point" cx="33.13%" cy="99.04%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="33.43%" cy="14.14%" r="1.2"></circle>
-        <circle class="generation-point" cx="33.43%" cy="99.53%" r="1.2"></circle>
+        <circle class="demand-point" cx="33.43%" cy="16.34%" r="1.2"></circle>
+        <circle class="generation-point" cx="33.43%" cy="99.55%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="33.73%" cy="13.81%" r="1.2"></circle>
-        <circle class="generation-point" cx="33.73%" cy="99.35%" r="1.2"></circle>
+        <circle class="demand-point" cx="33.73%" cy="12.32%" r="1.2"></circle>
+        <circle class="generation-point" cx="33.73%" cy="99.38%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="34.03%" cy="12.74%" r="1.2"></circle>
-        <circle class="generation-point" cx="34.03%" cy="98.61%" r="1.2"></circle>
+        <circle class="demand-point" cx="34.03%" cy="16.76%" r="1.2"></circle>
+        <circle class="generation-point" cx="34.03%" cy="98.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="34.33%" cy="20.93%" r="1.2"></circle>
-        <circle class="generation-point" cx="34.33%" cy="96.51%" r="1.2"></circle>
+        <circle class="demand-point" cx="34.33%" cy="19.94%" r="1.2"></circle>
+        <circle class="generation-point" cx="34.33%" cy="96.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="34.63%" cy="19.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="34.63%" cy="95.80%" r="1.2"></circle>
+        <circle class="demand-point" cx="34.63%" cy="20.47%" r="1.2"></circle>
+        <circle class="generation-point" cx="34.63%" cy="95.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="34.93%" cy="20.99%" r="1.2"></circle>
-        <circle class="generation-point" cx="34.93%" cy="94.64%" r="1.2"></circle>
+        <circle class="demand-point" cx="34.93%" cy="22.28%" r="1.2"></circle>
+        <circle class="generation-point" cx="34.93%" cy="94.89%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="35.22%" cy="15.91%" r="1.2"></circle>
-        <circle class="generation-point" cx="35.22%" cy="91.52%" r="1.2"></circle>
+        <circle class="demand-point" cx="35.22%" cy="18.60%" r="1.2"></circle>
+        <circle class="generation-point" cx="35.22%" cy="91.91%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="35.52%" cy="19.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="35.52%" cy="87.89%" r="1.2"></circle>
+        <circle class="demand-point" cx="35.52%" cy="19.22%" r="1.2"></circle>
+        <circle class="generation-point" cx="35.52%" cy="88.45%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="35.82%" cy="18.61%" r="1.2"></circle>
-        <circle class="generation-point" cx="35.82%" cy="83.20%" r="1.2"></circle>
+        <circle class="demand-point" cx="35.82%" cy="17.36%" r="1.2"></circle>
+        <circle class="generation-point" cx="35.82%" cy="83.98%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="36.12%" cy="16.27%" r="1.2"></circle>
-        <circle class="generation-point" cx="36.12%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="36.12%" cy="20.13%" r="1.2"></circle>
+        <circle class="generation-point" cx="36.12%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="36.42%" cy="19.74%" r="1.2"></circle>
-        <circle class="generation-point" cx="36.42%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="36.42%" cy="16.37%" r="1.2"></circle>
+        <circle class="generation-point" cx="36.42%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="36.72%" cy="16.23%" r="1.2"></circle>
-        <circle class="generation-point" cx="36.72%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="36.72%" cy="20.93%" r="1.2"></circle>
+        <circle class="generation-point" cx="36.72%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="37.01%" cy="18.29%" r="1.2"></circle>
-        <circle class="generation-point" cx="37.01%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="37.01%" cy="17.69%" r="1.2"></circle>
+        <circle class="generation-point" cx="37.01%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="37.31%" cy="17.04%" r="1.2"></circle>
-        <circle class="generation-point" cx="37.31%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="37.31%" cy="15.09%" r="1.2"></circle>
+        <circle class="generation-point" cx="37.31%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="37.61%" cy="8.52%" r="1.2"></circle>
-        <circle class="generation-point" cx="37.61%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="37.61%" cy="13.33%" r="1.2"></circle>
+        <circle class="generation-point" cx="37.61%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="37.91%" cy="5.99%" r="1.2"></circle>
-        <circle class="generation-point" cx="37.91%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="37.91%" cy="12.58%" r="1.2"></circle>
+        <circle class="generation-point" cx="37.91%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="38.21%" cy="7.24%" r="1.2"></circle>
-        <circle class="generation-point" cx="38.21%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="38.21%" cy="6.97%" r="1.2"></circle>
+        <circle class="generation-point" cx="38.21%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="38.51%" cy="3.47%" r="1.2"></circle>
-        <circle class="generation-point" cx="38.51%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="38.51%" cy="8.09%" r="1.2"></circle>
+        <circle class="generation-point" cx="38.51%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="38.81%" cy="3.79%" r="1.2"></circle>
-        <circle class="generation-point" cx="38.81%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="38.81%" cy="10.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="38.81%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="39.10%" cy="2.30%" r="1.2"></circle>
-        <circle class="generation-point" cx="39.10%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="39.10%" cy="7.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="39.10%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="39.40%" cy="7.43%" r="1.2"></circle>
-        <circle class="generation-point" cx="39.40%" cy="83.20%" r="1.2"></circle>
+        <circle class="demand-point" cx="39.40%" cy="9.13%" r="1.2"></circle>
+        <circle class="generation-point" cx="39.40%" cy="83.98%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="39.70%" cy="1.43%" r="1.2"></circle>
-        <circle class="generation-point" cx="39.70%" cy="94.64%" r="1.2"></circle>
+        <circle class="demand-point" cx="39.70%" cy="6.27%" r="1.2"></circle>
+        <circle class="generation-point" cx="39.70%" cy="94.89%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="40.00%" cy="6.73%" r="1.2"></circle>
-        <circle class="generation-point" cx="40.00%" cy="97.84%" r="1.2"></circle>
+        <circle class="demand-point" cx="40.00%" cy="8.86%" r="1.2"></circle>
+        <circle class="generation-point" cx="40.00%" cy="97.94%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="40.30%" cy="2.12%" r="1.2"></circle>
-        <circle class="generation-point" cx="40.30%" cy="89.70%" r="1.2"></circle>
+        <circle class="demand-point" cx="40.30%" cy="4.28%" r="1.2"></circle>
+        <circle class="generation-point" cx="40.30%" cy="90.18%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="40.60%" cy="5.62%" r="1.2"></circle>
-        <circle class="generation-point" cx="40.60%" cy="86.02%" r="1.2"></circle>
+        <circle class="demand-point" cx="40.60%" cy="8.61%" r="1.2"></circle>
+        <circle class="generation-point" cx="40.60%" cy="86.67%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="40.90%" cy="7.61%" r="1.2"></circle>
-        <circle class="generation-point" cx="40.90%" cy="83.51%" r="1.2"></circle>
+        <circle class="demand-point" cx="40.90%" cy="7.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="40.90%" cy="84.27%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="41.19%" cy="7.75%" r="1.2"></circle>
-        <circle class="generation-point" cx="41.19%" cy="83.35%" r="1.2"></circle>
+        <circle class="demand-point" cx="41.19%" cy="5.64%" r="1.2"></circle>
+        <circle class="generation-point" cx="41.19%" cy="84.13%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="41.49%" cy="10.12%" r="1.2"></circle>
-        <circle class="generation-point" cx="41.49%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="41.49%" cy="13.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="41.49%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="41.79%" cy="9.26%" r="1.2"></circle>
-        <circle class="generation-point" cx="41.79%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="41.79%" cy="11.17%" r="1.2"></circle>
+        <circle class="generation-point" cx="41.79%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="42.09%" cy="7.15%" r="1.2"></circle>
-        <circle class="generation-point" cx="42.09%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="42.09%" cy="9.26%" r="1.2"></circle>
+        <circle class="generation-point" cx="42.09%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="42.39%" cy="9.98%" r="1.2"></circle>
-        <circle class="generation-point" cx="42.39%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="42.39%" cy="14.42%" r="1.2"></circle>
+        <circle class="generation-point" cx="42.39%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="42.69%" cy="9.38%" r="1.2"></circle>
-        <circle class="generation-point" cx="42.69%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="42.69%" cy="11.25%" r="1.2"></circle>
+        <circle class="generation-point" cx="42.69%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="42.99%" cy="16.61%" r="1.2"></circle>
-        <circle class="generation-point" cx="42.99%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="42.99%" cy="18.23%" r="1.2"></circle>
+        <circle class="generation-point" cx="42.99%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="43.28%" cy="18.71%" r="1.2"></circle>
-        <circle class="generation-point" cx="43.28%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="43.28%" cy="17.38%" r="1.2"></circle>
+        <circle class="generation-point" cx="43.28%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="43.58%" cy="17.39%" r="1.2"></circle>
-        <circle class="generation-point" cx="43.58%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="43.58%" cy="20.66%" r="1.2"></circle>
+        <circle class="generation-point" cx="43.58%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="43.88%" cy="18.21%" r="1.2"></circle>
-        <circle class="generation-point" cx="43.88%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="43.88%" cy="20.80%" r="1.2"></circle>
+        <circle class="generation-point" cx="43.88%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="44.18%" cy="18.56%" r="1.2"></circle>
-        <circle class="generation-point" cx="44.18%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="44.18%" cy="17.80%" r="1.2"></circle>
+        <circle class="generation-point" cx="44.18%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="44.48%" cy="15.51%" r="1.2"></circle>
-        <circle class="generation-point" cx="44.48%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="44.48%" cy="18.17%" r="1.2"></circle>
+        <circle class="generation-point" cx="44.48%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="44.78%" cy="10.16%" r="1.2"></circle>
-        <circle class="generation-point" cx="44.78%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="44.78%" cy="11.13%" r="1.2"></circle>
+        <circle class="generation-point" cx="44.78%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="45.07%" cy="10.14%" r="1.2"></circle>
-        <circle class="generation-point" cx="45.07%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="45.07%" cy="10.96%" r="1.2"></circle>
+        <circle class="generation-point" cx="45.07%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="45.37%" cy="7.68%" r="1.2"></circle>
-        <circle class="generation-point" cx="45.37%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="45.37%" cy="8.42%" r="1.2"></circle>
+        <circle class="generation-point" cx="45.37%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="45.67%" cy="5.04%" r="1.2"></circle>
-        <circle class="generation-point" cx="45.67%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="45.67%" cy="6.72%" r="1.2"></circle>
+        <circle class="generation-point" cx="45.67%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="45.97%" cy="4.73%" r="1.2"></circle>
-        <circle class="generation-point" cx="45.97%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="45.97%" cy="6.61%" r="1.2"></circle>
+        <circle class="generation-point" cx="45.97%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="46.27%" cy="5.21%" r="1.2"></circle>
-        <circle class="generation-point" cx="46.27%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="46.27%" cy="8.48%" r="1.2"></circle>
+        <circle class="generation-point" cx="46.27%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="46.57%" cy="5.05%" r="1.2"></circle>
-        <circle class="generation-point" cx="46.57%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="46.57%" cy="3.69%" r="1.2"></circle>
+        <circle class="generation-point" cx="46.57%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="46.87%" cy="5.73%" r="1.2"></circle>
-        <circle class="generation-point" cx="46.87%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="46.87%" cy="6.27%" r="1.2"></circle>
+        <circle class="generation-point" cx="46.87%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="47.16%" cy="7.67%" r="1.2"></circle>
-        <circle class="generation-point" cx="47.16%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="47.16%" cy="9.37%" r="1.2"></circle>
+        <circle class="generation-point" cx="47.16%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="47.46%" cy="0.25%" r="1.2"></circle>
-        <circle class="generation-point" cx="47.46%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="47.46%" cy="5.94%" r="1.2"></circle>
+        <circle class="generation-point" cx="47.46%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="47.76%" cy="5.91%" r="1.2"></circle>
-        <circle class="generation-point" cx="47.76%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="47.76%" cy="8.96%" r="1.2"></circle>
+        <circle class="generation-point" cx="47.76%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="48.06%" cy="4.83%" r="1.2"></circle>
-        <circle class="generation-point" cx="48.06%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="48.06%" cy="5.69%" r="1.2"></circle>
+        <circle class="generation-point" cx="48.06%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="48.36%" cy="6.10%" r="1.2"></circle>
-        <circle class="generation-point" cx="48.36%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="48.36%" cy="5.00%" r="1.2"></circle>
+        <circle class="generation-point" cx="48.36%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="48.66%" cy="8.49%" r="1.2"></circle>
-        <circle class="generation-point" cx="48.66%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="48.66%" cy="13.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="48.66%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="48.96%" cy="9.70%" r="1.2"></circle>
-        <circle class="generation-point" cx="48.96%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="48.96%" cy="9.87%" r="1.2"></circle>
+        <circle class="generation-point" cx="48.96%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="49.25%" cy="11.17%" r="1.2"></circle>
-        <circle class="generation-point" cx="49.25%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="49.25%" cy="10.85%" r="1.2"></circle>
+        <circle class="generation-point" cx="49.25%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="49.55%" cy="8.64%" r="1.2"></circle>
-        <circle class="generation-point" cx="49.55%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="49.55%" cy="10.12%" r="1.2"></circle>
+        <circle class="generation-point" cx="49.55%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="49.85%" cy="12.17%" r="1.2"></circle>
-        <circle class="generation-point" cx="49.85%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="49.85%" cy="8.22%" r="1.2"></circle>
+        <circle class="generation-point" cx="49.85%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="50.15%" cy="18.81%" r="1.2"></circle>
-        <circle class="generation-point" cx="50.15%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="50.15%" cy="19.05%" r="1.2"></circle>
+        <circle class="generation-point" cx="50.15%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="50.45%" cy="15.57%" r="1.2"></circle>
-        <circle class="generation-point" cx="50.45%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="50.45%" cy="19.88%" r="1.2"></circle>
+        <circle class="generation-point" cx="50.45%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="50.75%" cy="16.07%" r="1.2"></circle>
-        <circle class="generation-point" cx="50.75%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="50.75%" cy="20.10%" r="1.2"></circle>
+        <circle class="generation-point" cx="50.75%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="51.04%" cy="15.79%" r="1.2"></circle>
-        <circle class="generation-point" cx="51.04%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="51.04%" cy="19.98%" r="1.2"></circle>
+        <circle class="generation-point" cx="51.04%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="51.34%" cy="16.36%" r="1.2"></circle>
-        <circle class="generation-point" cx="51.34%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="51.34%" cy="18.77%" r="1.2"></circle>
+        <circle class="generation-point" cx="51.34%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="51.64%" cy="15.77%" r="1.2"></circle>
-        <circle class="generation-point" cx="51.64%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="51.64%" cy="18.09%" r="1.2"></circle>
+        <circle class="generation-point" cx="51.64%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="51.94%" cy="8.10%" r="1.2"></circle>
-        <circle class="generation-point" cx="51.94%" cy="83.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="51.94%" cy="11.09%" r="1.2"></circle>
+        <circle class="generation-point" cx="51.94%" cy="84.42%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="52.24%" cy="10.02%" r="1.2"></circle>
-        <circle class="generation-point" cx="52.24%" cy="90.80%" r="1.2"></circle>
+        <circle class="demand-point" cx="52.24%" cy="10.11%" r="1.2"></circle>
+        <circle class="generation-point" cx="52.24%" cy="91.22%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="52.54%" cy="2.84%" r="1.2"></circle>
-        <circle class="generation-point" cx="52.54%" cy="92.57%" r="1.2"></circle>
+        <circle class="demand-point" cx="52.54%" cy="7.13%" r="1.2"></circle>
+        <circle class="generation-point" cx="52.54%" cy="92.92%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="52.84%" cy="9.01%" r="1.2"></circle>
-        <circle class="generation-point" cx="52.84%" cy="95.80%" r="1.2"></circle>
+        <circle class="demand-point" cx="52.84%" cy="4.46%" r="1.2"></circle>
+        <circle class="generation-point" cx="52.84%" cy="95.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="53.13%" cy="4.63%" r="1.2"></circle>
-        <circle class="generation-point" cx="53.13%" cy="98.15%" r="1.2"></circle>
+        <circle class="demand-point" cx="53.13%" cy="7.65%" r="1.2"></circle>
+        <circle class="generation-point" cx="53.13%" cy="98.23%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="53.43%" cy="8.55%" r="1.2"></circle>
-        <circle class="generation-point" cx="53.43%" cy="98.86%" r="1.2"></circle>
+        <circle class="demand-point" cx="53.43%" cy="2.10%" r="1.2"></circle>
+        <circle class="generation-point" cx="53.43%" cy="98.92%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="53.73%" cy="4.62%" r="1.2"></circle>
-        <circle class="generation-point" cx="53.73%" cy="98.75%" r="1.2"></circle>
+        <circle class="demand-point" cx="53.73%" cy="5.99%" r="1.2"></circle>
+        <circle class="generation-point" cx="53.73%" cy="98.81%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="54.03%" cy="5.44%" r="1.2"></circle>
-        <circle class="generation-point" cx="54.03%" cy="97.23%" r="1.2"></circle>
+        <circle class="demand-point" cx="54.03%" cy="8.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="54.03%" cy="97.35%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="54.33%" cy="6.69%" r="1.2"></circle>
-        <circle class="generation-point" cx="54.33%" cy="98.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="54.33%" cy="9.14%" r="1.2"></circle>
+        <circle class="generation-point" cx="54.33%" cy="98.46%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="54.63%" cy="6.20%" r="1.2"></circle>
-        <circle class="generation-point" cx="54.63%" cy="97.50%" r="1.2"></circle>
+        <circle class="demand-point" cx="54.63%" cy="6.26%" r="1.2"></circle>
+        <circle class="generation-point" cx="54.63%" cy="97.62%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="54.93%" cy="2.92%" r="1.2"></circle>
-        <circle class="generation-point" cx="54.93%" cy="97.55%" r="1.2"></circle>
+        <circle class="demand-point" cx="54.93%" cy="7.57%" r="1.2"></circle>
+        <circle class="generation-point" cx="54.93%" cy="97.66%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="55.22%" cy="5.81%" r="1.2"></circle>
-        <circle class="generation-point" cx="55.22%" cy="97.46%" r="1.2"></circle>
+        <circle class="demand-point" cx="55.22%" cy="5.83%" r="1.2"></circle>
+        <circle class="generation-point" cx="55.22%" cy="97.57%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="55.52%" cy="9.16%" r="1.2"></circle>
-        <circle class="generation-point" cx="55.52%" cy="94.64%" r="1.2"></circle>
+        <circle class="demand-point" cx="55.52%" cy="6.28%" r="1.2"></circle>
+        <circle class="generation-point" cx="55.52%" cy="94.89%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="55.82%" cy="8.89%" r="1.2"></circle>
-        <circle class="generation-point" cx="55.82%" cy="92.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="55.82%" cy="11.70%" r="1.2"></circle>
+        <circle class="generation-point" cx="55.82%" cy="93.26%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="56.12%" cy="11.30%" r="1.2"></circle>
-        <circle class="generation-point" cx="56.12%" cy="94.18%" r="1.2"></circle>
+        <circle class="demand-point" cx="56.12%" cy="13.07%" r="1.2"></circle>
+        <circle class="generation-point" cx="56.12%" cy="94.45%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="56.42%" cy="13.44%" r="1.2"></circle>
-        <circle class="generation-point" cx="56.42%" cy="95.92%" r="1.2"></circle>
+        <circle class="demand-point" cx="56.42%" cy="14.25%" r="1.2"></circle>
+        <circle class="generation-point" cx="56.42%" cy="96.11%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="56.72%" cy="8.72%" r="1.2"></circle>
-        <circle class="generation-point" cx="56.72%" cy="95.92%" r="1.2"></circle>
+        <circle class="demand-point" cx="56.72%" cy="12.37%" r="1.2"></circle>
+        <circle class="generation-point" cx="56.72%" cy="96.11%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="57.01%" cy="10.37%" r="1.2"></circle>
-        <circle class="generation-point" cx="57.01%" cy="95.27%" r="1.2"></circle>
+        <circle class="demand-point" cx="57.01%" cy="10.06%" r="1.2"></circle>
+        <circle class="generation-point" cx="57.01%" cy="95.49%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="57.31%" cy="17.26%" r="1.2"></circle>
-        <circle class="generation-point" cx="57.31%" cy="95.41%" r="1.2"></circle>
+        <circle class="demand-point" cx="57.31%" cy="18.30%" r="1.2"></circle>
+        <circle class="generation-point" cx="57.31%" cy="95.62%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="57.61%" cy="17.08%" r="1.2"></circle>
-        <circle class="generation-point" cx="57.61%" cy="95.86%" r="1.2"></circle>
+        <circle class="demand-point" cx="57.61%" cy="20.68%" r="1.2"></circle>
+        <circle class="generation-point" cx="57.61%" cy="96.05%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="57.91%" cy="20.50%" r="1.2"></circle>
-        <circle class="generation-point" cx="57.91%" cy="97.08%" r="1.2"></circle>
+        <circle class="demand-point" cx="57.91%" cy="18.37%" r="1.2"></circle>
+        <circle class="generation-point" cx="57.91%" cy="97.22%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="58.21%" cy="19.86%" r="1.2"></circle>
-        <circle class="generation-point" cx="58.21%" cy="97.41%" r="1.2"></circle>
+        <circle class="demand-point" cx="58.21%" cy="18.02%" r="1.2"></circle>
+        <circle class="generation-point" cx="58.21%" cy="97.53%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="58.51%" cy="16.80%" r="1.2"></circle>
-        <circle class="generation-point" cx="58.51%" cy="96.88%" r="1.2"></circle>
+        <circle class="demand-point" cx="58.51%" cy="20.09%" r="1.2"></circle>
+        <circle class="generation-point" cx="58.51%" cy="97.02%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="58.81%" cy="18.33%" r="1.2"></circle>
-        <circle class="generation-point" cx="58.81%" cy="96.83%" r="1.2"></circle>
+        <circle class="demand-point" cx="58.81%" cy="18.40%" r="1.2"></circle>
+        <circle class="generation-point" cx="58.81%" cy="96.97%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="59.10%" cy="10.26%" r="1.2"></circle>
-        <circle class="generation-point" cx="59.10%" cy="97.88%" r="1.2"></circle>
+        <circle class="demand-point" cx="59.10%" cy="11.47%" r="1.2"></circle>
+        <circle class="generation-point" cx="59.10%" cy="97.98%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="59.40%" cy="9.14%" r="1.2"></circle>
-        <circle class="generation-point" cx="59.40%" cy="98.94%" r="1.2"></circle>
+        <circle class="demand-point" cx="59.40%" cy="13.60%" r="1.2"></circle>
+        <circle class="generation-point" cx="59.40%" cy="98.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="59.70%" cy="8.27%" r="1.2"></circle>
-        <circle class="generation-point" cx="59.70%" cy="99.40%" r="1.2"></circle>
+        <circle class="demand-point" cx="59.70%" cy="6.49%" r="1.2"></circle>
+        <circle class="generation-point" cx="59.70%" cy="99.43%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="60.00%" cy="8.22%" r="1.2"></circle>
-        <circle class="generation-point" cx="60.00%" cy="99.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="60.00%" cy="6.11%" r="1.2"></circle>
+        <circle class="generation-point" cx="60.00%" cy="99.69%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="60.30%" cy="5.80%" r="1.2"></circle>
+        <circle class="demand-point" cx="60.30%" cy="5.14%" r="1.2"></circle>
         <circle class="generation-point" cx="60.30%" cy="99.89%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="60.60%" cy="3.68%" r="1.2"></circle>
+        <circle class="demand-point" cx="60.60%" cy="5.20%" r="1.2"></circle>
         <circle class="generation-point" cx="60.60%" cy="99.90%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="60.90%" cy="6.18%" r="1.2"></circle>
-        <circle class="generation-point" cx="60.90%" cy="99.94%" r="1.2"></circle>
+        <circle class="demand-point" cx="60.90%" cy="9.71%" r="1.2"></circle>
+        <circle class="generation-point" cx="60.90%" cy="99.95%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="61.19%" cy="4.95%" r="1.2"></circle>
+        <circle class="demand-point" cx="61.19%" cy="8.90%" r="1.2"></circle>
         <circle class="generation-point" cx="61.19%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="61.49%" cy="7.87%" r="1.2"></circle>
+        <circle class="demand-point" cx="61.49%" cy="6.20%" r="1.2"></circle>
         <circle class="generation-point" cx="61.49%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="61.79%" cy="5.98%" r="1.2"></circle>
+        <circle class="demand-point" cx="61.79%" cy="6.20%" r="1.2"></circle>
         <circle class="generation-point" cx="61.79%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="62.09%" cy="6.78%" r="1.2"></circle>
+        <circle class="demand-point" cx="62.09%" cy="6.20%" r="1.2"></circle>
         <circle class="generation-point" cx="62.09%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="62.39%" cy="3.94%" r="1.2"></circle>
+        <circle class="demand-point" cx="62.39%" cy="0.00%" r="1.2"></circle>
         <circle class="generation-point" cx="62.39%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="62.69%" cy="7.46%" r="1.2"></circle>
+        <circle class="demand-point" cx="62.69%" cy="6.09%" r="1.2"></circle>
         <circle class="generation-point" cx="62.69%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="62.99%" cy="8.76%" r="1.2"></circle>
+        <circle class="demand-point" cx="62.99%" cy="9.57%" r="1.2"></circle>
         <circle class="generation-point" cx="62.99%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="63.28%" cy="12.16%" r="1.2"></circle>
+        <circle class="demand-point" cx="63.28%" cy="9.89%" r="1.2"></circle>
         <circle class="generation-point" cx="63.28%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="63.58%" cy="8.22%" r="1.2"></circle>
+        <circle class="demand-point" cx="63.58%" cy="10.42%" r="1.2"></circle>
         <circle class="generation-point" cx="63.58%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="63.88%" cy="7.41%" r="1.2"></circle>
+        <circle class="demand-point" cx="63.88%" cy="12.13%" r="1.2"></circle>
         <circle class="generation-point" cx="63.88%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="64.18%" cy="8.47%" r="1.2"></circle>
+        <circle class="demand-point" cx="64.18%" cy="10.23%" r="1.2"></circle>
         <circle class="generation-point" cx="64.18%" cy="99.98%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="64.48%" cy="17.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="64.48%" cy="19.91%" r="1.2"></circle>
         <circle class="generation-point" cx="64.48%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="64.78%" cy="14.73%" r="1.2"></circle>
+        <circle class="demand-point" cx="64.78%" cy="19.03%" r="1.2"></circle>
         <circle class="generation-point" cx="64.78%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="65.07%" cy="19.08%" r="1.2"></circle>
+        <circle class="demand-point" cx="65.07%" cy="19.44%" r="1.2"></circle>
         <circle class="generation-point" cx="65.07%" cy="99.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="65.37%" cy="16.01%" r="1.2"></circle>
+        <circle class="demand-point" cx="65.37%" cy="18.52%" r="1.2"></circle>
         <circle class="generation-point" cx="65.37%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="65.67%" cy="13.94%" r="1.2"></circle>
+        <circle class="demand-point" cx="65.67%" cy="14.88%" r="1.2"></circle>
         <circle class="generation-point" cx="65.67%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="65.97%" cy="14.07%" r="1.2"></circle>
+        <circle class="demand-point" cx="65.97%" cy="21.69%" r="1.2"></circle>
         <circle class="generation-point" cx="65.97%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="66.27%" cy="7.34%" r="1.2"></circle>
+        <circle class="demand-point" cx="66.27%" cy="10.36%" r="1.2"></circle>
         <circle class="generation-point" cx="66.27%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="66.57%" cy="10.57%" r="1.2"></circle>
-        <circle class="generation-point" cx="66.57%" cy="99.84%" r="1.2"></circle>
+        <circle class="demand-point" cx="66.57%" cy="14.43%" r="1.2"></circle>
+        <circle class="generation-point" cx="66.57%" cy="99.85%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="66.87%" cy="6.12%" r="1.2"></circle>
-        <circle class="generation-point" cx="66.87%" cy="99.17%" r="1.2"></circle>
+        <circle class="demand-point" cx="66.87%" cy="8.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="66.87%" cy="99.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="67.16%" cy="4.80%" r="1.2"></circle>
-        <circle class="generation-point" cx="67.16%" cy="98.91%" r="1.2"></circle>
+        <circle class="demand-point" cx="67.16%" cy="5.13%" r="1.2"></circle>
+        <circle class="generation-point" cx="67.16%" cy="98.96%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="67.46%" cy="5.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="67.46%" cy="98.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="67.46%" cy="7.03%" r="1.2"></circle>
+        <circle class="generation-point" cx="67.46%" cy="98.46%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="67.76%" cy="1.44%" r="1.2"></circle>
-        <circle class="generation-point" cx="67.76%" cy="99.01%" r="1.2"></circle>
+        <circle class="demand-point" cx="67.76%" cy="9.16%" r="1.2"></circle>
+        <circle class="generation-point" cx="67.76%" cy="99.06%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="68.06%" cy="5.88%" r="1.2"></circle>
-        <circle class="generation-point" cx="68.06%" cy="98.22%" r="1.2"></circle>
+        <circle class="demand-point" cx="68.06%" cy="8.48%" r="1.2"></circle>
+        <circle class="generation-point" cx="68.06%" cy="98.30%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="68.36%" cy="4.27%" r="1.2"></circle>
-        <circle class="generation-point" cx="68.36%" cy="97.59%" r="1.2"></circle>
+        <circle class="demand-point" cx="68.36%" cy="5.89%" r="1.2"></circle>
+        <circle class="generation-point" cx="68.36%" cy="97.70%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="68.66%" cy="6.70%" r="1.2"></circle>
-        <circle class="generation-point" cx="68.66%" cy="97.76%" r="1.2"></circle>
+        <circle class="demand-point" cx="68.66%" cy="8.51%" r="1.2"></circle>
+        <circle class="generation-point" cx="68.66%" cy="97.86%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="68.96%" cy="4.31%" r="1.2"></circle>
-        <circle class="generation-point" cx="68.96%" cy="97.96%" r="1.2"></circle>
+        <circle class="demand-point" cx="68.96%" cy="6.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="68.96%" cy="98.05%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="69.25%" cy="2.23%" r="1.2"></circle>
-        <circle class="generation-point" cx="69.25%" cy="97.23%" r="1.2"></circle>
+        <circle class="demand-point" cx="69.25%" cy="7.07%" r="1.2"></circle>
+        <circle class="generation-point" cx="69.25%" cy="97.35%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="69.55%" cy="3.47%" r="1.2"></circle>
-        <circle class="generation-point" cx="69.55%" cy="96.72%" r="1.2"></circle>
+        <circle class="demand-point" cx="69.55%" cy="8.36%" r="1.2"></circle>
+        <circle class="generation-point" cx="69.55%" cy="96.87%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="69.85%" cy="7.47%" r="1.2"></circle>
-        <circle class="generation-point" cx="69.85%" cy="96.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="69.85%" cy="3.17%" r="1.2"></circle>
+        <circle class="generation-point" cx="69.85%" cy="96.56%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="70.15%" cy="10.36%" r="1.2"></circle>
-        <circle class="generation-point" cx="70.15%" cy="96.28%" r="1.2"></circle>
+        <circle class="demand-point" cx="70.15%" cy="10.45%" r="1.2"></circle>
+        <circle class="generation-point" cx="70.15%" cy="96.45%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="70.45%" cy="8.78%" r="1.2"></circle>
-        <circle class="generation-point" cx="70.45%" cy="96.98%" r="1.2"></circle>
+        <circle class="demand-point" cx="70.45%" cy="15.16%" r="1.2"></circle>
+        <circle class="generation-point" cx="70.45%" cy="97.12%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="70.75%" cy="9.82%" r="1.2"></circle>
-        <circle class="generation-point" cx="70.75%" cy="97.32%" r="1.2"></circle>
+        <circle class="demand-point" cx="70.75%" cy="11.25%" r="1.2"></circle>
+        <circle class="generation-point" cx="70.75%" cy="97.44%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="71.04%" cy="9.49%" r="1.2"></circle>
-        <circle class="generation-point" cx="71.04%" cy="97.88%" r="1.2"></circle>
+        <circle class="demand-point" cx="71.04%" cy="12.75%" r="1.2"></circle>
+        <circle class="generation-point" cx="71.04%" cy="97.98%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="71.34%" cy="9.09%" r="1.2"></circle>
-        <circle class="generation-point" cx="71.34%" cy="97.72%" r="1.2"></circle>
+        <circle class="demand-point" cx="71.34%" cy="10.07%" r="1.2"></circle>
+        <circle class="generation-point" cx="71.34%" cy="97.82%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="71.64%" cy="23.68%" r="1.2"></circle>
-        <circle class="generation-point" cx="71.64%" cy="95.54%" r="1.2"></circle>
+        <circle class="demand-point" cx="71.64%" cy="27.94%" r="1.2"></circle>
+        <circle class="generation-point" cx="71.64%" cy="95.75%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="71.94%" cy="25.01%" r="1.2"></circle>
-        <circle class="generation-point" cx="71.94%" cy="95.41%" r="1.2"></circle>
+        <circle class="demand-point" cx="71.94%" cy="26.95%" r="1.2"></circle>
+        <circle class="generation-point" cx="71.94%" cy="95.62%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="72.24%" cy="24.09%" r="1.2"></circle>
-        <circle class="generation-point" cx="72.24%" cy="96.72%" r="1.2"></circle>
+        <circle class="demand-point" cx="72.24%" cy="26.04%" r="1.2"></circle>
+        <circle class="generation-point" cx="72.24%" cy="96.87%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="72.54%" cy="25.05%" r="1.2"></circle>
-        <circle class="generation-point" cx="72.54%" cy="96.34%" r="1.2"></circle>
+        <circle class="demand-point" cx="72.54%" cy="25.52%" r="1.2"></circle>
+        <circle class="generation-point" cx="72.54%" cy="96.51%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="72.84%" cy="24.04%" r="1.2"></circle>
-        <circle class="generation-point" cx="72.84%" cy="95.86%" r="1.2"></circle>
+        <circle class="demand-point" cx="72.84%" cy="28.54%" r="1.2"></circle>
+        <circle class="generation-point" cx="72.84%" cy="96.05%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="73.13%" cy="26.68%" r="1.2"></circle>
-        <circle class="generation-point" cx="73.13%" cy="95.47%" r="1.2"></circle>
+        <circle class="demand-point" cx="73.13%" cy="27.27%" r="1.2"></circle>
+        <circle class="generation-point" cx="73.13%" cy="95.68%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="73.43%" cy="21.74%" r="1.2"></circle>
-        <circle class="generation-point" cx="73.43%" cy="94.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="73.43%" cy="21.17%" r="1.2"></circle>
+        <circle class="generation-point" cx="73.43%" cy="95.16%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="73.73%" cy="19.17%" r="1.2"></circle>
-        <circle class="generation-point" cx="73.73%" cy="94.34%" r="1.2"></circle>
+        <circle class="demand-point" cx="73.73%" cy="21.46%" r="1.2"></circle>
+        <circle class="generation-point" cx="73.73%" cy="94.60%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="74.03%" cy="16.20%" r="1.2"></circle>
-        <circle class="generation-point" cx="74.03%" cy="93.94%" r="1.2"></circle>
+        <circle class="demand-point" cx="74.03%" cy="13.49%" r="1.2"></circle>
+        <circle class="generation-point" cx="74.03%" cy="94.23%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="74.33%" cy="13.82%" r="1.2"></circle>
-        <circle class="generation-point" cx="74.33%" cy="95.54%" r="1.2"></circle>
+        <circle class="demand-point" cx="74.33%" cy="15.76%" r="1.2"></circle>
+        <circle class="generation-point" cx="74.33%" cy="95.75%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="74.63%" cy="15.60%" r="1.2"></circle>
-        <circle class="generation-point" cx="74.63%" cy="95.61%" r="1.2"></circle>
+        <circle class="demand-point" cx="74.63%" cy="18.55%" r="1.2"></circle>
+        <circle class="generation-point" cx="74.63%" cy="95.81%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="74.93%" cy="15.52%" r="1.2"></circle>
-        <circle class="generation-point" cx="74.93%" cy="95.34%" r="1.2"></circle>
+        <circle class="demand-point" cx="74.93%" cy="14.90%" r="1.2"></circle>
+        <circle class="generation-point" cx="74.93%" cy="95.56%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="75.22%" cy="12.70%" r="1.2"></circle>
-        <circle class="generation-point" cx="75.22%" cy="95.73%" r="1.2"></circle>
+        <circle class="demand-point" cx="75.22%" cy="12.89%" r="1.2"></circle>
+        <circle class="generation-point" cx="75.22%" cy="95.93%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="75.52%" cy="14.00%" r="1.2"></circle>
-        <circle class="generation-point" cx="75.52%" cy="95.92%" r="1.2"></circle>
+        <circle class="demand-point" cx="75.52%" cy="14.71%" r="1.2"></circle>
+        <circle class="generation-point" cx="75.52%" cy="96.11%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="75.82%" cy="15.13%" r="1.2"></circle>
-        <circle class="generation-point" cx="75.82%" cy="96.83%" r="1.2"></circle>
+        <circle class="demand-point" cx="75.82%" cy="18.98%" r="1.2"></circle>
+        <circle class="generation-point" cx="75.82%" cy="96.97%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="76.12%" cy="15.34%" r="1.2"></circle>
-        <circle class="generation-point" cx="76.12%" cy="95.41%" r="1.2"></circle>
+        <circle class="demand-point" cx="76.12%" cy="17.25%" r="1.2"></circle>
+        <circle class="generation-point" cx="76.12%" cy="95.62%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="76.42%" cy="12.43%" r="1.2"></circle>
-        <circle class="generation-point" cx="76.42%" cy="96.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="76.42%" cy="14.32%" r="1.2"></circle>
+        <circle class="generation-point" cx="76.42%" cy="96.82%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="76.72%" cy="14.34%" r="1.2"></circle>
-        <circle class="generation-point" cx="76.72%" cy="95.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="76.72%" cy="17.62%" r="1.2"></circle>
+        <circle class="generation-point" cx="76.72%" cy="95.87%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="77.01%" cy="13.95%" r="1.2"></circle>
-        <circle class="generation-point" cx="77.01%" cy="94.49%" r="1.2"></circle>
+        <circle class="demand-point" cx="77.01%" cy="15.70%" r="1.2"></circle>
+        <circle class="generation-point" cx="77.01%" cy="94.74%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="77.31%" cy="18.44%" r="1.2"></circle>
-        <circle class="generation-point" cx="77.31%" cy="95.54%" r="1.2"></circle>
+        <circle class="demand-point" cx="77.31%" cy="19.18%" r="1.2"></circle>
+        <circle class="generation-point" cx="77.31%" cy="95.75%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="77.61%" cy="21.47%" r="1.2"></circle>
-        <circle class="generation-point" cx="77.61%" cy="96.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="77.61%" cy="21.89%" r="1.2"></circle>
+        <circle class="generation-point" cx="77.61%" cy="96.56%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="77.91%" cy="18.01%" r="1.2"></circle>
-        <circle class="generation-point" cx="77.91%" cy="97.50%" r="1.2"></circle>
+        <circle class="demand-point" cx="77.91%" cy="20.51%" r="1.2"></circle>
+        <circle class="generation-point" cx="77.91%" cy="97.62%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="78.21%" cy="18.43%" r="1.2"></circle>
-        <circle class="generation-point" cx="78.21%" cy="97.92%" r="1.2"></circle>
+        <circle class="demand-point" cx="78.21%" cy="25.58%" r="1.2"></circle>
+        <circle class="generation-point" cx="78.21%" cy="98.02%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="78.51%" cy="19.29%" r="1.2"></circle>
-        <circle class="generation-point" cx="78.51%" cy="97.76%" r="1.2"></circle>
+        <circle class="demand-point" cx="78.51%" cy="22.05%" r="1.2"></circle>
+        <circle class="generation-point" cx="78.51%" cy="97.86%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="78.81%" cy="25.27%" r="1.2"></circle>
-        <circle class="generation-point" cx="78.81%" cy="98.32%" r="1.2"></circle>
+        <circle class="demand-point" cx="78.81%" cy="27.15%" r="1.2"></circle>
+        <circle class="generation-point" cx="78.81%" cy="98.40%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="79.10%" cy="26.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="79.10%" cy="98.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="79.10%" cy="28.61%" r="1.2"></circle>
+        <circle class="generation-point" cx="79.10%" cy="98.65%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="79.40%" cy="26.32%" r="1.2"></circle>
-        <circle class="generation-point" cx="79.40%" cy="98.70%" r="1.2"></circle>
+        <circle class="demand-point" cx="79.40%" cy="24.39%" r="1.2"></circle>
+        <circle class="generation-point" cx="79.40%" cy="98.76%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="79.70%" cy="27.36%" r="1.2"></circle>
-        <circle class="generation-point" cx="79.70%" cy="99.01%" r="1.2"></circle>
+        <circle class="demand-point" cx="79.70%" cy="28.88%" r="1.2"></circle>
+        <circle class="generation-point" cx="79.70%" cy="99.06%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="80.00%" cy="24.56%" r="1.2"></circle>
-        <circle class="generation-point" cx="80.00%" cy="99.23%" r="1.2"></circle>
+        <circle class="demand-point" cx="80.00%" cy="27.43%" r="1.2"></circle>
+        <circle class="generation-point" cx="80.00%" cy="99.27%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="80.30%" cy="24.55%" r="1.2"></circle>
-        <circle class="generation-point" cx="80.30%" cy="99.35%" r="1.2"></circle>
+        <circle class="demand-point" cx="80.30%" cy="26.59%" r="1.2"></circle>
+        <circle class="generation-point" cx="80.30%" cy="99.38%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="80.60%" cy="19.92%" r="1.2"></circle>
-        <circle class="generation-point" cx="80.60%" cy="99.47%" r="1.2"></circle>
+        <circle class="demand-point" cx="80.60%" cy="18.12%" r="1.2"></circle>
+        <circle class="generation-point" cx="80.60%" cy="99.49%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="80.90%" cy="18.38%" r="1.2"></circle>
-        <circle class="generation-point" cx="80.90%" cy="99.50%" r="1.2"></circle>
+        <circle class="demand-point" cx="80.90%" cy="22.70%" r="1.2"></circle>
+        <circle class="generation-point" cx="80.90%" cy="99.52%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="81.19%" cy="12.75%" r="1.2"></circle>
-        <circle class="generation-point" cx="81.19%" cy="99.64%" r="1.2"></circle>
+        <circle class="demand-point" cx="81.19%" cy="14.49%" r="1.2"></circle>
+        <circle class="generation-point" cx="81.19%" cy="99.65%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="81.49%" cy="13.79%" r="1.2"></circle>
-        <circle class="generation-point" cx="81.49%" cy="99.83%" r="1.2"></circle>
+        <circle class="demand-point" cx="81.49%" cy="16.42%" r="1.2"></circle>
+        <circle class="generation-point" cx="81.49%" cy="99.84%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="81.79%" cy="14.17%" r="1.2"></circle>
+        <circle class="demand-point" cx="81.79%" cy="18.08%" r="1.2"></circle>
         <circle class="generation-point" cx="81.79%" cy="99.93%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="82.09%" cy="13.59%" r="1.2"></circle>
-        <circle class="generation-point" cx="82.09%" cy="99.95%" r="1.2"></circle>
+        <circle class="demand-point" cx="82.09%" cy="15.67%" r="1.2"></circle>
+        <circle class="generation-point" cx="82.09%" cy="99.96%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="82.39%" cy="11.69%" r="1.2"></circle>
+        <circle class="demand-point" cx="82.39%" cy="16.11%" r="1.2"></circle>
         <circle class="generation-point" cx="82.39%" cy="99.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="82.69%" cy="13.46%" r="1.2"></circle>
+        <circle class="demand-point" cx="82.69%" cy="17.44%" r="1.2"></circle>
         <circle class="generation-point" cx="82.69%" cy="99.99%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="82.99%" cy="14.81%" r="1.2"></circle>
+        <circle class="demand-point" cx="82.99%" cy="16.32%" r="1.2"></circle>
         <circle class="generation-point" cx="82.99%" cy="99.97%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="83.28%" cy="13.33%" r="1.2"></circle>
+        <circle class="demand-point" cx="83.28%" cy="17.08%" r="1.2"></circle>
         <circle class="generation-point" cx="83.28%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="83.58%" cy="15.36%" r="1.2"></circle>
+        <circle class="demand-point" cx="83.58%" cy="16.25%" r="1.2"></circle>
         <circle class="generation-point" cx="83.58%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="83.88%" cy="17.45%" r="1.2"></circle>
+        <circle class="demand-point" cx="83.88%" cy="15.33%" r="1.2"></circle>
         <circle class="generation-point" cx="83.88%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="84.18%" cy="14.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="84.18%" cy="13.79%" r="1.2"></circle>
         <circle class="generation-point" cx="84.18%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="84.48%" cy="20.16%" r="1.2"></circle>
+        <circle class="demand-point" cx="84.48%" cy="22.39%" r="1.2"></circle>
         <circle class="generation-point" cx="84.48%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="84.78%" cy="19.00%" r="1.2"></circle>
+        <circle class="demand-point" cx="84.78%" cy="17.02%" r="1.2"></circle>
         <circle class="generation-point" cx="84.78%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="85.07%" cy="16.76%" r="1.2"></circle>
+        <circle class="demand-point" cx="85.07%" cy="23.52%" r="1.2"></circle>
         <circle class="generation-point" cx="85.07%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="85.37%" cy="20.72%" r="1.2"></circle>
+        <circle class="demand-point" cx="85.37%" cy="20.66%" r="1.2"></circle>
         <circle class="generation-point" cx="85.37%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="85.67%" cy="19.25%" r="1.2"></circle>
+        <circle class="demand-point" cx="85.67%" cy="19.48%" r="1.2"></circle>
         <circle class="generation-point" cx="85.67%" cy="100.00%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="85.97%" cy="19.50%" r="1.2"></circle>
-        <circle class="generation-point" cx="85.97%" cy="99.92%" r="1.2"></circle>
+        <circle class="demand-point" cx="85.97%" cy="18.19%" r="1.2"></circle>
+        <circle class="generation-point" cx="85.97%" cy="99.93%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="86.27%" cy="16.56%" r="1.2"></circle>
-        <circle class="generation-point" cx="86.27%" cy="99.42%" r="1.2"></circle>
+        <circle class="demand-point" cx="86.27%" cy="19.66%" r="1.2"></circle>
+        <circle class="generation-point" cx="86.27%" cy="99.44%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="86.57%" cy="17.59%" r="1.2"></circle>
-        <circle class="generation-point" cx="86.57%" cy="98.03%" r="1.2"></circle>
+        <circle class="demand-point" cx="86.57%" cy="18.99%" r="1.2"></circle>
+        <circle class="generation-point" cx="86.57%" cy="98.13%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="86.87%" cy="13.75%" r="1.2"></circle>
-        <circle class="generation-point" cx="86.87%" cy="97.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="86.87%" cy="19.45%" r="1.2"></circle>
+        <circle class="generation-point" cx="86.87%" cy="97.78%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="87.16%" cy="14.98%" r="1.2"></circle>
-        <circle class="generation-point" cx="87.16%" cy="96.67%" r="1.2"></circle>
+        <circle class="demand-point" cx="87.16%" cy="19.61%" r="1.2"></circle>
+        <circle class="generation-point" cx="87.16%" cy="96.82%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="87.46%" cy="16.62%" r="1.2"></circle>
-        <circle class="generation-point" cx="87.46%" cy="96.04%" r="1.2"></circle>
+        <circle class="demand-point" cx="87.46%" cy="17.27%" r="1.2"></circle>
+        <circle class="generation-point" cx="87.46%" cy="96.23%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="87.76%" cy="9.70%" r="1.2"></circle>
-        <circle class="generation-point" cx="87.76%" cy="95.27%" r="1.2"></circle>
+        <circle class="demand-point" cx="87.76%" cy="10.94%" r="1.2"></circle>
+        <circle class="generation-point" cx="87.76%" cy="95.49%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="88.06%" cy="8.83%" r="1.2"></circle>
-        <circle class="generation-point" cx="88.06%" cy="94.34%" r="1.2"></circle>
+        <circle class="demand-point" cx="88.06%" cy="12.80%" r="1.2"></circle>
+        <circle class="generation-point" cx="88.06%" cy="94.60%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="88.36%" cy="2.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="88.36%" cy="92.93%" r="1.2"></circle>
+        <circle class="demand-point" cx="88.36%" cy="5.48%" r="1.2"></circle>
+        <circle class="generation-point" cx="88.36%" cy="93.26%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="88.66%" cy="5.42%" r="1.2"></circle>
-        <circle class="generation-point" cx="88.66%" cy="90.69%" r="1.2"></circle>
+        <circle class="demand-point" cx="88.66%" cy="6.58%" r="1.2"></circle>
+        <circle class="generation-point" cx="88.66%" cy="91.12%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="88.96%" cy="5.83%" r="1.2"></circle>
-        <circle class="generation-point" cx="88.96%" cy="89.92%" r="1.2"></circle>
+        <circle class="demand-point" cx="88.96%" cy="5.64%" r="1.2"></circle>
+        <circle class="generation-point" cx="88.96%" cy="90.39%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="89.25%" cy="3.36%" r="1.2"></circle>
-        <circle class="generation-point" cx="89.25%" cy="90.37%" r="1.2"></circle>
+        <circle class="demand-point" cx="89.25%" cy="5.99%" r="1.2"></circle>
+        <circle class="generation-point" cx="89.25%" cy="90.81%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="89.55%" cy="7.25%" r="1.2"></circle>
-        <circle class="generation-point" cx="89.55%" cy="89.23%" r="1.2"></circle>
+        <circle class="demand-point" cx="89.55%" cy="8.69%" r="1.2"></circle>
+        <circle class="generation-point" cx="89.55%" cy="89.73%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="89.85%" cy="5.81%" r="1.2"></circle>
-        <circle class="generation-point" cx="89.85%" cy="86.85%" r="1.2"></circle>
+        <circle class="demand-point" cx="89.85%" cy="8.19%" r="1.2"></circle>
+        <circle class="generation-point" cx="89.85%" cy="87.46%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="90.15%" cy="5.41%" r="1.2"></circle>
-        <circle class="generation-point" cx="90.15%" cy="83.04%" r="1.2"></circle>
+        <circle class="demand-point" cx="90.15%" cy="5.77%" r="1.2"></circle>
+        <circle class="generation-point" cx="90.15%" cy="83.82%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="90.45%" cy="4.95%" r="1.2"></circle>
-        <circle class="generation-point" cx="90.45%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="90.45%" cy="6.02%" r="1.2"></circle>
+        <circle class="generation-point" cx="90.45%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="90.75%" cy="4.55%" r="1.2"></circle>
-        <circle class="generation-point" cx="90.75%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="90.75%" cy="7.19%" r="1.2"></circle>
+        <circle class="generation-point" cx="90.75%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="91.04%" cy="6.55%" r="1.2"></circle>
-        <circle class="generation-point" cx="91.04%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="91.04%" cy="6.94%" r="1.2"></circle>
+        <circle class="generation-point" cx="91.04%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="91.34%" cy="5.27%" r="1.2"></circle>
-        <circle class="generation-point" cx="91.34%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="91.34%" cy="4.78%" r="1.2"></circle>
+        <circle class="generation-point" cx="91.34%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="91.64%" cy="10.30%" r="1.2"></circle>
-        <circle class="generation-point" cx="91.64%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="91.64%" cy="12.62%" r="1.2"></circle>
+        <circle class="generation-point" cx="91.64%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="91.94%" cy="10.20%" r="1.2"></circle>
-        <circle class="generation-point" cx="91.94%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="91.94%" cy="10.61%" r="1.2"></circle>
+        <circle class="generation-point" cx="91.94%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="92.24%" cy="12.27%" r="1.2"></circle>
-        <circle class="generation-point" cx="92.24%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="92.24%" cy="11.93%" r="1.2"></circle>
+        <circle class="generation-point" cx="92.24%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="92.54%" cy="11.39%" r="1.2"></circle>
-        <circle class="generation-point" cx="92.54%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="92.54%" cy="11.96%" r="1.2"></circle>
+        <circle class="generation-point" cx="92.54%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="92.84%" cy="8.87%" r="1.2"></circle>
-        <circle class="generation-point" cx="92.84%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="92.84%" cy="9.63%" r="1.2"></circle>
+        <circle class="generation-point" cx="92.84%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="93.13%" cy="14.08%" r="1.2"></circle>
-        <circle class="generation-point" cx="93.13%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="93.13%" cy="17.31%" r="1.2"></circle>
+        <circle class="generation-point" cx="93.13%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="93.43%" cy="17.53%" r="1.2"></circle>
-        <circle class="generation-point" cx="93.43%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="93.43%" cy="17.33%" r="1.2"></circle>
+        <circle class="generation-point" cx="93.43%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="93.73%" cy="17.97%" r="1.2"></circle>
-        <circle class="generation-point" cx="93.73%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="93.73%" cy="16.53%" r="1.2"></circle>
+        <circle class="generation-point" cx="93.73%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="94.03%" cy="16.29%" r="1.2"></circle>
-        <circle class="generation-point" cx="94.03%" cy="83.04%" r="1.2"></circle>
+        <circle class="demand-point" cx="94.03%" cy="18.62%" r="1.2"></circle>
+        <circle class="generation-point" cx="94.03%" cy="83.82%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="94.33%" cy="15.48%" r="1.2"></circle>
-        <circle class="generation-point" cx="94.33%" cy="83.04%" r="1.2"></circle>
+        <circle class="demand-point" cx="94.33%" cy="17.54%" r="1.2"></circle>
+        <circle class="generation-point" cx="94.33%" cy="83.82%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="94.63%" cy="17.23%" r="1.2"></circle>
-        <circle class="generation-point" cx="94.63%" cy="83.51%" r="1.2"></circle>
+        <circle class="demand-point" cx="94.63%" cy="19.15%" r="1.2"></circle>
+        <circle class="generation-point" cx="94.63%" cy="84.27%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="94.93%" cy="7.77%" r="1.2"></circle>
-        <circle class="generation-point" cx="94.93%" cy="84.43%" r="1.2"></circle>
+        <circle class="demand-point" cx="94.93%" cy="11.00%" r="1.2"></circle>
+        <circle class="generation-point" cx="94.93%" cy="85.15%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="95.22%" cy="10.76%" r="1.2"></circle>
-        <circle class="generation-point" cx="95.22%" cy="86.44%" r="1.2"></circle>
+        <circle class="demand-point" cx="95.22%" cy="11.81%" r="1.2"></circle>
+        <circle class="generation-point" cx="95.22%" cy="87.07%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="95.52%" cy="4.67%" r="1.2"></circle>
-        <circle class="generation-point" cx="95.52%" cy="86.44%" r="1.2"></circle>
+        <circle class="demand-point" cx="95.52%" cy="6.97%" r="1.2"></circle>
+        <circle class="generation-point" cx="95.52%" cy="87.07%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="95.82%" cy="5.46%" r="1.2"></circle>
-        <circle class="generation-point" cx="95.82%" cy="86.85%" r="1.2"></circle>
+        <circle class="demand-point" cx="95.82%" cy="6.05%" r="1.2"></circle>
+        <circle class="generation-point" cx="95.82%" cy="87.46%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="96.12%" cy="6.56%" r="1.2"></circle>
-        <circle class="generation-point" cx="96.12%" cy="88.27%" r="1.2"></circle>
+        <circle class="demand-point" cx="96.12%" cy="8.67%" r="1.2"></circle>
+        <circle class="generation-point" cx="96.12%" cy="88.81%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="96.42%" cy="4.30%" r="1.2"></circle>
-        <circle class="generation-point" cx="96.42%" cy="87.76%" r="1.2"></circle>
+        <circle class="demand-point" cx="96.42%" cy="3.27%" r="1.2"></circle>
+        <circle class="generation-point" cx="96.42%" cy="88.33%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="96.72%" cy="4.04%" r="1.2"></circle>
-        <circle class="generation-point" cx="96.72%" cy="86.85%" r="1.2"></circle>
+        <circle class="demand-point" cx="96.72%" cy="9.02%" r="1.2"></circle>
+        <circle class="generation-point" cx="96.72%" cy="87.46%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="97.01%" cy="7.12%" r="1.2"></circle>
-        <circle class="generation-point" cx="97.01%" cy="88.14%" r="1.2"></circle>
+        <circle class="demand-point" cx="97.01%" cy="9.41%" r="1.2"></circle>
+        <circle class="generation-point" cx="97.01%" cy="88.69%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="97.31%" cy="6.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="97.31%" cy="86.57%" r="1.2"></circle>
+        <circle class="demand-point" cx="97.31%" cy="5.00%" r="1.2"></circle>
+        <circle class="generation-point" cx="97.31%" cy="87.20%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="97.61%" cy="7.30%" r="1.2"></circle>
-        <circle class="generation-point" cx="97.61%" cy="90.90%" r="1.2"></circle>
+        <circle class="demand-point" cx="97.61%" cy="5.68%" r="1.2"></circle>
+        <circle class="generation-point" cx="97.61%" cy="91.32%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="97.91%" cy="1.75%" r="1.2"></circle>
-        <circle class="generation-point" cx="97.91%" cy="89.47%" r="1.2"></circle>
+        <circle class="demand-point" cx="97.91%" cy="6.00%" r="1.2"></circle>
+        <circle class="generation-point" cx="97.91%" cy="89.96%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="98.21%" cy="5.51%" r="1.2"></circle>
-        <circle class="generation-point" cx="98.21%" cy="84.58%" r="1.2"></circle>
+        <circle class="demand-point" cx="98.21%" cy="5.99%" r="1.2"></circle>
+        <circle class="generation-point" cx="98.21%" cy="85.29%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="98.51%" cy="7.75%" r="1.2"></circle>
-        <circle class="generation-point" cx="98.51%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="98.51%" cy="7.18%" r="1.2"></circle>
+        <circle class="generation-point" cx="98.51%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="98.81%" cy="12.58%" r="1.2"></circle>
-        <circle class="generation-point" cx="98.81%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="98.81%" cy="13.16%" r="1.2"></circle>
+        <circle class="generation-point" cx="98.81%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="99.10%" cy="8.37%" r="1.2"></circle>
-        <circle class="generation-point" cx="99.10%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="99.10%" cy="11.44%" r="1.2"></circle>
+        <circle class="generation-point" cx="99.10%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="99.40%" cy="7.19%" r="1.2"></circle>
-        <circle class="generation-point" cx="99.40%" cy="82.39%" r="1.2"></circle>
+        <circle class="demand-point" cx="99.40%" cy="12.77%" r="1.2"></circle>
+        <circle class="generation-point" cx="99.40%" cy="83.21%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="99.70%" cy="11.42%" r="1.2"></circle>
-        <circle class="generation-point" cx="99.70%" cy="86.57%" r="1.2"></circle>
+        <circle class="demand-point" cx="99.70%" cy="9.85%" r="1.2"></circle>
+        <circle class="generation-point" cx="99.70%" cy="87.20%" r="1.2"></circle>
         
-        <circle class="demand-point" cx="100.00%" cy="5.49%" r="1.2"></circle>
-        <circle class="generation-point" cx="100.00%" cy="89.92%" r="1.2"></circle>
+        <circle class="demand-point" cx="100.00%" cy="11.84%" r="1.2"></circle>
+        <circle class="generation-point" cx="100.00%" cy="90.39%" r="1.2"></circle>
         
                     </svg>
                 </div>
@@ -1628,7 +1819,7 @@
                 <div class="pipeline-step">
                     <span class="status-dot"></span>
                     <strong>Demand modelling</strong>
-                    <p>Active</p>
+                    <p>Calibrated</p>
                 </div>
 
                 <div class="pipeline-step">
@@ -1658,7 +1849,7 @@
                     <h2>About the analysis</h2>
                     <p>
                         This dashboard estimates physical on-site electricity coverage using
-                        real hourly wind data and a synthetic industrial demand profile.
+                        real hourly wind data and a calibrated synthetic industrial demand profile.
                     </p>
                 </div>
             </div>
@@ -1668,8 +1859,8 @@
                 <div>
                     <h2>Method</h2>
                     <p>
-                        The hourly demand profile is synthetic, but calibrated to Aalborg
-                        Portland's publicly reported annual electricity consumption.
+                        The hourly demand profile is synthetic because public hourly consumption is not available,
+                        but its annual total is calibrated to Aalborg Portland's reported electricity consumption.
                     </p>
                 </div>
             </div>
