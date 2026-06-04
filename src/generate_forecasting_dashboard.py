@@ -21,6 +21,8 @@ def main():
         ascending=False
     ).iloc[0]
 
+    average_coverage = scenario_df["coverage_percent"].mean()
+
     model_rows = ""
     for _, row in model_df.iterrows():
         highlight = "highlight" if row["model"] == best_model["model"] else ""
@@ -35,22 +37,22 @@ def main():
         """
 
     turbine_options = ""
-    turbine_cards = ""
+    turbine_table_rows = ""
 
     for turbine in scenario_df["turbine"].unique():
         turbine_options += f'<option value="{turbine}">{turbine}</option>'
 
         one_turbine = scenario_df[
-            (scenario_df["turbine"] == turbine) &
-            (scenario_df["number_of_turbines"] == 1)
+            (scenario_df["turbine"] == turbine)
+            & (scenario_df["number_of_turbines"] == 1)
         ].iloc[0]
 
-        turbine_cards += f"""
-        <div class="mini-card">
-            <h3>{turbine}</h3>
-            <p>{format_number(one_turbine["forecast_generation_mwh"])} MWh</p>
-            <small>Forecast generation for one turbine over the next 7 days</small>
-        </div>
+        turbine_table_rows += f"""
+        <tr>
+            <td><strong>{turbine}</strong></td>
+            <td>{format_number(one_turbine["forecast_generation_mwh"])} MWh</td>
+            <td>{one_turbine["coverage_percent"]:.2f}%</td>
+        </tr>
         """
 
     scenario_json = scenario_df.to_json(orient="records")
@@ -104,22 +106,22 @@ def main():
         }}
 
         .nav-bar {{
-            background:#5c0026;
-            padding:14px 60px;
-            display:flex;
-            gap:40px;
+            background: #5c0026;
+            padding: 14px 60px;
+            display: flex;
+            gap: 40px;
         }}
 
         .nav-bar a {{
-            color:white;
-            text-decoration:none;
-            font-weight:600;
-            letter-spacing:0.3px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }}
 
         .nav-bar a:hover,
         .nav-bar a.active {{
-            color:#ff2b7a;
+            color: #ff2b7a;
         }}
 
         .page-hero {{
@@ -194,7 +196,7 @@ def main():
 
         .kpi-grid {{
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-bottom: 24px;
         }}
@@ -221,37 +223,6 @@ def main():
             grid-template-columns: 1fr 1fr;
             gap: 24px;
             margin-bottom: 24px;
-        }}
-
-        .mini-grid {{
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 24px;
-        }}
-
-        .mini-card {{
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }}
-
-        .mini-card h3 {{
-            margin: 0 0 12px 0;
-            color: #222;
-            font-size: 17px;
-        }}
-
-        .mini-card p {{
-            color: var(--brand);
-            font-size: 26px;
-            font-weight: 900;
-            margin: 0;
-        }}
-
-        .mini-card small {{
-            color: #777;
         }}
 
         h2 {{
@@ -313,7 +284,7 @@ def main():
 
         .result {{
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
             margin-top: 18px;
         }}
@@ -327,7 +298,7 @@ def main():
         .result-card strong {{
             display: block;
             color: var(--brand);
-            font-size: 28px;
+            font-size: 26px;
             margin-top: 6px;
         }}
 
@@ -365,12 +336,43 @@ def main():
             .page-hero-grid,
             .kpi-grid,
             .grid,
-            .mini-grid,
             .result {{
                 grid-template-columns: 1fr;
             }}
+
             .container {{
                 margin-top: 20px;
+            }}
+        }}
+
+        @media (max-width: 900px) {{
+            .top-brand {{
+                padding: 22px 30px;
+            }}
+
+            .page-hero {{
+                padding: 46px 30px 70px 30px;
+            }}
+
+            .page-hero h1 {{
+                font-size: 42px;
+            }}
+
+            .page-hero p {{
+                font-size: 18px;
+            }}
+
+            .nav-bar {{
+                padding: 14px 30px;
+                gap: 20px;
+                flex-wrap: wrap;
+            }}
+
+            .footer {{
+                padding: 28px 30px;
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
             }}
         }}
     </style>
@@ -401,11 +403,11 @@ def main():
             </div>
 
             <div class="hero-panel">
-                <small>Best forecasting model</small>
-                <h2>{best_model["model"]}</h2>
-                <small>test MAE</small>
-                <div class="big">{best_model["mae_mw"]:.3f}</div>
-                <small>MW average absolute error</small>
+                <small>Expected 7-day generation</small>
+                <h2>{best_scenario["turbine"]}</h2>
+                <small>{int(best_scenario["number_of_turbines"])} turbines</small>
+                <div class="big">{format_number(best_scenario["forecast_generation_mwh"])}</div>
+                <small>MWh in the maximum generation scenario</small>
             </div>
         </div>
     </section>
@@ -414,38 +416,50 @@ def main():
 
         <section class="kpi-grid">
             <div class="card">
+                <div class="kpi-label">Best generation scenario</div>
+                <div class="kpi-value">{format_number(best_scenario["forecast_generation_mwh"])} MWh</div>
+                <div class="kpi-note">
+                    {int(best_scenario["number_of_turbines"])} turbines, {best_scenario["turbine"]}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="kpi-label">Average demand coverage</div>
+                <div class="kpi-value">{average_coverage:.2f}%</div>
+                <div class="kpi-note">Across all stakeholder scenarios</div>
+            </div>
+
+            <div class="card">
                 <div class="kpi-label">Forecast horizon</div>
                 <div class="kpi-value">7 days</div>
-                <div class="kpi-note">168 hourly observations</div>
-            </div>
-
-            <div class="card">
-                <div class="kpi-label">Best model</div>
-                <div class="kpi-value">{best_model["model"]}</div>
-                <div class="kpi-note">Selected by lowest MAE</div>
-            </div>
-
-            <div class="card">
-                <div class="kpi-label">Max scenario</div>
-                <div class="kpi-value">{format_number(best_scenario["forecast_generation_mwh"])} MWh</div>
-                <div class="kpi-note">{int(best_scenario["number_of_turbines"])} turbines, {best_scenario["turbine"]}</div>
-            </div>
-
-            <div class="card">
-                <div class="kpi-label">Decision tool</div>
-                <div class="kpi-value">Interactive</div>
-                <div class="kpi-note">Select turbine model and turbine count</div>
+                <div class="kpi-note">168 hourly forecast observations</div>
             </div>
         </section>
 
-        <section class="mini-grid">
-            {turbine_cards}
+        <section class="card" style="margin-bottom: 24px;">
+            <h2>Turbine forecast comparison</h2>
+            <div class="sub">
+                Expected 7-day generation and demand coverage for one installed turbine.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Turbine model</th>
+                        <th>7-day generation</th>
+                        <th>7-day demand coverage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {turbine_table_rows}
+                </tbody>
+            </table>
         </section>
 
         <section class="grid">
             <div class="card">
                 <h2>Interactive stakeholder calculator</h2>
-                <div class="sub">Estimate 7-day generation and demand coverage</div>
+                <div class="sub">Estimate 7-day generation, demand coverage and remaining grid dependency</div>
 
                 <div class="interactive-box">
                     <label for="turbineSelect">Turbine model</label>
@@ -465,6 +479,11 @@ def main():
                         <div class="result-card">
                             <span>7-day demand coverage</span>
                             <strong id="coverageResult">-</strong>
+                        </div>
+
+                        <div class="result-card">
+                            <span>Grid electricity required</span>
+                            <strong id="gridResult">-</strong>
                         </div>
                     </div>
                 </div>
@@ -487,6 +506,11 @@ def main():
                         {model_rows}
                     </tbody>
                 </table>
+
+                <p class="sub" style="margin-top: 18px;">
+                    Best model: <strong>{best_model["model"]}</strong>. Model quality is reported separately from
+                    the business KPIs to keep the page focused on industrial decision support.
+                </p>
             </div>
         </section>
 
@@ -541,12 +565,16 @@ def main():
             const generation = oneTurbineScenario.forecast_generation_mwh * count;
             const demand = oneTurbineScenario.estimated_7d_demand_mwh;
             const coverage = generation / demand * 100;
+            const gridRequired = Math.max(demand - generation, 0);
 
             document.getElementById("generationResult").textContent =
                 formatNumber(generation) + " MWh";
 
             document.getElementById("coverageResult").textContent =
                 coverage.toFixed(2) + "%";
+
+            document.getElementById("gridResult").textContent =
+                formatNumber(gridRequired) + " MWh";
         }}
 
         document.getElementById("turbineSelect").addEventListener("change", updateCalculator);
