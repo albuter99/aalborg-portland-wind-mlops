@@ -166,22 +166,22 @@ def main():
             opacity: 0.9;
         }}
 
-        .nav-bar {{
+        .-bar {{
             background:#5c0026;
             padding:14px 60px;
             display:flex;
             gap:40px;
         }}
 
-        .nav-bar a {{
+        .-bar a {{
             color:white;
             text-decoration:none;
             font-weight:600;
             letter-spacing:0.3px;
         }}
 
-        .nav-bar a:hover,
-        .nav-bar a.active {{
+        .-bar a:hover,
+        .-bar a.active {{
             color:#ff2b7a;
         }}
 
@@ -500,7 +500,7 @@ def main():
                 font-size: 42px;
             }}
 
-            .nav-bar {{
+            .-bar {{
                 padding: 14px 30px;
                 gap: 20px;
                 flex-wrap: wrap;
@@ -519,6 +519,7 @@ def main():
     <section class="nav-bar">
         <a href="index.html">Overview</a>
         <a href="advanced.html" class="active">Advanced Analytics</a>
+        <a href="forecasting.html">Forecasting</a>
         <a href="economics.html">Economics</a>
     </section>
 
