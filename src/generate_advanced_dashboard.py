@@ -24,11 +24,6 @@ def main():
     best_season_turbine = best_season_row["turbine"]
     best_season_coverage = best_season_row["seasonal_coverage_percent"]
 
-    best_sensitivity_row = sensitivity_df.sort_values(
-        "coverage_percent",
-        ascending=False
-    ).iloc[0]
-
     min_sensitivity = sensitivity_df["coverage_percent"].min()
     max_sensitivity = sensitivity_df["coverage_percent"].max()
 
@@ -45,9 +40,12 @@ def main():
         .reset_index()
     )
 
-    best_turbine_seasonal = seasonal_df[
-        seasonal_df["turbine"] == best_season_turbine
-    ].set_index("season").reindex(season_order).reset_index()
+    best_turbine_seasonal = (
+        seasonal_df[seasonal_df["turbine"] == best_season_turbine]
+        .set_index("season")
+        .reindex(season_order)
+        .reset_index()
+    )
 
     seasonal_summary_rows = ""
     for _, row in season_summary.iterrows():
@@ -166,23 +164,23 @@ def main():
             opacity: 0.9;
         }}
 
-        .-bar {{
-            background:#5c0026;
-            padding:14px 60px;
-            display:flex;
-            gap:40px;
+        .nav-bar {{
+            background: #5c0026;
+            padding: 14px 60px;
+            display: flex;
+            gap: 40px;
         }}
 
-        .-bar a {{
-            color:white;
-            text-decoration:none;
-            font-weight:600;
-            letter-spacing:0.3px;
+        .nav-bar a {{
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }}
 
-        .-bar a:hover,
-        .-bar a.active {{
-            color:#ff2b7a;
+        .nav-bar a:hover,
+        .nav-bar a.active {{
+            color: #ff2b7a;
         }}
 
         .page-hero {{
@@ -265,9 +263,9 @@ def main():
 
         .kpi-grid {{
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }}
 
         .kpi {{
@@ -492,6 +490,10 @@ def main():
         }}
 
         @media (max-width: 900px) {{
+            .top-brand {{
+                padding: 22px 30px;
+            }}
+
             .page-hero {{
                 padding: 46px 30px 70px 30px;
             }}
@@ -500,10 +502,21 @@ def main():
                 font-size: 42px;
             }}
 
-            .-bar {{
+            .page-hero p {{
+                font-size: 18px;
+            }}
+
+            .nav-bar {{
                 padding: 14px 30px;
                 gap: 20px;
                 flex-wrap: wrap;
+            }}
+
+            .footer {{
+                padding: 28px 30px;
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
             }}
         }}
     </style>
@@ -528,11 +541,11 @@ def main():
             <div>
                 <h1>Advanced wind<br>energy analytics</h1>
                 <p>
-                    Seasonal performance, demand sensitivity and forecasting roadmap
-                    for Aalborg Portland's wind-energy self-sufficiency assessment.
+                    Seasonal performance and demand sensitivity analysis for Aalborg Portland's
+                    wind-energy self-sufficiency assessment.
                 </p>
                 <p class="hero-note">
-                    This page extends the main dashboard from annual reporting to scenario-based industrial decision support.
+                    This page moves the project beyond annual averages and supports scenario-based industrial planning.
                 </p>
             </div>
 
@@ -572,16 +585,7 @@ def main():
                 <div>
                     <div class="kpi-label">Demand sensitivity</div>
                     <div class="kpi-value">±10%</div>
-                    <div class="kpi-note">Low, base and high demand</div>
-                </div>
-            </div>
-
-            <div class="card kpi">
-                <div class="icon">↗</div>
-                <div>
-                    <div class="kpi-label">Forecasting module</div>
-                    <div class="kpi-value">Next</div>
-                    <div class="kpi-note">7-day forecast and model comparison</div>
+                    <div class="kpi-note">Low, base and high demand assumptions</div>
                 </div>
             </div>
         </section>
@@ -618,7 +622,7 @@ def main():
                 <div class="insight-box">
                     <strong>Interpretation:</strong>
                     Winter shows the strongest seasonal performance, while summer is weaker.
-                    This supports the need for seasonal analysis instead of relying only on annual averages.
+                    This supports seasonal analysis instead of relying only on annual averages.
                 </div>
             </div>
 
@@ -656,7 +660,7 @@ def main():
                 <p>
                     A cement facility operates continuously, but wind generation varies strongly by season.
                     Seasonal analysis helps identify periods where on-site wind generation is more likely to
-                    reduce grid dependency and periods where complementary solutions may be required.
+                    reduce grid dependency and periods where complementary energy solutions may be required.
                 </p>
 
                 <span class="tag">Industrial demand</span>
@@ -719,10 +723,10 @@ def main():
             </div>
 
             <div class="card module-card">
-                <h2>Future forecasting</h2>
+                <h2>Forecasting connection</h2>
                 <p>
-                    The next extension can use 7-day weather forecasts to estimate short-term wind generation
-                    and expected industrial coverage.
+                    The seasonal and sensitivity results provide context for the forecasting module,
+                    where short-term wind generation is estimated using weather forecasts and model comparison.
                 </p>
                 <span class="tag">7-day forecast</span>
                 <span class="tag">Operational planning</span>
@@ -730,14 +734,14 @@ def main():
             </div>
 
             <div class="card module-card">
-                <h2>Model comparison</h2>
+                <h2>Decision-support role</h2>
                 <p>
-                    Linear Regression, Random Forest and XGBoost can be compared to assess whether machine learning
-                    improves short-term wind generation forecasting.
+                    The analysis helps stakeholders understand when wind generation performs best,
+                    how sensitive the conclusions are to demand assumptions, and where additional energy planning is needed.
                 </p>
-                <span class="tag">Baseline model</span>
-                <span class="tag">Random Forest</span>
-                <span class="tag">XGBoost</span>
+                <span class="tag">Industrial planning</span>
+                <span class="tag">Risk awareness</span>
+                <span class="tag">Grid dependency</span>
             </div>
         </section>
 
