@@ -341,7 +341,7 @@ def main():
 
         .result {{
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-top: 22px;
         }}
@@ -608,18 +608,23 @@ def main():
 
                     <div class="result">
                         <div class="result-card">
-                            <span>Forecast generation</span>
-                            <strong id="generationResult">-</strong>
+                            <span>Total industrial demand</span>
+                            <strong id="demandResult">-</strong>
                         </div>
 
                         <div class="result-card">
-                            <span>7-day demand coverage</span>
-                            <strong id="coverageResult">-</strong>
+                            <span>Wind generation</span>
+                            <strong id="generationResult">-</strong>
                         </div>
 
                         <div class="result-card">
                             <span>Grid electricity required</span>
                             <strong id="gridResult">-</strong>
+                        </div>
+
+                        <div class="result-card">
+                            <span>Demand coverage</span>
+                            <strong id="coverageResult">-</strong>
                         </div>
                     </div>
                 </div>
@@ -764,14 +769,17 @@ def main():
             const coverage = demand > 0 ? totalGeneration / demand * 100 : 0;
             const gridRequired = Math.max(demand - totalGeneration, 0);
 
+            document.getElementById("demandResult").textContent =
+                formatNumber(demand) + " MWh";
+
             document.getElementById("generationResult").textContent =
                 formatNumber(totalGeneration) + " MWh";
 
-            document.getElementById("coverageResult").textContent =
-                coverage.toFixed(2) + "%";
-
             document.getElementById("gridResult").textContent =
                 formatNumber(gridRequired) + " MWh";
+
+            document.getElementById("coverageResult").textContent =
+                coverage.toFixed(2) + "%";
 
             updateMixChart(contributions, totalGeneration);
         }}
