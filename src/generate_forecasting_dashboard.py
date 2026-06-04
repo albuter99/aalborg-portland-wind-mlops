@@ -424,9 +424,9 @@ def main():
             </div>
 
             <div class="card">
-                <div class="kpi-label">Average demand coverage</div>
+                <div class="kpi-label">Average scenario coverage</div>
                 <div class="kpi-value">{average_coverage:.2f}%</div>
-                <div class="kpi-note">Across all stakeholder scenarios</div>
+                <div class="kpi-note">Across all turbine and deployment scenarios</div>
             </div>
 
             <div class="card">
