@@ -3,12 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Aalborg Portland Advanced Analytics</title>
+    <title>Aalborg Portland Forecasting</title>
 
     <style>
         :root {
             --brand: #a0003f;
-            --dark: #2b0014;
             --accent: #e4005a;
             --light: #f7f5f6;
         }
@@ -97,19 +96,11 @@
             max-width: 760px;
         }
 
-        .hero-note {
-            margin-top: 16px !important;
-            font-size: 16px !important;
-            font-weight: 700;
-            opacity: 0.9;
-        }
-
         .hero-panel {
             background: rgba(18, 0, 10, 0.72);
             border-radius: 14px;
             padding: 32px;
             box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-            border: 1px solid rgba(255,255,255,0.08);
         }
 
         .hero-panel small {
@@ -151,82 +142,64 @@
             margin-bottom: 24px;
         }
 
-        .kpi {
-            display: flex;
-            gap: 18px;
-            align-items: center;
-            min-height: 118px;
-        }
-
-        .icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--brand);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .kpi-label {
-            font-size: 15px;
-            color: #555;
-            margin-bottom: 6px;
-        }
-
         .kpi-value {
             font-size: 29px;
             font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -0.5px;
+            margin-top: 8px;
+        }
+
+        .kpi-label {
+            color: #555;
+            font-size: 15px;
         }
 
         .kpi-note {
-            font-size: 12px;
             color: #777;
-            margin-top: 6px;
+            font-size: 12px;
+            margin-top: 8px;
         }
 
-        .section-title {
-            margin: 34px 0 16px 0;
-            display: flex;
-            align-items: end;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .section-title h2 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        .section-title p {
-            margin: 6px 0 0 0;
-            color: #666;
-            max-width: 780px;
-        }
-
-        .analysis-grid {
+        .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 24px;
             margin-bottom: 24px;
         }
 
-        .three-grid {
+        .mini-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
             margin-bottom: 24px;
+        }
+
+        .mini-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .mini-card h3 {
+            margin: 0 0 12px 0;
+            color: #222;
+            font-size: 17px;
+        }
+
+        .mini-card p {
+            color: var(--brand);
+            font-size: 26px;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .mini-card small {
+            color: #777;
         }
 
         h2 {
             margin-top: 0;
-            font-size: 23px;
+            font-size: 24px;
         }
 
         .sub {
@@ -246,7 +219,6 @@
             background: #f0ecee;
             text-align: left;
             padding: 13px 10px;
-            font-weight: 700;
         }
 
         td {
@@ -259,64 +231,47 @@
             font-weight: 900;
         }
 
-        .bars {
-            height: 270px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            border-left: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            padding: 0 12px 12px 12px;
+        .interactive-box {
+            background: #faf7f8;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 24px;
         }
 
-        .bar-item {
-            width: 22%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
-        .bar {
-            width: 62px;
-            background: linear-gradient(180deg, #e4005a, #8b0037);
-            border-radius: 7px 7px 0 0;
-        }
-
-        .bar-value {
-            font-weight: 900;
-            color: var(--brand);
+        label {
+            font-weight: 800;
+            display: block;
             margin-bottom: 8px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 18px;
             font-size: 15px;
         }
 
-        .bar-label {
-            font-size: 11px;
-            color: #555;
-            margin-top: 10px;
-            line-height: 1.25;
+        .result {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 18px;
         }
 
-        .insight-box {
-            background: #faf7f8;
-            border-left: 5px solid var(--brand);
-            padding: 18px 20px;
+        .result-card {
+            background: white;
             border-radius: 10px;
-            margin-top: 20px;
+            padding: 18px;
         }
 
-        .insight-box strong {
+        .result-card strong {
+            display: block;
             color: var(--brand);
-        }
-
-        .module-card {
-            min-height: 215px;
-        }
-
-        .module-card p {
-            color: #555;
-            line-height: 1.5;
+            font-size: 28px;
+            margin-top: 6px;
         }
 
         .tag {
@@ -329,16 +284,6 @@
             border-radius: 999px;
             font-size: 12px;
             margin: 4px 4px 0 0;
-        }
-
-        .status-pill {
-            display: inline-block;
-            background: rgba(228,0,90,0.10);
-            color: var(--brand);
-            font-weight: 900;
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 13px;
         }
 
         .footer {
@@ -362,29 +307,13 @@
         @media (max-width: 1100px) {
             .page-hero-grid,
             .kpi-grid,
-            .analysis-grid,
-            .three-grid {
+            .grid,
+            .mini-grid,
+            .result {
                 grid-template-columns: 1fr;
             }
-
             .container {
                 margin-top: 20px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .page-hero {
-                padding: 46px 30px 70px 30px;
-            }
-
-            .page-hero h1 {
-                font-size: 42px;
-            }
-
-            .nav-bar {
-                padding: 14px 30px;
-                gap: 20px;
-                flex-wrap: wrap;
             }
         }
     </style>
@@ -399,30 +328,27 @@
 
     <section class="nav-bar">
         <a href="index.html">Overview</a>
-        <a href="advanced.html" class="active">Advanced Analytics</a>
-        <a href="forecasting.html">Forecasting</a>
+        <a href="advanced.html">Advanced Analytics</a>
+        <a href="forecasting.html" class="active">Forecasting</a>
         <a href="economics.html">Economics</a>
     </section>
 
     <section class="page-hero">
         <div class="page-hero-grid">
             <div>
-                <h1>Advanced wind<br>energy analytics</h1>
+                <h1>7-day wind<br>generation forecast</h1>
                 <p>
-                    Seasonal performance, demand sensitivity and forecasting roadmap
-                    for Aalborg Portland's wind-energy self-sufficiency assessment.
-                </p>
-                <p class="hero-note">
-                    This page extends the main dashboard from annual reporting to scenario-based industrial decision support.
+                    Estimate the electricity Aalborg Portland could generate over the next 7 days
+                    under different turbine models and turbine-count scenarios.
                 </p>
             </div>
 
             <div class="hero-panel">
-                <small>Best seasonal scenario</small>
-                <h2>Nordex N149 5.X</h2>
-                <small>Winter</small>
-                <div class="big">5.06%</div>
-                <small>seasonal electricity coverage</small>
+                <small>Best forecasting model</small>
+                <h2>Random Forest</h2>
+                <small>test MAE</small>
+                <div class="big">0.000</div>
+                <small>MW average absolute error</small>
             </div>
         </div>
     </section>
@@ -430,312 +356,192 @@
     <main class="container">
 
         <section class="kpi-grid">
-            <div class="card kpi">
-                <div class="icon">❄</div>
-                <div>
-                    <div class="kpi-label">Best season</div>
-                    <div class="kpi-value">Winter</div>
-                    <div class="kpi-note">Nordex N149 5.X</div>
-                </div>
+            <div class="card">
+                <div class="kpi-label">Forecast horizon</div>
+                <div class="kpi-value">7 days</div>
+                <div class="kpi-note">168 hourly observations</div>
             </div>
 
-            <div class="card kpi">
-                <div class="icon">↕</div>
-                <div>
-                    <div class="kpi-label">Coverage range</div>
-                    <div class="kpi-value">2.85% - 4.50%</div>
-                    <div class="kpi-note">Across demand sensitivity scenarios</div>
-                </div>
+            <div class="card">
+                <div class="kpi-label">Best model</div>
+                <div class="kpi-value">Random Forest</div>
+                <div class="kpi-note">Selected by lowest MAE</div>
             </div>
 
-            <div class="card kpi">
-                <div class="icon">±</div>
-                <div>
-                    <div class="kpi-label">Demand sensitivity</div>
-                    <div class="kpi-value">±10%</div>
-                    <div class="kpi-note">Low, base and high demand</div>
-                </div>
+            <div class="card">
+                <div class="kpi-label">Max scenario</div>
+                <div class="kpi-value">1.047 MWh</div>
+                <div class="kpi-note">10 turbines, Siemens Gamesa SG 5.0-145</div>
             </div>
 
-            <div class="card kpi">
-                <div class="icon">↗</div>
-                <div>
-                    <div class="kpi-label">Forecasting module</div>
-                    <div class="kpi-value">Next</div>
-                    <div class="kpi-note">7-day forecast and model comparison</div>
-                </div>
+            <div class="card">
+                <div class="kpi-label">Decision tool</div>
+                <div class="kpi-value">Interactive</div>
+                <div class="kpi-note">Select turbine model and turbine count</div>
             </div>
         </section>
 
-        <div class="section-title">
-            <div>
-                <h2>Seasonal performance</h2>
-                <p>
-                    Wind generation is not constant throughout the year. This section compares seasonal production
-                    and identifies when on-site wind is most valuable for industrial electricity coverage.
-                </p>
-            </div>
-            <span class="status-pill">Seasonal analysis active</span>
+        <section class="mini-grid">
+            
+        <div class="mini-card">
+            <h3>Vestas V136 4.5 MW</h3>
+            <p>89 MWh</p>
+            <small>Forecast generation for one turbine over the next 7 days</small>
         </div>
+        
+        <div class="mini-card">
+            <h3>Siemens Gamesa SG 5.0-145</h3>
+            <p>105 MWh</p>
+            <small>Forecast generation for one turbine over the next 7 days</small>
+        </div>
+        
+        <div class="mini-card">
+            <h3>Nordex N149 5.X</h3>
+            <p>99 MWh</p>
+            <small>Forecast generation for one turbine over the next 7 days</small>
+        </div>
+        
+        <div class="mini-card">
+            <h3>Enercon E-138 EP3</h3>
+            <p>79 MWh</p>
+            <small>Forecast generation for one turbine over the next 7 days</small>
+        </div>
+        
+        </section>
 
-        <section class="analysis-grid">
+        <section class="grid">
             <div class="card">
-                <h2>Season summary</h2>
-                <div class="sub">Average coverage across all turbine models</div>
+                <h2>Interactive stakeholder calculator</h2>
+                <div class="sub">Estimate 7-day generation and demand coverage</div>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Season</th>
-                            <th>Total generation</th>
-                            <th>Average coverage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-        <tr class="highlight">
-            <td>Winter</td>
-            <td>11.157 MWh</td>
-            <td>4.52%</td>
-        </tr>
-        
-        <tr class="">
-            <td>Spring</td>
-            <td>7.676 MWh</td>
-            <td>3.05%</td>
-        </tr>
-        
-        <tr class="">
-            <td>Summer</td>
-            <td>7.246 MWh</td>
-            <td>2.88%</td>
-        </tr>
-        
-        <tr class="">
-            <td>Autumn</td>
-            <td>10.221 MWh</td>
-            <td>4.10%</td>
-        </tr>
-        
-                    </tbody>
-                </table>
+                <div class="interactive-box">
+                    <label for="turbineSelect">Turbine model</label>
+                    <select id="turbineSelect">
+                        <option value="Vestas V136 4.5 MW">Vestas V136 4.5 MW</option><option value="Siemens Gamesa SG 5.0-145">Siemens Gamesa SG 5.0-145</option><option value="Nordex N149 5.X">Nordex N149 5.X</option><option value="Enercon E-138 EP3">Enercon E-138 EP3</option>
+                    </select>
 
-                <div class="insight-box">
-                    <strong>Interpretation:</strong>
-                    Winter shows the strongest seasonal performance, while summer is weaker.
-                    This supports the need for seasonal analysis instead of relying only on annual averages.
+                    <label for="turbineCount">Number of turbines</label>
+                    <input id="turbineCount" type="number" min="1" max="50" value="1">
+
+                    <div class="result">
+                        <div class="result-card">
+                            <span>Forecast generation</span>
+                            <strong id="generationResult">-</strong>
+                        </div>
+
+                        <div class="result-card">
+                            <span>7-day demand coverage</span>
+                            <strong id="coverageResult">-</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="card">
-                <h2>Seasonal coverage comparison</h2>
-                <div class="sub">Average coverage by season</div>
-
-                <div class="bars">
-                    
-        <div class="bar-item">
-            <div class="bar-value">4.52%</div>
-            <div class="bar" style="height:190.0px;"></div>
-            <div class="bar-label">Winter</div>
-        </div>
-        
-        <div class="bar-item">
-            <div class="bar-value">3.05%</div>
-            <div class="bar" style="height:128.31305309734515px;"></div>
-            <div class="bar-label">Spring</div>
-        </div>
-        
-        <div class="bar-item">
-            <div class="bar-value">2.88%</div>
-            <div class="bar" style="height:121.06194690265484px;"></div>
-            <div class="bar-label">Summer</div>
-        </div>
-        
-        <div class="bar-item">
-            <div class="bar-value">4.10%</div>
-            <div class="bar" style="height:172.55530973451323px;"></div>
-            <div class="bar-label">Autumn</div>
-        </div>
-        
-                </div>
-            </div>
-        </section>
-
-        <section class="analysis-grid">
-            <div class="card">
-                <h2>Best turbine by season</h2>
-                <div class="sub">Nordex N149 5.X seasonal behaviour</div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Season</th>
-                            <th>Generation</th>
-                            <th>Coverage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-        <tr class="highlight">
-            <td>Winter</td>
-            <td>3.124 MWh</td>
-            <td>5.06%</td>
-        </tr>
-        
-        <tr class="">
-            <td>Spring</td>
-            <td>2.127 MWh</td>
-            <td>3.38%</td>
-        </tr>
-        
-        <tr class="">
-            <td>Summer</td>
-            <td>2.007 MWh</td>
-            <td>3.19%</td>
-        </tr>
-        
-        <tr class="">
-            <td>Autumn</td>
-            <td>2.852 MWh</td>
-            <td>4.58%</td>
-        </tr>
-        
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="card module-card">
-                <h2>Why this matters</h2>
-                <p>
-                    A cement facility operates continuously, but wind generation varies strongly by season.
-                    Seasonal analysis helps identify periods where on-site wind generation is more likely to
-                    reduce grid dependency and periods where complementary solutions may be required.
-                </p>
-
-                <span class="tag">Industrial demand</span>
-                <span class="tag">Seasonality</span>
-                <span class="tag">Renewable variability</span>
-                <span class="tag">Decision support</span>
-            </div>
-        </section>
-
-        <div class="section-title">
-            <div>
-                <h2>Demand sensitivity</h2>
-                <p>
-                    Since the hourly load profile is synthetic, sensitivity analysis tests how robust the conclusions are
-                    when industrial electricity demand is lower or higher than the baseline assumption.
-                </p>
-            </div>
-            <span class="status-pill">±10% demand tested</span>
-        </div>
-
-        <section class="analysis-grid">
-            <div class="card">
-                <h2>Nordex N149 5.X sensitivity</h2>
-                <div class="sub">Coverage under low, base and high demand assumptions</div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Scenario</th>
-                            <th>Demand</th>
-                            <th>Coverage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-        <tr class="">
-            <td>Low demand (-10%)</td>
-            <td>224.720 MWh</td>
-            <td>4.50%</td>
-        </tr>
-        
-        <tr class="highlight">
-            <td>Base demand</td>
-            <td>249.689 MWh</td>
-            <td>4.05%</td>
-        </tr>
-        
-        <tr class="">
-            <td>High demand (+10%)</td>
-            <td>274.657 MWh</td>
-            <td>3.68%</td>
-        </tr>
-        
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="card">
-                <h2>Sensitivity comparison</h2>
-                <div class="sub">Coverage variation for the selected turbine</div>
-
-                <div class="bars">
-                    
-        <div class="bar-item">
-            <div class="bar-value">4.50%</div>
-            <div class="bar" style="height:190.0px;"></div>
-            <div class="bar-label">Low<br>demand<br>(-10%)</div>
-        </div>
-        
-        <div class="bar-item">
-            <div class="bar-value">4.05%</div>
-            <div class="bar" style="height:170.99999999999997px;"></div>
-            <div class="bar-label">Base<br>demand</div>
-        </div>
-        
-        <div class="bar-item">
-            <div class="bar-value">3.68%</div>
-            <div class="bar" style="height:155.3777777777778px;"></div>
-            <div class="bar-label">High<br>demand<br>(+10%)</div>
-        </div>
-        
-                </div>
-            </div>
-        </section>
-
-        <section class="three-grid">
-            <div class="card module-card">
-                <h2>Methodology value</h2>
-                <p>
-                    The advanced analytics layer improves the project by moving beyond single annual KPIs
-                    and introducing scenario-based assessment.
-                </p>
-                <span class="tag">Scenario analysis</span>
-                <span class="tag">Robustness</span>
-                <span class="tag">Academic value</span>
-            </div>
-
-            <div class="card module-card">
-                <h2>Future forecasting</h2>
-                <p>
-                    The next extension can use 7-day weather forecasts to estimate short-term wind generation
-                    and expected industrial coverage.
-                </p>
-                <span class="tag">7-day forecast</span>
-                <span class="tag">Operational planning</span>
-                <span class="tag">Weather API</span>
-            </div>
-
-            <div class="card module-card">
                 <h2>Model comparison</h2>
+                <div class="sub">Forecasting models evaluated on historical turbine generation</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>MAE MW</th>
+                            <th>RMSE MW</th>
+                            <th>R²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+        <tr class="">
+            <td>Linear Regression</td>
+            <td>0.2859</td>
+            <td>0.4022</td>
+            <td>0.9461</td>
+        </tr>
+        
+        <tr class="highlight">
+            <td>Random Forest</td>
+            <td>0.0001</td>
+            <td>0.0004</td>
+            <td>1.0000</td>
+        </tr>
+        
+        <tr class="">
+            <td>XGBoost</td>
+            <td>0.0078</td>
+            <td>0.0167</td>
+            <td>0.9999</td>
+        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <h2>Academic interpretation</h2>
                 <p>
-                    Linear Regression, Random Forest and XGBoost can be compared to assess whether machine learning
-                    improves short-term wind generation forecasting.
+                    The forecasting module transforms the project from a descriptive dashboard into an operational
+                    decision-support tool. Instead of only reporting annual generation, stakeholders can estimate
+                    expected short-term production under different deployment scenarios.
                 </p>
-                <span class="tag">Baseline model</span>
-                <span class="tag">Random Forest</span>
-                <span class="tag">XGBoost</span>
+                <span class="tag">Forecasting</span>
+                <span class="tag">Decision support</span>
+                <span class="tag">Industrial planning</span>
+            </div>
+
+            <div class="card">
+                <h2>LSTM feasibility</h2>
+                <p>
+                    LSTM models are widely used for sequential forecasting, but they require heavier dependencies
+                    and more careful training. For this lightweight GitHub Actions pipeline, Linear Regression,
+                    Random Forest and XGBoost provide a more stable implementation.
+                </p>
+                <span class="tag">LSTM considered</span>
+                <span class="tag">GitHub Actions constraint</span>
+                <span class="tag">Future work</span>
             </div>
         </section>
 
     </main>
 
     <footer class="footer">
-        <div>Aalborg Portland advanced wind-energy analytics</div>
+        <div>Aalborg Portland 7-day forecasting and decision-support tool</div>
         <div class="logo">aalborg<span>portland</span></div>
     </footer>
+
+    <script>
+        const scenarios = [{"turbine":"Vestas V136 4.5 MW","number_of_turbines":1,"forecast_generation_mwh":88.62,"estimated_7d_demand_mwh":4787.43,"coverage_percent":1.85},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":2,"forecast_generation_mwh":177.23,"estimated_7d_demand_mwh":4787.43,"coverage_percent":3.7},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":3,"forecast_generation_mwh":265.85,"estimated_7d_demand_mwh":4787.43,"coverage_percent":5.55},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":5,"forecast_generation_mwh":443.08,"estimated_7d_demand_mwh":4787.43,"coverage_percent":9.25},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":10,"forecast_generation_mwh":886.15,"estimated_7d_demand_mwh":4787.43,"coverage_percent":18.51},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":1,"forecast_generation_mwh":104.7,"estimated_7d_demand_mwh":4787.43,"coverage_percent":2.19},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":2,"forecast_generation_mwh":209.41,"estimated_7d_demand_mwh":4787.43,"coverage_percent":4.37},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":3,"forecast_generation_mwh":314.11,"estimated_7d_demand_mwh":4787.43,"coverage_percent":6.56},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":5,"forecast_generation_mwh":523.52,"estimated_7d_demand_mwh":4787.43,"coverage_percent":10.94},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":10,"forecast_generation_mwh":1047.04,"estimated_7d_demand_mwh":4787.43,"coverage_percent":21.87},{"turbine":"Nordex N149 5.X","number_of_turbines":1,"forecast_generation_mwh":98.52,"estimated_7d_demand_mwh":4787.43,"coverage_percent":2.06},{"turbine":"Nordex N149 5.X","number_of_turbines":2,"forecast_generation_mwh":197.03,"estimated_7d_demand_mwh":4787.43,"coverage_percent":4.12},{"turbine":"Nordex N149 5.X","number_of_turbines":3,"forecast_generation_mwh":295.55,"estimated_7d_demand_mwh":4787.43,"coverage_percent":6.17},{"turbine":"Nordex N149 5.X","number_of_turbines":5,"forecast_generation_mwh":492.58,"estimated_7d_demand_mwh":4787.43,"coverage_percent":10.29},{"turbine":"Nordex N149 5.X","number_of_turbines":10,"forecast_generation_mwh":985.16,"estimated_7d_demand_mwh":4787.43,"coverage_percent":20.58},{"turbine":"Enercon E-138 EP3","number_of_turbines":1,"forecast_generation_mwh":78.68,"estimated_7d_demand_mwh":4787.43,"coverage_percent":1.64},{"turbine":"Enercon E-138 EP3","number_of_turbines":2,"forecast_generation_mwh":157.35,"estimated_7d_demand_mwh":4787.43,"coverage_percent":3.29},{"turbine":"Enercon E-138 EP3","number_of_turbines":3,"forecast_generation_mwh":236.03,"estimated_7d_demand_mwh":4787.43,"coverage_percent":4.93},{"turbine":"Enercon E-138 EP3","number_of_turbines":5,"forecast_generation_mwh":393.38,"estimated_7d_demand_mwh":4787.43,"coverage_percent":8.22},{"turbine":"Enercon E-138 EP3","number_of_turbines":10,"forecast_generation_mwh":786.75,"estimated_7d_demand_mwh":4787.43,"coverage_percent":16.43}];
+
+        function formatNumber(value) {
+            return Math.round(value).toLocaleString("de-DE");
+        }
+
+        function updateCalculator() {
+            const turbine = document.getElementById("turbineSelect").value;
+            const count = Number(document.getElementById("turbineCount").value);
+
+            const oneTurbineScenario = scenarios.find(row =>
+                row.turbine === turbine && row.number_of_turbines === 1
+            );
+
+            const generation = oneTurbineScenario.forecast_generation_mwh * count;
+            const demand = oneTurbineScenario.estimated_7d_demand_mwh;
+            const coverage = generation / demand * 100;
+
+            document.getElementById("generationResult").textContent =
+                formatNumber(generation) + " MWh";
+
+            document.getElementById("coverageResult").textContent =
+                coverage.toFixed(2) + "%";
+        }
+
+        document.getElementById("turbineSelect").addEventListener("change", updateCalculator);
+        document.getElementById("turbineCount").addEventListener("input", updateCalculator);
+
+        updateCalculator();
+    </script>
 
 </body>
 </html>

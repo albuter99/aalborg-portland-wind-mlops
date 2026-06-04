@@ -1,0 +1,21 @@
+turbine,number_of_turbines,forecast_generation_mwh,estimated_7d_demand_mwh,coverage_percent
+Vestas V136 4.5 MW,1,88.62,4787.43,1.85
+Vestas V136 4.5 MW,2,177.23,4787.43,3.7
+Vestas V136 4.5 MW,3,265.85,4787.43,5.55
+Vestas V136 4.5 MW,5,443.08,4787.43,9.25
+Vestas V136 4.5 MW,10,886.15,4787.43,18.51
+Siemens Gamesa SG 5.0-145,1,104.7,4787.43,2.19
+Siemens Gamesa SG 5.0-145,2,209.41,4787.43,4.37
+Siemens Gamesa SG 5.0-145,3,314.11,4787.43,6.56
+Siemens Gamesa SG 5.0-145,5,523.52,4787.43,10.94
+Siemens Gamesa SG 5.0-145,10,1047.04,4787.43,21.87
+Nordex N149 5.X,1,98.52,4787.43,2.06
+Nordex N149 5.X,2,197.03,4787.43,4.12
+Nordex N149 5.X,3,295.55,4787.43,6.17
+Nordex N149 5.X,5,492.58,4787.43,10.29
+Nordex N149 5.X,10,985.16,4787.43,20.58
+Enercon E-138 EP3,1,78.68,4787.43,1.64
+Enercon E-138 EP3,2,157.35,4787.43,3.29
+Enercon E-138 EP3,3,236.03,4787.43,4.93
+Enercon E-138 EP3,5,393.38,4787.43,8.22
+Enercon E-138 EP3,10,786.75,4787.43,16.43
