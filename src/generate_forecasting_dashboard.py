@@ -14,6 +14,9 @@ def main():
     model_df = pd.read_csv("artifacts/forecast_model_comparison.csv")
     scenario_df = pd.read_csv("artifacts/forecast_stakeholder_scenarios.csv")
     hourly_df = pd.read_csv("artifacts/forecast_hourly_profile.csv")
+    model_note_df = pd.read_csv("artifacts/forecast_model_note.csv")
+
+    model_note = model_note_df.iloc[0]
 
     hourly_df["timestamp"] = pd.to_datetime(hourly_df["timestamp"])
     hourly_df["label"] = hourly_df["timestamp"].dt.strftime("%d %b %H:%M")
@@ -37,6 +40,7 @@ def main():
             <td>{row["mae_mw"]:.4f}</td>
             <td>{row["rmse_mw"]:.4f}</td>
             <td>{row["r2_score"]:.4f}</td>
+            <td>{row.get("evaluation_type", "Surrogate model approximation")}</td>
         </tr>
         """
 
@@ -62,6 +66,7 @@ def main():
             <td><strong>{turbine}</strong></td>
             <td>{format_number(one_turbine["forecast_generation_mwh"])} MWh</td>
             <td>{one_turbine["coverage_percent"]:.2f}%</td>
+            <td>{format_number(one_turbine.get("grid_required_mwh", one_turbine["estimated_7d_demand_mwh"] - one_turbine["forecast_generation_mwh"]))} MWh</td>
         </tr>
         """
 
@@ -304,6 +309,19 @@ def main():
             font-weight: 900;
         }}
 
+        .method-note {{
+            background: #faf7f8;
+            border-left: 5px solid var(--brand);
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }}
+
+        .method-note strong {{
+            color: var(--brand);
+        }}
+
         .interactive-box {{
             background: #faf7f8;
             border: 1px solid #eee;
@@ -317,7 +335,6 @@ def main():
             margin-bottom: 4px;
         }}
 
-        select,
         input {{
             width: 100%;
             padding: 13px;
@@ -520,10 +537,10 @@ def main():
                 <h1>7-day wind<br>generation forecast</h1>
                 <p>
                     Estimate the electricity Aalborg Portland could generate over the next 7 days
-                    under different turbine deployment scenarios.
+                    using weather forecasts and turbine-specific power curves.
                 </p>
                 <p class="hero-note">
-                    Forecast generated using {best_model["model"]} and translated into industrial energy-planning indicators.
+                    Operational forecast based on Open-Meteo wind forecasts and physical turbine power-curve modelling.
                 </p>
             </div>
 
@@ -532,10 +549,10 @@ def main():
                 <div class="big">{format_number(best_scenario["forecast_generation_mwh"])}</div>
                 <small>MWh under the maximum generation scenario</small>
 
-                <h2>Forecast generated using {best_model["model"]}</h2>
+                <h2>Forecast method: physical power curve</h2>
                 <small>
-                    Model quality is reported below, but the main dashboard focuses on energy planning,
-                    demand coverage and grid dependency.
+                    Machine-learning models are evaluated separately as surrogate approximations,
+                    not as measured production forecasting models.
                 </small>
             </div>
         </div>
@@ -579,7 +596,7 @@ def main():
         <section class="card" style="margin-bottom: 24px;">
             <h2>Turbine forecast comparison</h2>
             <div class="sub">
-                Expected 7-day generation and demand coverage for one installed turbine.
+                Expected 7-day generation, demand coverage and grid dependency for one installed turbine.
             </div>
 
             <table>
@@ -588,6 +605,7 @@ def main():
                         <th>Turbine model</th>
                         <th>7-day generation</th>
                         <th>7-day demand coverage</th>
+                        <th>Grid required</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -600,7 +618,7 @@ def main():
             <div class="card">
                 <h2>Interactive stakeholder calculator</h2>
                 <div class="sub">
-                    Combine several turbine models and estimate generation, demand coverage and grid dependency.
+                    Combine several turbine models and estimate demand, wind generation, grid dependency and coverage.
                 </div>
 
                 <div class="interactive-box">
@@ -648,22 +666,44 @@ def main():
             <div class="card">
                 <h2>Forecast methodology</h2>
                 <div class="sub">
-                    Machine-learning models evaluated on historical turbine generation.
+                    Operational forecast and surrogate model interpretation.
+                </div>
+
+                <div class="method-note">
+                    <strong>Operational forecast:</strong>
+                    The 7-day forecast is generated from Open-Meteo wind forecasts and
+                    turbine-specific physical power curves. This is the main energy-planning
+                    forecast used by the dashboard.
                 </div>
 
                 <p>
-                    The operational forecast is generated using <strong>{best_model["model"]}</strong>,
-                    which achieved the lowest forecasting error among the tested models. The model comparison is kept
-                    separate from the business KPIs so that the dashboard remains focused on industrial decision support.
+                    Machine-learning models are evaluated separately as surrogate models. Their purpose
+                    is to approximate simulated turbine generation, not to replace the physical
+                    power-curve calculation.
                 </p>
+
+                <p>
+                    <strong>Important interpretation:</strong>
+                    {model_note["evaluation_note"]}
+                </p>
+
+                <p>
+                    Split strategy: <strong>{model_note["split_strategy"]}</strong>.
+                </p>
+
+                <h2 style="margin-top: 24px;">Surrogate model comparison</h2>
+                <div class="sub">
+                    Models evaluated against simulated turbine generation from physical power curves.
+                </div>
 
                 <table>
                     <thead>
                         <tr>
                             <th>Model</th>
-                            <th>MAE MW</th>
-                            <th>RMSE MW</th>
-                            <th>R²</th>
+                            <th>Test MAE MW</th>
+                            <th>Test RMSE MW</th>
+                            <th>Test R²</th>
+                            <th>Evaluation type</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -675,13 +715,18 @@ def main():
             <div class="card">
                 <h2>Academic interpretation</h2>
                 <p>
-                    The forecasting module transforms the project from a descriptive dashboard into an operational
-                    decision-support tool. Instead of only reporting annual generation, stakeholders can estimate
-                    expected short-term production under single-turbine and mixed-turbine deployment scenarios.
+                    The forecasting module has two layers. First, the operational energy forecast
+                    uses weather forecast inputs and physical turbine power curves. Second, machine-learning
+                    models are evaluated as surrogate approximations of the simulated generation output.
                 </p>
-                <span class="tag">Forecasting</span>
+                <p>
+                    This avoids presenting the very high R² values as real-world forecasting accuracy.
+                    Instead, they are interpreted as approximation performance against a deterministic
+                    physical simulation target.
+                </p>
+                <span class="tag">Physical forecast</span>
+                <span class="tag">Surrogate ML</span>
                 <span class="tag">Decision support</span>
-                <span class="tag">Industrial planning</span>
                 <span class="tag">Grid dependency</span>
             </div>
         </section>
@@ -690,12 +735,13 @@ def main():
             <div class="card">
                 <h2>LSTM feasibility</h2>
                 <p>
-                    LSTM models are widely used for sequential forecasting, but they require heavier dependencies
-                    and more careful training. For this lightweight GitHub Actions pipeline, Linear Regression,
-                    Random Forest and XGBoost provide a more stable implementation.
+                    LSTM models are widely used for sequential forecasting, but they require measured historical
+                    production data, heavier dependencies and more careful training. For this lightweight GitHub
+                    Actions pipeline, the operational forecast is based on physical power curves, while Linear
+                    Regression, Random Forest and XGBoost are compared as surrogate models.
                 </p>
                 <span class="tag">LSTM considered</span>
-                <span class="tag">GitHub Actions constraint</span>
+                <span class="tag">Measured production unavailable</span>
                 <span class="tag">Future work</span>
             </div>
 
@@ -818,7 +864,7 @@ def main():
             chart.innerHTML = html;
         }}
 
-                function renderForecastProfileChart() {{
+        function renderForecastProfileChart() {{
             const ctx = document.getElementById("forecastProfileChart");
 
             const labels = hourlyProfile.map(row => row.label);
