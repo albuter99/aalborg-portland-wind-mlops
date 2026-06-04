@@ -13,6 +13,10 @@ def format_number(value):
 def main():
     model_df = pd.read_csv("artifacts/forecast_model_comparison.csv")
     scenario_df = pd.read_csv("artifacts/forecast_stakeholder_scenarios.csv")
+    hourly_df = pd.read_csv("artifacts/forecast_hourly_profile.csv")
+
+    hourly_df["timestamp"] = pd.to_datetime(hourly_df["timestamp"])
+    hourly_df["label"] = hourly_df["timestamp"].dt.strftime("%d %b %H:%M")
 
     best_model = model_df.sort_values("mae_mw").iloc[0]
 
@@ -80,6 +84,14 @@ def main():
         """
 
     scenario_json = scenario_df.to_json(orient="records")
+    hourly_profile_json = hourly_df[
+        [
+            "label",
+            "forecast_generation_mwh",
+            "estimated_demand_mwh",
+            "grid_required_mwh"
+        ]
+    ].to_json(orient="records")
 
     html = f"""
 <!DOCTYPE html>
@@ -87,6 +99,7 @@ def main():
 <head>
     <meta charset="UTF-8">
     <title>Aalborg Portland Forecasting</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {{
@@ -354,6 +367,14 @@ def main():
             min-height: 365px;
         }}
 
+        .line-chart-wrapper {{
+            height: 420px;
+            background: #faf7f8;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 20px;
+        }}
+
         .bar-row {{
             margin-bottom: 18px;
         }}
@@ -545,6 +566,17 @@ def main():
         </section>
 
         <section class="card" style="margin-bottom: 24px;">
+            <h2>7-day forecast profile</h2>
+            <div class="sub">
+                Hourly wind generation forecast compared with estimated industrial electricity demand.
+            </div>
+
+            <div class="line-chart-wrapper">
+                <canvas id="forecastProfileChart"></canvas>
+            </div>
+        </section>
+
+        <section class="card" style="margin-bottom: 24px;">
             <h2>Turbine forecast comparison</h2>
             <div class="sub">
                 Expected 7-day generation and demand coverage for one installed turbine.
@@ -607,18 +639,6 @@ def main():
             </div>
         </section>
 
-        <section class="card" style="margin-bottom: 24px;">
-            <h2>7-day forecast profile</h2>
-            <div class="sub">
-                Prepared placeholder for the next improvement: hourly forecast generation versus estimated industrial demand.
-            </div>
-
-            <div class="placeholder-chart">
-                Next step: add a 168-hour line chart comparing forecasted wind generation and estimated demand.
-                This will make the forecasting page visually closer to an operational energy-planning dashboard.
-            </div>
-        </section>
-
         <section class="grid">
             <div class="card">
                 <h2>Forecast methodology</h2>
@@ -675,11 +695,10 @@ def main():
             </div>
 
             <div class="card">
-                <h2>Next development step</h2>
+                <h2>Operational value</h2>
                 <p>
-                    The next improvement should add an hourly 168-observation chart comparing forecasted wind generation
-                    with estimated industrial demand. This would make short-term surplus, deficit and grid-dependency
-                    periods easier to interpret.
+                    The 168-hour forecast profile makes the dashboard more useful for planning because it shows when
+                    wind generation is expected to be closer to or further from industrial electricity demand.
                 </p>
                 <span class="tag">168-hour profile</span>
                 <span class="tag">Demand comparison</span>
@@ -696,6 +715,7 @@ def main():
 
     <script>
         const scenarios = {scenario_json};
+        const hourlyProfile = {hourly_profile_json};
 
         function formatNumber(value) {{
             return Math.round(value).toLocaleString("de-DE");
@@ -790,11 +810,81 @@ def main():
             chart.innerHTML = html;
         }}
 
+        function renderForecastProfileChart() {{
+            const ctx = document.getElementById("forecastProfileChart");
+
+            new Chart(ctx, {{
+                type: "line",
+                data: {{
+                    labels: hourlyProfile.map(row => row.label),
+                    datasets: [
+                        {{
+                            label: "Estimated industrial demand",
+                            data: hourlyProfile.map(row => row.estimated_demand_mwh),
+                            borderColor: "#2b0014",
+                            backgroundColor: "rgba(43, 0, 20, 0.08)",
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            tension: 0.25
+                        }},
+                        {{
+                            label: "Forecast wind generation",
+                            data: hourlyProfile.map(row => row.forecast_generation_mwh),
+                            borderColor: "#e4005a",
+                            backgroundColor: "rgba(228, 0, 90, 0.10)",
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            tension: 0.25
+                        }}
+                    ]
+                }},
+                options: {{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {{
+                        mode: "index",
+                        intersect: false
+                    }},
+                    plugins: {{
+                        legend: {{
+                            position: "top"
+                        }},
+                        tooltip: {{
+                            callbacks: {{
+                                label: function(context) {{
+                                    return context.dataset.label + ": " +
+                                        context.parsed.y.toFixed(2) + " MWh";
+                                }}
+                            }}
+                        }}
+                    }},
+                    scales: {{
+                        x: {{
+                            ticks: {{
+                                maxTicksLimit: 12
+                            }},
+                            grid: {{
+                                display: false
+                            }}
+                        }},
+                        y: {{
+                            title: {{
+                                display: true,
+                                text: "MWh per hour"
+                            }},
+                            beginAtZero: true
+                        }}
+                    }}
+                }}
+            }});
+        }}
+
         document.querySelectorAll(".turbine-count").forEach(input => {{
             input.addEventListener("input", updateCalculator);
         }});
 
         updateCalculator();
+        renderForecastProfileChart();
     </script>
 
 </body>
