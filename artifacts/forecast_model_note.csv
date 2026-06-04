@@ -1,0 +1,2 @@
+forecasting_method,ml_role,evaluation_note,split_strategy,selected_model
+Physical power-curve forecast,Machine learning models are evaluated as surrogate models.,"The target variable is simulated turbine generation derived from a physical power curve, not measured turbine production. Very high R² values are therefore expected and should be interpreted as approximation accuracy rather than real-world forecasting accuracy.","Chronological split: 70% train, 15% validation, 15% test",Random Forest
