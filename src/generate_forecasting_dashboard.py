@@ -810,31 +810,63 @@ def main():
             chart.innerHTML = html;
         }}
 
-        function renderForecastProfileChart() {{
+                function renderForecastProfileChart() {{
             const ctx = document.getElementById("forecastProfileChart");
+
+            const labels = hourlyProfile.map(row => row.label);
+            const demand = hourlyProfile.map(row => row.estimated_demand_mwh);
+            const generation = hourlyProfile.map(row => row.forecast_generation_mwh);
+
+            const windCovered = hourlyProfile.map(row =>
+                Math.min(row.forecast_generation_mwh, row.estimated_demand_mwh)
+            );
 
             new Chart(ctx, {{
                 type: "line",
                 data: {{
-                    labels: hourlyProfile.map(row => row.label),
+                    labels: labels,
                     datasets: [
                         {{
+                            label: "Demand not covered by wind",
+                            data: demand,
+                            borderColor: "rgba(0, 0, 0, 0)",
+                            backgroundColor: "rgba(228, 0, 90, 0.12)",
+                            pointRadius: 0,
+                            fill: "origin",
+                            tension: 0.25,
+                            order: 4
+                        }},
+                        {{
+                            label: "Wind-covered demand",
+                            data: windCovered,
+                            borderColor: "rgba(0, 0, 0, 0)",
+                            backgroundColor: "rgba(46, 160, 67, 0.22)",
+                            pointRadius: 0,
+                            fill: "origin",
+                            tension: 0.25,
+                            order: 3
+                        }},
+                        {{
                             label: "Estimated industrial demand",
-                            data: hourlyProfile.map(row => row.estimated_demand_mwh),
+                            data: demand,
                             borderColor: "#2b0014",
                             backgroundColor: "rgba(43, 0, 20, 0.08)",
-                            borderWidth: 2,
+                            borderWidth: 2.5,
                             pointRadius: 0,
-                            tension: 0.25
+                            tension: 0.25,
+                            fill: false,
+                            order: 1
                         }},
                         {{
                             label: "Forecast wind generation",
-                            data: hourlyProfile.map(row => row.forecast_generation_mwh),
+                            data: generation,
                             borderColor: "#e4005a",
                             backgroundColor: "rgba(228, 0, 90, 0.10)",
-                            borderWidth: 2,
+                            borderWidth: 2.5,
                             pointRadius: 0,
-                            tension: 0.25
+                            tension: 0.25,
+                            fill: false,
+                            order: 0
                         }}
                     ]
                 }},
@@ -847,11 +879,35 @@ def main():
                     }},
                     plugins: {{
                         legend: {{
-                            position: "top"
+                            position: "top",
+                            labels: {{
+                                filter: function(item) {{
+                                    return item.text !== "Demand not covered by wind";
+                                }}
+                            }}
                         }},
                         tooltip: {{
                             callbacks: {{
                                 label: function(context) {{
+                                    const index = context.dataIndex;
+                                    const row = hourlyProfile[index];
+
+                                    if (context.dataset.label === "Demand not covered by wind") {{
+                                        const value = Math.max(
+                                            row.estimated_demand_mwh - row.forecast_generation_mwh,
+                                            0
+                                        );
+                                        return "Grid required: " + value.toFixed(2) + " MWh";
+                                    }}
+
+                                    if (context.dataset.label === "Wind-covered demand") {{
+                                        const value = Math.min(
+                                            row.forecast_generation_mwh,
+                                            row.estimated_demand_mwh
+                                        );
+                                        return "Wind-covered demand: " + value.toFixed(2) + " MWh";
+                                    }}
+
                                     return context.dataset.label + ": " +
                                         context.parsed.y.toFixed(2) + " MWh";
                                 }}
