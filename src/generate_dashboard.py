@@ -129,6 +129,25 @@ def main():
             opacity: 0.9;
         }}
 
+        .nav-bar {{
+            background:#5c0026;
+            padding:14px 60px;
+            display:flex;
+            gap:40px;
+        }}
+
+        .nav-bar a {{
+            color:white;
+            text-decoration:none;
+            font-weight:600;
+            letter-spacing:0.3px;
+        }}
+
+        .nav-bar a:hover,
+        .nav-bar a.active {{
+        color:#ff2b7a;
+        }}
+
         .hero {{
             min-height: 390px;
             padding: 70px 70px 92px 70px;
@@ -500,6 +519,12 @@ def main():
     <section class="top-brand">
         <div class="brand-name">aalborg<span>portland</span></div>
         <div class="brand-subtitle">CEMENTIR HOLDING</div>
+    </section>
+
+    <section class="nav-bar">
+        <a href="index.html" class="active">Overview</a>
+        <a href="advanced.html">Advanced Analytics</a>
+        <a href="economics.html">Economics</a>
     </section>
 
     <section class="hero">
