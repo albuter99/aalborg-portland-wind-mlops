@@ -187,41 +187,17 @@
             margin-bottom: 20px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        th {
-            background: #f0ecee;
-            text-align: left;
-            padding: 13px 10px;
-        }
-
-        td {
-            padding: 14px 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        tr.highlight td {
-            color: var(--brand);
-            font-weight: 900;
-        }
-
         label {
             font-weight: 800;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
-        select,
         input {
             width: 100%;
             padding: 13px;
             border-radius: 8px;
             border: 1px solid #ddd;
-            margin-bottom: 18px;
             font-size: 15px;
         }
 
@@ -230,6 +206,28 @@
             border: 1px solid #eee;
             border-radius: 12px;
             padding: 24px;
+        }
+
+        .mix-row {
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 18px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .mix-row small {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.35;
+        }
+
+        .assumption-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+            margin-bottom: 18px;
         }
 
         .planner-results {
@@ -292,14 +290,6 @@
             transition: width 0.25s ease;
         }
 
-        .method-note {
-            background: #faf7f8;
-            border-left: 5px solid var(--brand);
-            padding: 18px 20px;
-            border-radius: 10px;
-            line-height: 1.5;
-        }
-
         .optimizer-button {
             width: 100%;
             border: none;
@@ -310,11 +300,7 @@
             font-weight: 900;
             font-size: 15px;
             cursor: pointer;
-            margin-top: 4px;
-        }
-
-        .optimizer-button:hover {
-            opacity: 0.92;
+            margin-top: 8px;
         }
 
         .optimizer-grid {
@@ -351,6 +337,14 @@
             line-height: 1.35;
         }
 
+        .method-note {
+            background: #faf7f8;
+            border-left: 5px solid var(--brand);
+            padding: 18px 20px;
+            border-radius: 10px;
+            line-height: 1.5;
+        }
+
         .tag {
             display: inline-block;
             background: #faf7f8;
@@ -385,7 +379,8 @@
             .page-hero-grid,
             .kpi-grid,
             .grid,
-            .planner-results {
+            .planner-results,
+            .assumption-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -417,6 +412,11 @@
                 flex-wrap: wrap;
             }
 
+            .mix-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
             .footer {
                 padding: 28px 30px;
                 flex-direction: column;
@@ -446,19 +446,19 @@
             <div>
                 <h1>Wind deployment<br>economics</h1>
                 <p>
-                    Translate turbine generation, demand coverage and grid dependency into
-                    financial decision-support indicators.
+                    Build mixed turbine deployment scenarios and translate annual generation into
+                    CAPEX, savings, payback and grid dependency.
                 </p>
                 <p class="hero-note">
-                    Interactive economics turns the project into an industrial decision-support framework.
+                    Mixed-turbine planning turns the project into an industrial decision-support framework.
                 </p>
             </div>
 
             <div class="hero-panel">
-                <small>Fastest payback scenario</small>
+                <small>Default fastest payback scenario</small>
                 <h2>Vestas V136 4.5 MW</h2>
-                <small>10 turbines</small>
-                <div class="big">3.4</div>
+                <small>20 turbines</small>
+                <div class="big">3.3</div>
                 <small>years estimated payback</small>
             </div>
         </div>
@@ -494,27 +494,103 @@
 
         <section class="grid">
             <div class="card">
-                <h2>Interactive deployment planner</h2>
+                <h2>Interactive mixed deployment planner</h2>
                 <div class="sub">
-                    Change deployment size, electricity price and infrastructure cost to test economic sensitivity.
+                    Combine turbine models and test how electricity price and infrastructure cost affect the business case.
                 </div>
 
                 <div class="planner-box">
-                    <label for="turbineSelect">Turbine model</label>
-                    <select id="turbineSelect">
-                        <option value="Vestas V136 4.5 MW">Vestas V136 4.5 MW</option><option value="Siemens Gamesa SG 5.0-145">Siemens Gamesa SG 5.0-145</option><option value="Nordex N149 5.X">Nordex N149 5.X</option><option value="Enercon E-138 EP3">Enercon E-138 EP3</option>
-                    </select>
+                    
+        <div class="mix-row">
+            <div>
+                <label for="Vestas_V136_45_MW">Vestas V136 4.5 MW</label>
+                <small>
+                    9.489 MWh/year per turbine ·
+                    42.000.000 DKK CAPEX per turbine
+                </small>
+            </div>
+            <input
+                id="Vestas_V136_45_MW"
+                class="turbine-count"
+                type="number"
+                min="0"
+                max="20"
+                value="0"
+                data-turbine="Vestas V136 4.5 MW"
+            >
+        </div>
+        
+        <div class="mix-row">
+            <div>
+                <label for="Siemens_Gamesa_SG_50_145">Siemens Gamesa SG 5.0-145</label>
+                <small>
+                    8.868 MWh/year per turbine ·
+                    47.000.000 DKK CAPEX per turbine
+                </small>
+            </div>
+            <input
+                id="Siemens_Gamesa_SG_50_145"
+                class="turbine-count"
+                type="number"
+                min="0"
+                max="20"
+                value="0"
+                data-turbine="Siemens Gamesa SG 5.0-145"
+            >
+        </div>
+        
+        <div class="mix-row">
+            <div>
+                <label for="Nordex_N149_5X">Nordex N149 5.X</label>
+                <small>
+                    10.110 MWh/year per turbine ·
+                    52.000.000 DKK CAPEX per turbine
+                </small>
+            </div>
+            <input
+                id="Nordex_N149_5X"
+                class="turbine-count"
+                type="number"
+                min="0"
+                max="20"
+                value="0"
+                data-turbine="Nordex N149 5.X"
+            >
+        </div>
+        
+        <div class="mix-row">
+            <div>
+                <label for="Enercon_E_138_EP3">Enercon E-138 EP3</label>
+                <small>
+                    7.833 MWh/year per turbine ·
+                    40.000.000 DKK CAPEX per turbine
+                </small>
+            </div>
+            <input
+                id="Enercon_E_138_EP3"
+                class="turbine-count"
+                type="number"
+                min="0"
+                max="20"
+                value="0"
+                data-turbine="Enercon E-138 EP3"
+            >
+        </div>
+        
 
-                    <label for="turbineCount">Number of turbines</label>
-                    <input id="turbineCount" type="number" min="1" max="20" value="1">
+                    <div class="assumption-grid">
+                        <div>
+                            <label for="electricityPriceInput">Electricity price DKK/MWh</label>
+                            <input id="electricityPriceInput" type="number" min="0" step="50" value="1470">
+                        </div>
 
-                    <label for="electricityPriceInput">Electricity price DKK/MWh</label>
-                    <input id="electricityPriceInput" type="number" min="0" step="50" value="1470">
+                        <div>
+                            <label for="infrastructureCostInput">Fixed infrastructure cost DKK</label>
+                            <input id="infrastructureCostInput" type="number" min="0" step="1000000" value="15000000">
+                        </div>
+                    </div>
 
-                    <label for="infrastructureCostInput">Fixed infrastructure cost DKK</label>
-                    <input id="infrastructureCostInput" type="number" min="0" step="1000000" value="15000000">
-
-                    <button class="optimizer-button" id="optimizeButton">
+                    <button class="optimizer-button" id="optimizeButton" type="button">
                         Optimize deployment
                     </button>
 
@@ -565,7 +641,7 @@
             <div class="card">
                 <h2>Savings versus investment</h2>
                 <div class="sub">
-                    Visual comparison of CAPEX and estimated annual savings for the selected assumptions.
+                    Visual comparison of CAPEX and estimated annual savings for the selected mixed deployment.
                 </div>
 
                 <div class="chart-box" id="savingsChart"></div>
@@ -576,14 +652,14 @@
             <div class="card">
                 <h2>Deployment optimizer</h2>
                 <div class="sub">
-                    Automatically searches turbine counts from 1 to 20 under the selected price and infrastructure assumptions.
+                    Searches all mixed-turbine combinations with up to 20 turbines in total.
                 </div>
 
                 <div class="optimizer-grid" id="optimizerResults">
                     <div class="optimizer-card">
                         <span>Instructions</span>
                         <strong>Click Optimize deployment</strong>
-                        <small>The optimizer will return the best scenario for coverage, payback, LCOE and cost per covered MWh.</small>
+                        <small>The optimizer returns the best mixed deployment for coverage, payback, LCOE and cost per covered MWh.</small>
                     </div>
                 </div>
             </div>
@@ -591,199 +667,14 @@
             <div class="card">
                 <h2>Decision-support interpretation</h2>
                 <p>
-                    This planner allows stakeholders to test how the business case changes when electricity prices
-                    or infrastructure costs change. This is closer to an industrial decision-support system than
-                    a static descriptive dashboard.
+                    This page no longer assumes one turbine type at a time. It lets stakeholders test mixed deployment
+                    strategies, price sensitivity and infrastructure-cost sensitivity in the same interface.
                 </p>
+                <span class="tag">Mixed deployment</span>
                 <span class="tag">Scenario optimization</span>
                 <span class="tag">Payback sensitivity</span>
-                <span class="tag">Infrastructure cost</span>
-                <span class="tag">Electricity price</span>
+                <span class="tag">Decision support</span>
             </div>
-        </section>
-
-        <section class="card" style="margin-bottom: 24px;">
-            <h2>Scenario comparison</h2>
-            <div class="sub">
-                Standard deployment sizes calculated with default assumptions.
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Turbine</th>
-                        <th>Units</th>
-                        <th>Annual generation</th>
-                        <th>Coverage</th>
-                        <th>CAPEX</th>
-                        <th>Payback</th>
-                        <th>LCOE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-        <tr class="">
-            <td>Vestas V136 4.5 MW</td>
-            <td>1</td>
-            <td>9.489 MWh</td>
-            <td>3.70%</td>
-            <td>57.000.000 DKK</td>
-            <td>4.42 years</td>
-            <td>411 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Vestas V136 4.5 MW</td>
-            <td>3</td>
-            <td>28.466 MWh</td>
-            <td>11.11%</td>
-            <td>141.000.000 DKK</td>
-            <td>3.64 years</td>
-            <td>358 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Vestas V136 4.5 MW</td>
-            <td>5</td>
-            <td>47.444 MWh</td>
-            <td>18.52%</td>
-            <td>225.000.000 DKK</td>
-            <td>3.49 years</td>
-            <td>348 DKK/MWh</td>
-        </tr>
-        
-        <tr class="highlight">
-            <td>Vestas V136 4.5 MW</td>
-            <td>10</td>
-            <td>94.888 MWh</td>
-            <td>37.04%</td>
-            <td>435.000.000 DKK</td>
-            <td>3.37 years</td>
-            <td>340 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Siemens Gamesa SG 5.0-145</td>
-            <td>1</td>
-            <td>8.868 MWh</td>
-            <td>3.46%</td>
-            <td>62.000.000 DKK</td>
-            <td>5.23 years</td>
-            <td>482 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Siemens Gamesa SG 5.0-145</td>
-            <td>3</td>
-            <td>26.605 MWh</td>
-            <td>10.38%</td>
-            <td>156.000.000 DKK</td>
-            <td>4.38 years</td>
-            <td>426 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Siemens Gamesa SG 5.0-145</td>
-            <td>5</td>
-            <td>44.342 MWh</td>
-            <td>17.31%</td>
-            <td>250.000.000 DKK</td>
-            <td>4.22 years</td>
-            <td>414 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Siemens Gamesa SG 5.0-145</td>
-            <td>10</td>
-            <td>88.684 MWh</td>
-            <td>34.61%</td>
-            <td>485.000.000 DKK</td>
-            <td>4.09 years</td>
-            <td>406 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Nordex N149 5.X</td>
-            <td>1</td>
-            <td>10.110 MWh</td>
-            <td>3.95%</td>
-            <td>67.000.000 DKK</td>
-            <td>4.94 years</td>
-            <td>460 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Nordex N149 5.X</td>
-            <td>3</td>
-            <td>30.330 MWh</td>
-            <td>11.84%</td>
-            <td>171.000.000 DKK</td>
-            <td>4.20 years</td>
-            <td>410 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Nordex N149 5.X</td>
-            <td>5</td>
-            <td>50.550 MWh</td>
-            <td>19.73%</td>
-            <td>275.000.000 DKK</td>
-            <td>4.06 years</td>
-            <td>401 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Nordex N149 5.X</td>
-            <td>10</td>
-            <td>101.100 MWh</td>
-            <td>39.46%</td>
-            <td>535.000.000 DKK</td>
-            <td>3.94 years</td>
-            <td>393 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Enercon E-138 EP3</td>
-            <td>1</td>
-            <td>7.833 MWh</td>
-            <td>3.06%</td>
-            <td>55.000.000 DKK</td>
-            <td>5.23 years</td>
-            <td>479 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Enercon E-138 EP3</td>
-            <td>3</td>
-            <td>23.499 MWh</td>
-            <td>9.17%</td>
-            <td>135.000.000 DKK</td>
-            <td>4.28 years</td>
-            <td>415 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Enercon E-138 EP3</td>
-            <td>5</td>
-            <td>39.165 MWh</td>
-            <td>15.29%</td>
-            <td>215.000.000 DKK</td>
-            <td>4.09 years</td>
-            <td>402 DKK/MWh</td>
-        </tr>
-        
-        <tr class="">
-            <td>Enercon E-138 EP3</td>
-            <td>10</td>
-            <td>78.331 MWh</td>
-            <td>30.57%</td>
-            <td>415.000.000 DKK</td>
-            <td>3.95 years</td>
-            <td>393 DKK/MWh</td>
-        </tr>
-        
-                </tbody>
-            </table>
         </section>
 
         <section class="grid">
@@ -799,14 +690,14 @@
             <div class="card">
                 <h2>Industrial decision-support value</h2>
                 <p>
-                    The economics page closes the framework by connecting technical performance, demand coverage,
-                    grid dependency and financial feasibility. The optimizer supports multiple decision objectives
-                    rather than assuming that one scenario is universally best.
+                    Economics closes the framework by connecting technical performance, demand coverage, grid dependency
+                    and financial feasibility. The optimizer supports multiple objectives because the best deployment
+                    depends on whether stakeholders prioritise coverage, payback or cost efficiency.
                 </p>
                 <span class="tag">CAPEX</span>
                 <span class="tag">Payback</span>
                 <span class="tag">LCOE</span>
-                <span class="tag">Decision support</span>
+                <span class="tag">Grid dependency</span>
             </div>
         </section>
 
@@ -818,7 +709,8 @@
     </footer>
 
     <script>
-        const economicsScenarios = [{"turbine":"Vestas V136 4.5 MW","number_of_turbines":1,"annual_generation_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":3.7,"grid_required_mwh":246722.18,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":57000000,"annual_opex_dkk":1050000.0,"annual_savings_dkk":13948565.4000000004,"net_annual_savings_dkk":12898565.4000000004,"payback_years":4.42,"lcoe_dkk_per_mwh":411.01},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":3,"annual_generation_mwh":28466.46,"annual_demand_mwh":256211.0,"coverage_percent":11.11,"grid_required_mwh":227744.54,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":141000000,"annual_opex_dkk":3150000.0,"annual_savings_dkk":41845696.200000003,"net_annual_savings_dkk":38695696.200000003,"payback_years":3.64,"lcoe_dkk_per_mwh":358.32},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":5,"annual_generation_mwh":47444.1,"annual_demand_mwh":256211.0,"coverage_percent":18.52,"grid_required_mwh":208766.9,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":225000000,"annual_opex_dkk":5250000.0,"annual_savings_dkk":69742827.0,"net_annual_savings_dkk":64492827.0,"payback_years":3.49,"lcoe_dkk_per_mwh":347.78},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":10,"annual_generation_mwh":94888.2,"annual_demand_mwh":256211.0,"coverage_percent":37.04,"grid_required_mwh":161322.8,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":435000000,"annual_opex_dkk":10500000.0,"annual_savings_dkk":139485654.0,"net_annual_savings_dkk":128985654.0,"payback_years":3.37,"lcoe_dkk_per_mwh":339.87},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":1,"annual_generation_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":3.46,"grid_required_mwh":247342.62,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":62000000,"annual_opex_dkk":1175000.0,"annual_savings_dkk":13036518.5999999996,"net_annual_savings_dkk":11861518.5999999996,"payback_years":5.23,"lcoe_dkk_per_mwh":482.05},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":3,"annual_generation_mwh":26605.14,"annual_demand_mwh":256211.0,"coverage_percent":10.38,"grid_required_mwh":229605.86,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":156000000,"annual_opex_dkk":3525000.0,"annual_savings_dkk":39109555.799999997,"net_annual_savings_dkk":35584555.799999997,"payback_years":4.38,"lcoe_dkk_per_mwh":425.67},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":5,"annual_generation_mwh":44341.9,"annual_demand_mwh":256211.0,"coverage_percent":17.31,"grid_required_mwh":211869.1,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":250000000,"annual_opex_dkk":5875000.0,"annual_savings_dkk":65182593.0,"net_annual_savings_dkk":59307593.0,"payback_years":4.22,"lcoe_dkk_per_mwh":414.39},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":10,"annual_generation_mwh":88683.8,"annual_demand_mwh":256211.0,"coverage_percent":34.61,"grid_required_mwh":167527.2,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":485000000,"annual_opex_dkk":11750000.0,"annual_savings_dkk":130365186.0,"net_annual_savings_dkk":118615186.0,"payback_years":4.09,"lcoe_dkk_per_mwh":405.94},{"turbine":"Nordex N149 5.X","number_of_turbines":1,"annual_generation_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":3.95,"grid_required_mwh":246101.04,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":67000000,"annual_opex_dkk":1300000.0,"annual_savings_dkk":14861641.1999999993,"net_annual_savings_dkk":13561641.1999999993,"payback_years":4.94,"lcoe_dkk_per_mwh":459.94},{"turbine":"Nordex N149 5.X","number_of_turbines":3,"annual_generation_mwh":30329.88,"annual_demand_mwh":256211.0,"coverage_percent":11.84,"grid_required_mwh":225881.12,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":171000000,"annual_opex_dkk":3900000.0,"annual_savings_dkk":44584923.6000000015,"net_annual_savings_dkk":40684923.6000000015,"payback_years":4.2,"lcoe_dkk_per_mwh":410.49},{"turbine":"Nordex N149 5.X","number_of_turbines":5,"annual_generation_mwh":50549.8,"annual_demand_mwh":256211.0,"coverage_percent":19.73,"grid_required_mwh":205661.2,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":275000000,"annual_opex_dkk":6500000.0,"annual_savings_dkk":74308206.0,"net_annual_savings_dkk":67808206.0,"payback_years":4.06,"lcoe_dkk_per_mwh":400.6},{"turbine":"Nordex N149 5.X","number_of_turbines":10,"annual_generation_mwh":101099.6,"annual_demand_mwh":256211.0,"coverage_percent":39.46,"grid_required_mwh":155111.4,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":535000000,"annual_opex_dkk":13000000.0,"annual_savings_dkk":148616412.0,"net_annual_savings_dkk":135616412.0,"payback_years":3.94,"lcoe_dkk_per_mwh":393.18},{"turbine":"Enercon E-138 EP3","number_of_turbines":1,"annual_generation_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":3.06,"grid_required_mwh":248377.91,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":55000000,"annual_opex_dkk":1000000.0,"annual_savings_dkk":11514642.3000000007,"net_annual_savings_dkk":10514642.3000000007,"payback_years":5.23,"lcoe_dkk_per_mwh":478.74},{"turbine":"Enercon E-138 EP3","number_of_turbines":3,"annual_generation_mwh":23499.27,"annual_demand_mwh":256211.0,"coverage_percent":9.17,"grid_required_mwh":232711.73,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":135000000,"annual_opex_dkk":3000000.0,"annual_savings_dkk":34543926.8999999985,"net_annual_savings_dkk":31543926.8999999985,"payback_years":4.28,"lcoe_dkk_per_mwh":414.91},{"turbine":"Enercon E-138 EP3","number_of_turbines":5,"annual_generation_mwh":39165.45,"annual_demand_mwh":256211.0,"coverage_percent":15.29,"grid_required_mwh":217045.55,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":215000000,"annual_opex_dkk":5000000.0,"annual_savings_dkk":57573211.5,"net_annual_savings_dkk":52573211.5,"payback_years":4.09,"lcoe_dkk_per_mwh":402.14},{"turbine":"Enercon E-138 EP3","number_of_turbines":10,"annual_generation_mwh":78330.9,"annual_demand_mwh":256211.0,"coverage_percent":30.57,"grid_required_mwh":177880.1,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":415000000,"annual_opex_dkk":10000000.0,"annual_savings_dkk":115146423.0,"net_annual_savings_dkk":105146423.0,"payback_years":3.95,"lcoe_dkk_per_mwh":392.57}];
+        const economicsScenarios = [{"turbine":"Vestas V136 4.5 MW","number_of_turbines":1,"annual_generation_mwh":9488.82,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":3.7,"grid_required_mwh":246722.18,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":57000000,"annual_opex_dkk":1050000.0,"annual_savings_dkk":13948565.4000000004,"net_annual_savings_dkk":12898565.4000000004,"payback_years":4.42,"lcoe_dkk_per_mwh":411.01},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":2,"annual_generation_mwh":18977.64,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":7.41,"grid_required_mwh":237233.36,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":99000000,"annual_opex_dkk":2100000.0,"annual_savings_dkk":27897130.8000000007,"net_annual_savings_dkk":25797130.8000000007,"payback_years":3.84,"lcoe_dkk_per_mwh":371.49},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":3,"annual_generation_mwh":28466.46,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":11.11,"grid_required_mwh":227744.54,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":141000000,"annual_opex_dkk":3150000.0,"annual_savings_dkk":41845696.200000003,"net_annual_savings_dkk":38695696.200000003,"payback_years":3.64,"lcoe_dkk_per_mwh":358.32},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":4,"annual_generation_mwh":37955.28,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":14.81,"grid_required_mwh":218255.72,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":183000000,"annual_opex_dkk":4200000.0,"annual_savings_dkk":55794261.6000000015,"net_annual_savings_dkk":51594261.6000000015,"payback_years":3.55,"lcoe_dkk_per_mwh":351.73},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":5,"annual_generation_mwh":47444.1,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":18.52,"grid_required_mwh":208766.9,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":225000000,"annual_opex_dkk":5250000.0,"annual_savings_dkk":69742827.0,"net_annual_savings_dkk":64492827.0,"payback_years":3.49,"lcoe_dkk_per_mwh":347.78},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":6,"annual_generation_mwh":56932.92,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":22.22,"grid_required_mwh":199278.08,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":267000000,"annual_opex_dkk":6300000.0,"annual_savings_dkk":83691392.400000006,"net_annual_savings_dkk":77391392.400000006,"payback_years":3.45,"lcoe_dkk_per_mwh":345.14},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":7,"annual_generation_mwh":66421.74,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":25.92,"grid_required_mwh":189789.26,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":309000000,"annual_opex_dkk":7350000.0,"annual_savings_dkk":97639957.799999997,"net_annual_savings_dkk":90289957.799999997,"payback_years":3.42,"lcoe_dkk_per_mwh":343.26},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":8,"annual_generation_mwh":75910.56,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":29.63,"grid_required_mwh":180300.44,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":351000000,"annual_opex_dkk":8400000.0,"annual_savings_dkk":111588523.200000003,"net_annual_savings_dkk":103188523.200000003,"payback_years":3.4,"lcoe_dkk_per_mwh":341.85},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":9,"annual_generation_mwh":85399.38,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":33.33,"grid_required_mwh":170811.62,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":393000000,"annual_opex_dkk":9450000.0,"annual_savings_dkk":125537088.599999994,"net_annual_savings_dkk":116087088.599999994,"payback_years":3.39,"lcoe_dkk_per_mwh":340.75},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":10,"annual_generation_mwh":94888.2,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":37.04,"grid_required_mwh":161322.8,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":435000000,"annual_opex_dkk":10500000.0,"annual_savings_dkk":139485654.0,"net_annual_savings_dkk":128985654.0,"payback_years":3.37,"lcoe_dkk_per_mwh":339.87},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":11,"annual_generation_mwh":104377.02,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":40.74,"grid_required_mwh":151833.98,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":477000000,"annual_opex_dkk":11550000.0,"annual_savings_dkk":153434219.400000006,"net_annual_savings_dkk":141884219.400000006,"payback_years":3.36,"lcoe_dkk_per_mwh":339.16},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":12,"annual_generation_mwh":113865.84,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":44.44,"grid_required_mwh":142345.16,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":519000000,"annual_opex_dkk":12600000.0,"annual_savings_dkk":167382784.8000000119,"net_annual_savings_dkk":154782784.8000000119,"payback_years":3.35,"lcoe_dkk_per_mwh":338.56},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":13,"annual_generation_mwh":123354.66,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":48.15,"grid_required_mwh":132856.34,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":561000000,"annual_opex_dkk":13650000.0,"annual_savings_dkk":181331350.1999999881,"net_annual_savings_dkk":167681350.1999999881,"payback_years":3.35,"lcoe_dkk_per_mwh":338.05},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":14,"annual_generation_mwh":132843.48,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":51.85,"grid_required_mwh":123367.52,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":603000000,"annual_opex_dkk":14700000.0,"annual_savings_dkk":195279915.599999994,"net_annual_savings_dkk":180579915.599999994,"payback_years":3.34,"lcoe_dkk_per_mwh":337.62},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":15,"annual_generation_mwh":142332.3,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":55.55,"grid_required_mwh":113878.7,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":645000000,"annual_opex_dkk":15750000.0,"annual_savings_dkk":209228481.0,"net_annual_savings_dkk":193478481.0,"payback_years":3.33,"lcoe_dkk_per_mwh":337.24},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":16,"annual_generation_mwh":151821.12,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":59.26,"grid_required_mwh":104389.88,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":687000000,"annual_opex_dkk":16800000.0,"annual_savings_dkk":223177046.400000006,"net_annual_savings_dkk":206377046.400000006,"payback_years":3.33,"lcoe_dkk_per_mwh":336.91},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":17,"annual_generation_mwh":161309.94,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":62.96,"grid_required_mwh":94901.06,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":729000000,"annual_opex_dkk":17850000.0,"annual_savings_dkk":237125611.8000000119,"net_annual_savings_dkk":219275611.8000000119,"payback_years":3.32,"lcoe_dkk_per_mwh":336.62},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":18,"annual_generation_mwh":170798.76,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":66.66,"grid_required_mwh":85412.24,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":771000000,"annual_opex_dkk":18900000.0,"annual_savings_dkk":251074177.1999999881,"net_annual_savings_dkk":232174177.1999999881,"payback_years":3.32,"lcoe_dkk_per_mwh":336.36},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":19,"annual_generation_mwh":180287.58,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":70.37,"grid_required_mwh":75923.42,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":813000000,"annual_opex_dkk":19950000.0,"annual_savings_dkk":265022742.599999994,"net_annual_savings_dkk":245072742.599999994,"payback_years":3.32,"lcoe_dkk_per_mwh":336.13},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":20,"annual_generation_mwh":189776.4,"annual_generation_one_turbine_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":74.07,"grid_required_mwh":66434.6,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":855000000,"annual_opex_dkk":21000000.0,"annual_savings_dkk":278971308.0,"net_annual_savings_dkk":257971308.0,"payback_years":3.31,"lcoe_dkk_per_mwh":335.92},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":1,"annual_generation_mwh":8868.38,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":3.46,"grid_required_mwh":247342.62,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":62000000,"annual_opex_dkk":1175000.0,"annual_savings_dkk":13036518.5999999996,"net_annual_savings_dkk":11861518.5999999996,"payback_years":5.23,"lcoe_dkk_per_mwh":482.05},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":2,"annual_generation_mwh":17736.76,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":6.92,"grid_required_mwh":238474.24,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":109000000,"annual_opex_dkk":2350000.0,"annual_savings_dkk":26073037.1999999993,"net_annual_savings_dkk":23723037.1999999993,"payback_years":4.59,"lcoe_dkk_per_mwh":439.76},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":3,"annual_generation_mwh":26605.14,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":10.38,"grid_required_mwh":229605.86,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":156000000,"annual_opex_dkk":3525000.0,"annual_savings_dkk":39109555.799999997,"net_annual_savings_dkk":35584555.799999997,"payback_years":4.38,"lcoe_dkk_per_mwh":425.67},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":4,"annual_generation_mwh":35473.52,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":13.85,"grid_required_mwh":220737.48,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":203000000,"annual_opex_dkk":4700000.0,"annual_savings_dkk":52146074.3999999985,"net_annual_savings_dkk":47446074.3999999985,"payback_years":4.28,"lcoe_dkk_per_mwh":418.62},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":5,"annual_generation_mwh":44341.9,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":17.31,"grid_required_mwh":211869.1,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":250000000,"annual_opex_dkk":5875000.0,"annual_savings_dkk":65182593.0,"net_annual_savings_dkk":59307593.0,"payback_years":4.22,"lcoe_dkk_per_mwh":414.39},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":6,"annual_generation_mwh":53210.28,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":20.77,"grid_required_mwh":203000.72,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":297000000,"annual_opex_dkk":7050000.0,"annual_savings_dkk":78219111.599999994,"net_annual_savings_dkk":71169111.599999994,"payback_years":4.17,"lcoe_dkk_per_mwh":411.57},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":7,"annual_generation_mwh":62078.66,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":24.23,"grid_required_mwh":194132.34,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":344000000,"annual_opex_dkk":8225000.0,"annual_savings_dkk":91255630.200000003,"net_annual_savings_dkk":83030630.200000003,"payback_years":4.14,"lcoe_dkk_per_mwh":409.56},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":8,"annual_generation_mwh":70947.04,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":27.69,"grid_required_mwh":185263.96,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":391000000,"annual_opex_dkk":9400000.0,"annual_savings_dkk":104292148.799999997,"net_annual_savings_dkk":94892148.799999997,"payback_years":4.12,"lcoe_dkk_per_mwh":408.05},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":9,"annual_generation_mwh":79815.42,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":31.15,"grid_required_mwh":176395.58,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":438000000,"annual_opex_dkk":10575000.0,"annual_savings_dkk":117328667.400000006,"net_annual_savings_dkk":106753667.400000006,"payback_years":4.1,"lcoe_dkk_per_mwh":406.88},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":10,"annual_generation_mwh":88683.8,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":34.61,"grid_required_mwh":167527.2,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":485000000,"annual_opex_dkk":11750000.0,"annual_savings_dkk":130365186.0,"net_annual_savings_dkk":118615186.0,"payback_years":4.09,"lcoe_dkk_per_mwh":405.94},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":11,"annual_generation_mwh":97552.18,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":38.07,"grid_required_mwh":158658.82,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":532000000,"annual_opex_dkk":12925000.0,"annual_savings_dkk":143401704.599999994,"net_annual_savings_dkk":130476704.599999994,"payback_years":4.08,"lcoe_dkk_per_mwh":405.17},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":12,"annual_generation_mwh":106420.56,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":41.54,"grid_required_mwh":149790.44,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":579000000,"annual_opex_dkk":14100000.0,"annual_savings_dkk":156438223.1999999881,"net_annual_savings_dkk":142338223.1999999881,"payback_years":4.07,"lcoe_dkk_per_mwh":404.53},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":13,"annual_generation_mwh":115288.94,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":45.0,"grid_required_mwh":140922.06,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":626000000,"annual_opex_dkk":15275000.0,"annual_savings_dkk":169474741.8000000119,"net_annual_savings_dkk":154199741.8000000119,"payback_years":4.06,"lcoe_dkk_per_mwh":403.98},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":14,"annual_generation_mwh":124157.32,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":48.46,"grid_required_mwh":132053.68,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":673000000,"annual_opex_dkk":16450000.0,"annual_savings_dkk":182511260.400000006,"net_annual_savings_dkk":166061260.400000006,"payback_years":4.05,"lcoe_dkk_per_mwh":403.52},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":15,"annual_generation_mwh":133025.7,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":51.92,"grid_required_mwh":123185.3,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":720000000,"annual_opex_dkk":17625000.0,"annual_savings_dkk":195547779.0,"net_annual_savings_dkk":177922779.0,"payback_years":4.05,"lcoe_dkk_per_mwh":403.12},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":16,"annual_generation_mwh":141894.08,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":55.38,"grid_required_mwh":114316.92,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":767000000,"annual_opex_dkk":18800000.0,"annual_savings_dkk":208584297.599999994,"net_annual_savings_dkk":189784297.599999994,"payback_years":4.04,"lcoe_dkk_per_mwh":402.77},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":17,"annual_generation_mwh":150762.46,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":58.84,"grid_required_mwh":105448.54,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":814000000,"annual_opex_dkk":19975000.0,"annual_savings_dkk":221620816.1999999881,"net_annual_savings_dkk":201645816.1999999881,"payback_years":4.04,"lcoe_dkk_per_mwh":402.45},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":18,"annual_generation_mwh":159630.84,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":62.3,"grid_required_mwh":96580.16,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":861000000,"annual_opex_dkk":21150000.0,"annual_savings_dkk":234657334.8000000119,"net_annual_savings_dkk":213507334.8000000119,"payback_years":4.03,"lcoe_dkk_per_mwh":402.18},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":19,"annual_generation_mwh":168499.22,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":65.77,"grid_required_mwh":87711.78,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":908000000,"annual_opex_dkk":22325000.0,"annual_savings_dkk":247693853.400000006,"net_annual_savings_dkk":225368853.400000006,"payback_years":4.03,"lcoe_dkk_per_mwh":401.93},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":20,"annual_generation_mwh":177367.6,"annual_generation_one_turbine_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":69.23,"grid_required_mwh":78843.4,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":955000000,"annual_opex_dkk":23500000.0,"annual_savings_dkk":260730372.0,"net_annual_savings_dkk":237230372.0,"payback_years":4.03,"lcoe_dkk_per_mwh":401.71},{"turbine":"Nordex N149 5.X","number_of_turbines":1,"annual_generation_mwh":10109.96,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":3.95,"grid_required_mwh":246101.04,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":67000000,"annual_opex_dkk":1300000.0,"annual_savings_dkk":14861641.1999999993,"net_annual_savings_dkk":13561641.1999999993,"payback_years":4.94,"lcoe_dkk_per_mwh":459.94},{"turbine":"Nordex N149 5.X","number_of_turbines":2,"annual_generation_mwh":20219.92,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":7.89,"grid_required_mwh":235991.08,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":119000000,"annual_opex_dkk":2600000.0,"annual_savings_dkk":29723282.3999999985,"net_annual_savings_dkk":27123282.3999999985,"payback_years":4.39,"lcoe_dkk_per_mwh":422.85},{"turbine":"Nordex N149 5.X","number_of_turbines":3,"annual_generation_mwh":30329.88,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":11.84,"grid_required_mwh":225881.12,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":171000000,"annual_opex_dkk":3900000.0,"annual_savings_dkk":44584923.6000000015,"net_annual_savings_dkk":40684923.6000000015,"payback_years":4.2,"lcoe_dkk_per_mwh":410.49},{"turbine":"Nordex N149 5.X","number_of_turbines":4,"annual_generation_mwh":40439.84,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":15.78,"grid_required_mwh":215771.16,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":223000000,"annual_opex_dkk":5200000.0,"annual_savings_dkk":59446564.799999997,"net_annual_savings_dkk":54246564.799999997,"payback_years":4.11,"lcoe_dkk_per_mwh":404.3},{"turbine":"Nordex N149 5.X","number_of_turbines":5,"annual_generation_mwh":50549.8,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":19.73,"grid_required_mwh":205661.2,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":275000000,"annual_opex_dkk":6500000.0,"annual_savings_dkk":74308206.0,"net_annual_savings_dkk":67808206.0,"payback_years":4.06,"lcoe_dkk_per_mwh":400.6},{"turbine":"Nordex N149 5.X","number_of_turbines":6,"annual_generation_mwh":60659.76,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":23.68,"grid_required_mwh":195551.24,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":327000000,"annual_opex_dkk":7800000.0,"annual_savings_dkk":89169847.200000003,"net_annual_savings_dkk":81369847.200000003,"payback_years":4.02,"lcoe_dkk_per_mwh":398.12},{"turbine":"Nordex N149 5.X","number_of_turbines":7,"annual_generation_mwh":70769.72,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":27.62,"grid_required_mwh":185441.28,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":379000000,"annual_opex_dkk":9100000.0,"annual_savings_dkk":104031488.400000006,"net_annual_savings_dkk":94931488.400000006,"payback_years":3.99,"lcoe_dkk_per_mwh":396.36},{"turbine":"Nordex N149 5.X","number_of_turbines":8,"annual_generation_mwh":80879.68,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":31.57,"grid_required_mwh":175331.32,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":431000000,"annual_opex_dkk":10400000.0,"annual_savings_dkk":118893129.599999994,"net_annual_savings_dkk":108493129.599999994,"payback_years":3.97,"lcoe_dkk_per_mwh":395.03},{"turbine":"Nordex N149 5.X","number_of_turbines":9,"annual_generation_mwh":90989.64,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":35.51,"grid_required_mwh":165221.36,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":483000000,"annual_opex_dkk":11700000.0,"annual_savings_dkk":133754770.799999997,"net_annual_savings_dkk":122054770.799999997,"payback_years":3.96,"lcoe_dkk_per_mwh":394.0},{"turbine":"Nordex N149 5.X","number_of_turbines":10,"annual_generation_mwh":101099.6,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":39.46,"grid_required_mwh":155111.4,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":535000000,"annual_opex_dkk":13000000.0,"annual_savings_dkk":148616412.0,"net_annual_savings_dkk":135616412.0,"payback_years":3.94,"lcoe_dkk_per_mwh":393.18},{"turbine":"Nordex N149 5.X","number_of_turbines":11,"annual_generation_mwh":111209.56,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":43.41,"grid_required_mwh":145001.44,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":587000000,"annual_opex_dkk":14300000.0,"annual_savings_dkk":163478053.1999999881,"net_annual_savings_dkk":149178053.1999999881,"payback_years":3.93,"lcoe_dkk_per_mwh":392.5},{"turbine":"Nordex N149 5.X","number_of_turbines":12,"annual_generation_mwh":121319.52,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":47.35,"grid_required_mwh":134891.48,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":639000000,"annual_opex_dkk":15600000.0,"annual_savings_dkk":178339694.400000006,"net_annual_savings_dkk":162739694.400000006,"payback_years":3.93,"lcoe_dkk_per_mwh":391.94},{"turbine":"Nordex N149 5.X","number_of_turbines":13,"annual_generation_mwh":131429.48,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":51.3,"grid_required_mwh":124781.52,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":691000000,"annual_opex_dkk":16900000.0,"annual_savings_dkk":193201335.599999994,"net_annual_savings_dkk":176301335.599999994,"payback_years":3.92,"lcoe_dkk_per_mwh":391.46},{"turbine":"Nordex N149 5.X","number_of_turbines":14,"annual_generation_mwh":141539.44,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":55.24,"grid_required_mwh":114671.56,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":743000000,"annual_opex_dkk":18200000.0,"annual_savings_dkk":208062976.8000000119,"net_annual_savings_dkk":189862976.8000000119,"payback_years":3.91,"lcoe_dkk_per_mwh":391.06},{"turbine":"Nordex N149 5.X","number_of_turbines":15,"annual_generation_mwh":151649.4,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":59.19,"grid_required_mwh":104561.6,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":795000000,"annual_opex_dkk":19500000.0,"annual_savings_dkk":222924618.0,"net_annual_savings_dkk":203424618.0,"payback_years":3.91,"lcoe_dkk_per_mwh":390.7},{"turbine":"Nordex N149 5.X","number_of_turbines":16,"annual_generation_mwh":161759.36,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":63.14,"grid_required_mwh":94451.64,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":847000000,"annual_opex_dkk":20800000.0,"annual_savings_dkk":237786259.1999999881,"net_annual_savings_dkk":216986259.1999999881,"payback_years":3.9,"lcoe_dkk_per_mwh":390.39},{"turbine":"Nordex N149 5.X","number_of_turbines":17,"annual_generation_mwh":171869.32,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":67.08,"grid_required_mwh":84341.68,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":899000000,"annual_opex_dkk":22100000.0,"annual_savings_dkk":252647900.400000006,"net_annual_savings_dkk":230547900.400000006,"payback_years":3.9,"lcoe_dkk_per_mwh":390.12},{"turbine":"Nordex N149 5.X","number_of_turbines":18,"annual_generation_mwh":181979.28,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":71.03,"grid_required_mwh":74231.72,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":951000000,"annual_opex_dkk":23400000.0,"annual_savings_dkk":267509541.599999994,"net_annual_savings_dkk":244109541.599999994,"payback_years":3.9,"lcoe_dkk_per_mwh":389.88},{"turbine":"Nordex N149 5.X","number_of_turbines":19,"annual_generation_mwh":192089.24,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":74.97,"grid_required_mwh":64121.76,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":1003000000,"annual_opex_dkk":24700000.0,"annual_savings_dkk":282371182.8000000119,"net_annual_savings_dkk":257671182.8000000119,"payback_years":3.89,"lcoe_dkk_per_mwh":389.66},{"turbine":"Nordex N149 5.X","number_of_turbines":20,"annual_generation_mwh":202199.2,"annual_generation_one_turbine_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":78.92,"grid_required_mwh":54011.8,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":1055000000,"annual_opex_dkk":26000000.0,"annual_savings_dkk":297232824.0,"net_annual_savings_dkk":271232824.0,"payback_years":3.89,"lcoe_dkk_per_mwh":389.47},{"turbine":"Enercon E-138 EP3","number_of_turbines":1,"annual_generation_mwh":7833.09,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":3.06,"grid_required_mwh":248377.91,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":55000000,"annual_opex_dkk":1000000.0,"annual_savings_dkk":11514642.3000000007,"net_annual_savings_dkk":10514642.3000000007,"payback_years":5.23,"lcoe_dkk_per_mwh":478.74},{"turbine":"Enercon E-138 EP3","number_of_turbines":2,"annual_generation_mwh":15666.18,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":6.11,"grid_required_mwh":240544.82,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":95000000,"annual_opex_dkk":2000000.0,"annual_savings_dkk":23029284.6000000015,"net_annual_savings_dkk":21029284.6000000015,"payback_years":4.52,"lcoe_dkk_per_mwh":430.86},{"turbine":"Enercon E-138 EP3","number_of_turbines":3,"annual_generation_mwh":23499.27,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":9.17,"grid_required_mwh":232711.73,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":135000000,"annual_opex_dkk":3000000.0,"annual_savings_dkk":34543926.8999999985,"net_annual_savings_dkk":31543926.8999999985,"payback_years":4.28,"lcoe_dkk_per_mwh":414.91},{"turbine":"Enercon E-138 EP3","number_of_turbines":4,"annual_generation_mwh":31332.36,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":12.23,"grid_required_mwh":224878.64,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":175000000,"annual_opex_dkk":4000000.0,"annual_savings_dkk":46058569.200000003,"net_annual_savings_dkk":42058569.200000003,"payback_years":4.16,"lcoe_dkk_per_mwh":406.93},{"turbine":"Enercon E-138 EP3","number_of_turbines":5,"annual_generation_mwh":39165.45,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":15.29,"grid_required_mwh":217045.55,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":215000000,"annual_opex_dkk":5000000.0,"annual_savings_dkk":57573211.5,"net_annual_savings_dkk":52573211.5,"payback_years":4.09,"lcoe_dkk_per_mwh":402.14},{"turbine":"Enercon E-138 EP3","number_of_turbines":6,"annual_generation_mwh":46998.54,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":18.34,"grid_required_mwh":209212.46,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":255000000,"annual_opex_dkk":6000000.0,"annual_savings_dkk":69087853.799999997,"net_annual_savings_dkk":63087853.799999997,"payback_years":4.04,"lcoe_dkk_per_mwh":398.95},{"turbine":"Enercon E-138 EP3","number_of_turbines":7,"annual_generation_mwh":54831.63,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":21.4,"grid_required_mwh":201379.37,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":295000000,"annual_opex_dkk":7000000.0,"annual_savings_dkk":80602496.099999994,"net_annual_savings_dkk":73602496.099999994,"payback_years":4.01,"lcoe_dkk_per_mwh":396.67},{"turbine":"Enercon E-138 EP3","number_of_turbines":8,"annual_generation_mwh":62664.72,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":24.46,"grid_required_mwh":193546.28,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":335000000,"annual_opex_dkk":8000000.0,"annual_savings_dkk":92117138.400000006,"net_annual_savings_dkk":84117138.400000006,"payback_years":3.98,"lcoe_dkk_per_mwh":394.96},{"turbine":"Enercon E-138 EP3","number_of_turbines":9,"annual_generation_mwh":70497.81,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":27.52,"grid_required_mwh":185713.19,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":375000000,"annual_opex_dkk":9000000.0,"annual_savings_dkk":103631780.700000003,"net_annual_savings_dkk":94631780.700000003,"payback_years":3.96,"lcoe_dkk_per_mwh":393.63},{"turbine":"Enercon E-138 EP3","number_of_turbines":10,"annual_generation_mwh":78330.9,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":30.57,"grid_required_mwh":177880.1,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":415000000,"annual_opex_dkk":10000000.0,"annual_savings_dkk":115146423.0,"net_annual_savings_dkk":105146423.0,"payback_years":3.95,"lcoe_dkk_per_mwh":392.57},{"turbine":"Enercon E-138 EP3","number_of_turbines":11,"annual_generation_mwh":86163.99,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":33.63,"grid_required_mwh":170047.01,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":455000000,"annual_opex_dkk":11000000.0,"annual_savings_dkk":126661065.299999997,"net_annual_savings_dkk":115661065.299999997,"payback_years":3.93,"lcoe_dkk_per_mwh":391.69},{"turbine":"Enercon E-138 EP3","number_of_turbines":12,"annual_generation_mwh":93997.08,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":36.69,"grid_required_mwh":162213.92,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":495000000,"annual_opex_dkk":12000000.0,"annual_savings_dkk":138175707.599999994,"net_annual_savings_dkk":126175707.599999994,"payback_years":3.92,"lcoe_dkk_per_mwh":390.97},{"turbine":"Enercon E-138 EP3","number_of_turbines":13,"annual_generation_mwh":101830.17,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":39.74,"grid_required_mwh":154380.83,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":535000000,"annual_opex_dkk":13000000.0,"annual_savings_dkk":149690349.900000006,"net_annual_savings_dkk":136690349.900000006,"payback_years":3.91,"lcoe_dkk_per_mwh":390.36},{"turbine":"Enercon E-138 EP3","number_of_turbines":14,"annual_generation_mwh":109663.26,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":42.8,"grid_required_mwh":146547.74,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":575000000,"annual_opex_dkk":14000000.0,"annual_savings_dkk":161204992.1999999881,"net_annual_savings_dkk":147204992.1999999881,"payback_years":3.91,"lcoe_dkk_per_mwh":389.83},{"turbine":"Enercon E-138 EP3","number_of_turbines":15,"annual_generation_mwh":117496.35,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":45.86,"grid_required_mwh":138714.65,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":615000000,"annual_opex_dkk":15000000.0,"annual_savings_dkk":172719634.5,"net_annual_savings_dkk":157719634.5,"payback_years":3.9,"lcoe_dkk_per_mwh":389.37},{"turbine":"Enercon E-138 EP3","number_of_turbines":16,"annual_generation_mwh":125329.44,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":48.92,"grid_required_mwh":130881.56,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":655000000,"annual_opex_dkk":16000000.0,"annual_savings_dkk":184234276.8000000119,"net_annual_savings_dkk":168234276.8000000119,"payback_years":3.89,"lcoe_dkk_per_mwh":388.97},{"turbine":"Enercon E-138 EP3","number_of_turbines":17,"annual_generation_mwh":133162.53,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":51.97,"grid_required_mwh":123048.47,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":695000000,"annual_opex_dkk":17000000.0,"annual_savings_dkk":195748919.099999994,"net_annual_savings_dkk":178748919.099999994,"payback_years":3.89,"lcoe_dkk_per_mwh":388.62},{"turbine":"Enercon E-138 EP3","number_of_turbines":18,"annual_generation_mwh":140995.62,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":55.03,"grid_required_mwh":115215.38,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":735000000,"annual_opex_dkk":18000000.0,"annual_savings_dkk":207263561.400000006,"net_annual_savings_dkk":189263561.400000006,"payback_years":3.88,"lcoe_dkk_per_mwh":388.31},{"turbine":"Enercon E-138 EP3","number_of_turbines":19,"annual_generation_mwh":148828.71,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":58.09,"grid_required_mwh":107382.29,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":775000000,"annual_opex_dkk":19000000.0,"annual_savings_dkk":218778203.6999999881,"net_annual_savings_dkk":199778203.6999999881,"payback_years":3.88,"lcoe_dkk_per_mwh":388.03},{"turbine":"Enercon E-138 EP3","number_of_turbines":20,"annual_generation_mwh":156661.8,"annual_generation_one_turbine_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":61.15,"grid_required_mwh":99549.2,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":815000000,"annual_opex_dkk":20000000.0,"annual_savings_dkk":230292846.0,"net_annual_savings_dkk":210292846.0,"payback_years":3.88,"lcoe_dkk_per_mwh":387.78}];
+        const turbineNames = [...new Set(economicsScenarios.map(row => row.turbine))];
 
         function formatNumber(value) {
             return Math.round(value).toLocaleString("de-DE");
@@ -830,17 +722,56 @@
             );
         }
 
-        function calculateScenario(turbine, count, electricityPrice, infrastructureCost) {
-            const oneTurbineScenario = getOneTurbineScenario(turbine);
+        function getCurrentInputs() {
+            const counts = {};
 
-            const annualGeneration = oneTurbineScenario.annual_generation_mwh * count;
-            const annualDemand = oneTurbineScenario.annual_demand_mwh;
-            const coverage = annualGeneration / annualDemand * 100;
+            document.querySelectorAll(".turbine-count").forEach(input => {
+                counts[input.dataset.turbine] = Number(input.value) || 0;
+            });
+
+            return {
+                counts: counts,
+                electricityPrice: Number(document.getElementById("electricityPriceInput").value) || 0,
+                infrastructureCost: Number(document.getElementById("infrastructureCostInput").value) || 0
+            };
+        }
+
+        function calculateMixedScenario(counts, electricityPrice, infrastructureCost) {
+            let annualGeneration = 0;
+            let turbineCapex = 0;
+            let annualDemand = null;
+            let totalTurbines = 0;
+
+            turbineNames.forEach(turbine => {
+                const count = Number(counts[turbine]) || 0;
+                const base = getOneTurbineScenario(turbine);
+
+                if (!base) {
+                    return;
+                }
+
+                if (annualDemand === null) {
+                    annualDemand = base.annual_demand_mwh;
+                }
+
+                annualGeneration += base.annual_generation_one_turbine_mwh * count;
+                turbineCapex += base.turbine_capex_per_unit_dkk * count;
+                totalTurbines += count;
+            });
+
+            if (annualDemand === null) {
+                annualDemand = 0;
+            }
+
+            const coverage = annualDemand > 0
+                ? annualGeneration / annualDemand * 100
+                : 0;
+
             const gridRequired = Math.max(annualDemand - annualGeneration, 0);
+            const totalCapex = totalTurbines > 0
+                ? turbineCapex + infrastructureCost
+                : 0;
 
-            const turbineCapexPerUnit = oneTurbineScenario.turbine_capex_per_unit_dkk;
-            const turbineCapex = turbineCapexPerUnit * count;
-            const totalCapex = turbineCapex + infrastructureCost;
             const annualOpex = turbineCapex * 0.025;
             const annualSavings = annualGeneration * electricityPrice;
             const netAnnualSavings = annualSavings - annualOpex;
@@ -859,8 +790,8 @@
                 : Infinity;
 
             return {
-                turbine: turbine,
-                count: count,
+                counts: counts,
+                totalTurbines: totalTurbines,
                 annualGeneration: annualGeneration,
                 annualDemand: annualDemand,
                 coverage: coverage,
@@ -875,21 +806,11 @@
             };
         }
 
-        function getCurrentInputs() {
-            return {
-                turbine: document.getElementById("turbineSelect").value,
-                count: Number(document.getElementById("turbineCount").value) || 1,
-                electricityPrice: Number(document.getElementById("electricityPriceInput").value) || 0,
-                infrastructureCost: Number(document.getElementById("infrastructureCostInput").value) || 0
-            };
-        }
-
         function updatePlanner() {
             const inputs = getCurrentInputs();
 
-            const scenario = calculateScenario(
-                inputs.turbine,
-                inputs.count,
+            const scenario = calculateMixedScenario(
+                inputs.counts,
                 inputs.electricityPrice,
                 inputs.infrastructureCost
             );
@@ -973,24 +894,59 @@
             chart.innerHTML = html;
         }
 
-        function optimizeDeployment() {
-            const inputs = getCurrentInputs();
+        function generateCombinations(maxTurbines) {
+            const combinations = [];
 
-            const turbines = [...new Set(economicsScenarios.map(row => row.turbine))];
-            let allScenarios = [];
+            for (let v = 0; v <= maxTurbines; v++) {
+                for (let s = 0; s <= maxTurbines - v; s++) {
+                    for (let n = 0; n <= maxTurbines - v - s; n++) {
+                        for (let e = 0; e <= maxTurbines - v - s - n; e++) {
+                            const total = v + s + n + e;
 
-            turbines.forEach(turbine => {
-                for (let count = 1; count <= 20; count++) {
-                    allScenarios.push(
-                        calculateScenario(
-                            turbine,
-                            count,
-                            inputs.electricityPrice,
-                            inputs.infrastructureCost
-                        )
-                    );
+                            if (total === 0) {
+                                continue;
+                            }
+
+                            const counts = {};
+                            counts[turbineNames[0]] = v;
+                            counts[turbineNames[1]] = s;
+                            counts[turbineNames[2]] = n;
+                            counts[turbineNames[3]] = e;
+
+                            combinations.push(counts);
+                        }
+                    }
+                }
+            }
+
+            return combinations;
+        }
+
+        function scenarioLabel(scenario) {
+            const parts = [];
+
+            turbineNames.forEach(turbine => {
+                const count = scenario.counts[turbine] || 0;
+
+                if (count > 0) {
+                    parts.push(`${count} × ${turbine}`);
                 }
             });
+
+            return parts.join(" + ");
+        }
+
+        function optimizeDeployment() {
+            const inputs = getCurrentInputs();
+            const combinations = generateCombinations(20);
+
+            const allScenarios = combinations.map(counts =>
+                calculateMixedScenario(
+                    counts,
+                    inputs.electricityPrice,
+                    inputs.infrastructureCost
+                )
+            );
 
             const viableScenarios = allScenarios.filter(row =>
                 isFinite(row.payback) && row.netAnnualSavings > 0
@@ -1022,10 +978,6 @@
             );
         }
 
-        function scenarioText(scenario) {
-            return `${scenario.count} × ${scenario.turbine}`;
-        }
-
         function renderOptimizerResults(maxCoverage, fastestPayback, lowestLcoe, lowestCostPerCoveredMwh) {
             const container = document.getElementById("optimizerResults");
 
@@ -1034,8 +986,8 @@
             html += `
                 <div class="optimizer-card">
                     <span>Maximum coverage</span>
-                    <strong>${scenarioText(maxCoverage)}</strong>
-                    <small>${maxCoverage.coverage.toFixed(2)}% demand coverage · ${formatNumber(maxCoverage.annualGeneration)} MWh/year</small>
+                    <strong>${scenarioLabel(maxCoverage)}</strong>
+                    <small>${maxCoverage.coverage.toFixed(2)}% coverage · ${formatNumber(maxCoverage.annualGeneration)} MWh/year</small>
                 </div>
             `;
 
@@ -1043,7 +995,7 @@
                 html += `
                     <div class="optimizer-card">
                         <span>Fastest payback</span>
-                        <strong>${scenarioText(fastestPayback)}</strong>
+                        <strong>${scenarioLabel(fastestPayback)}</strong>
                         <small>${fastestPayback.payback.toFixed(2)} years · ${formatNumber(fastestPayback.netAnnualSavings)} DKK net savings/year</small>
                     </div>
                 `;
@@ -1060,7 +1012,7 @@
             html += `
                 <div class="optimizer-card">
                     <span>Lowest LCOE</span>
-                    <strong>${scenarioText(lowestLcoe)}</strong>
+                    <strong>${scenarioLabel(lowestLcoe)}</strong>
                     <small>${formatNumber(lowestLcoe.lcoe)} DKK/MWh · ${formatNumber(lowestLcoe.totalCapex)} DKK CAPEX</small>
                 </div>
             `;
@@ -1068,7 +1020,7 @@
             html += `
                 <div class="optimizer-card">
                     <span>Lowest cost per covered MWh</span>
-                    <strong>${scenarioText(lowestCostPerCoveredMwh)}</strong>
+                    <strong>${scenarioLabel(lowestCostPerCoveredMwh)}</strong>
                     <small>${formatNumber(lowestCostPerCoveredMwh.costPerCoveredMwh)} DKK/MWh · ${lowestCostPerCoveredMwh.coverage.toFixed(2)}% coverage</small>
                 </div>
             `;
@@ -1076,8 +1028,10 @@
             container.innerHTML = html;
         }
 
-        document.getElementById("turbineSelect").addEventListener("change", updatePlanner);
-        document.getElementById("turbineCount").addEventListener("input", updatePlanner);
+        document.querySelectorAll(".turbine-count").forEach(input => {
+            input.addEventListener("input", updatePlanner);
+        });
+
         document.getElementById("electricityPriceInput").addEventListener("input", updatePlanner);
         document.getElementById("infrastructureCostInput").addEventListener("input", updatePlanner);
         document.getElementById("optimizeButton").addEventListener("click", optimizeDeployment);
