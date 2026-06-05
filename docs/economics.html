@@ -300,6 +300,57 @@
             line-height: 1.5;
         }
 
+        .optimizer-button {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            background: linear-gradient(90deg, #8b0037, #e4005a);
+            color: white;
+            font-weight: 900;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .optimizer-button:hover {
+            opacity: 0.92;
+        }
+
+        .optimizer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .optimizer-card {
+            background: #faf7f8;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .optimizer-card span {
+            display: block;
+            color: #555;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .optimizer-card strong {
+            color: var(--brand);
+            font-size: 20px;
+            display: block;
+        }
+
+        .optimizer-card small {
+            color: #777;
+            display: block;
+            margin-top: 6px;
+            line-height: 1.35;
+        }
+
         .tag {
             display: inline-block;
             background: #faf7f8;
@@ -399,7 +450,7 @@
                     financial decision-support indicators.
                 </p>
                 <p class="hero-note">
-                    Economics completes the dashboard story: technical feasibility, forecasting and financial viability.
+                    Interactive economics turns the project into an industrial decision-support framework.
                 </p>
             </div>
 
@@ -417,15 +468,15 @@
 
         <section class="kpi-grid">
             <div class="card">
-                <div class="kpi-label">Electricity price assumption</div>
+                <div class="kpi-label">Default electricity price</div>
                 <div class="kpi-value">1.470 DKK/MWh</div>
-                <div class="kpi-note">Based on invoice variable electricity price proxy</div>
+                <div class="kpi-note">Editable in the planner</div>
             </div>
 
             <div class="card">
-                <div class="kpi-label">Fixed infrastructure cost</div>
+                <div class="kpi-label">Default infrastructure cost</div>
                 <div class="kpi-value">15.000.000 DKK</div>
-                <div class="kpi-note">Transformer, connection and integration proxy</div>
+                <div class="kpi-note">Editable in the planner</div>
             </div>
 
             <div class="card">
@@ -445,7 +496,7 @@
             <div class="card">
                 <h2>Interactive deployment planner</h2>
                 <div class="sub">
-                    Select turbine model and deployment size to estimate energy and economic outcomes.
+                    Change deployment size, electricity price and infrastructure cost to test economic sensitivity.
                 </div>
 
                 <div class="planner-box">
@@ -456,6 +507,16 @@
 
                     <label for="turbineCount">Number of turbines</label>
                     <input id="turbineCount" type="number" min="1" max="20" value="1">
+
+                    <label for="electricityPriceInput">Electricity price DKK/MWh</label>
+                    <input id="electricityPriceInput" type="number" min="0" step="50" value="1470">
+
+                    <label for="infrastructureCostInput">Fixed infrastructure cost DKK</label>
+                    <input id="infrastructureCostInput" type="number" min="0" step="1000000" value="15000000">
+
+                    <button class="optimizer-button" id="optimizeButton">
+                        Optimize deployment
+                    </button>
 
                     <div class="planner-results">
                         <div class="result-card">
@@ -504,17 +565,47 @@
             <div class="card">
                 <h2>Savings versus investment</h2>
                 <div class="sub">
-                    Visual comparison of CAPEX and estimated annual net savings for the selected deployment.
+                    Visual comparison of CAPEX and estimated annual savings for the selected assumptions.
                 </div>
 
                 <div class="chart-box" id="savingsChart"></div>
             </div>
         </section>
 
+        <section class="grid">
+            <div class="card">
+                <h2>Deployment optimizer</h2>
+                <div class="sub">
+                    Automatically searches turbine counts from 1 to 20 under the selected price and infrastructure assumptions.
+                </div>
+
+                <div class="optimizer-grid" id="optimizerResults">
+                    <div class="optimizer-card">
+                        <span>Instructions</span>
+                        <strong>Click Optimize deployment</strong>
+                        <small>The optimizer will return the best scenario for coverage, payback, LCOE and cost per covered MWh.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Decision-support interpretation</h2>
+                <p>
+                    This planner allows stakeholders to test how the business case changes when electricity prices
+                    or infrastructure costs change. This is closer to an industrial decision-support system than
+                    a static descriptive dashboard.
+                </p>
+                <span class="tag">Scenario optimization</span>
+                <span class="tag">Payback sensitivity</span>
+                <span class="tag">Infrastructure cost</span>
+                <span class="tag">Electricity price</span>
+            </div>
+        </section>
+
         <section class="card" style="margin-bottom: 24px;">
             <h2>Scenario comparison</h2>
             <div class="sub">
-                Standard deployment sizes for comparison across turbine models.
+                Standard deployment sizes calculated with default assumptions.
             </div>
 
             <table>
@@ -699,19 +790,18 @@
             <div class="card">
                 <h2>Economic methodology</h2>
                 <div class="method-note">
-                    The model estimates avoided electricity purchases by multiplying annual wind generation by
-                    the assumed electricity price. CAPEX includes turbine investment plus a fixed infrastructure
-                    proxy for grid connection, transformer and integration. OPEX is modelled as a fixed annual
-                    percentage of turbine CAPEX.
+                    Avoided electricity purchases are estimated by multiplying annual wind generation by the selected
+                    electricity price. CAPEX includes turbine investment plus a fixed infrastructure proxy for grid
+                    connection, transformer and integration. OPEX is modelled as a fixed annual percentage of turbine CAPEX.
                 </div>
             </div>
 
             <div class="card">
-                <h2>Decision-support value</h2>
+                <h2>Industrial decision-support value</h2>
                 <p>
-                    This page converts the project from a descriptive energy assessment into an interactive
-                    deployment planner. Stakeholders can compare turbine choices, deployment sizes, grid dependency,
-                    payback and LCOE under transparent assumptions.
+                    The economics page closes the framework by connecting technical performance, demand coverage,
+                    grid dependency and financial feasibility. The optimizer supports multiple decision objectives
+                    rather than assuming that one scenario is universally best.
                 </p>
                 <span class="tag">CAPEX</span>
                 <span class="tag">Payback</span>
@@ -728,7 +818,7 @@
     </footer>
 
     <script>
-        const economicsScenarios = [{"turbine":"Vestas V136 4.5 MW","number_of_turbines":1,"annual_generation_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":3.7,"grid_required_mwh":246722.18,"total_capex_dkk":57000000,"annual_opex_dkk":1050000.0,"annual_savings_dkk":13948565.4000000004,"net_annual_savings_dkk":12898565.4000000004,"payback_years":4.42,"lcoe_dkk_per_mwh":411.01},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":3,"annual_generation_mwh":28466.46,"annual_demand_mwh":256211.0,"coverage_percent":11.11,"grid_required_mwh":227744.54,"total_capex_dkk":141000000,"annual_opex_dkk":3150000.0,"annual_savings_dkk":41845696.200000003,"net_annual_savings_dkk":38695696.200000003,"payback_years":3.64,"lcoe_dkk_per_mwh":358.32},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":5,"annual_generation_mwh":47444.1,"annual_demand_mwh":256211.0,"coverage_percent":18.52,"grid_required_mwh":208766.9,"total_capex_dkk":225000000,"annual_opex_dkk":5250000.0,"annual_savings_dkk":69742827.0,"net_annual_savings_dkk":64492827.0,"payback_years":3.49,"lcoe_dkk_per_mwh":347.78},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":10,"annual_generation_mwh":94888.2,"annual_demand_mwh":256211.0,"coverage_percent":37.04,"grid_required_mwh":161322.8,"total_capex_dkk":435000000,"annual_opex_dkk":10500000.0,"annual_savings_dkk":139485654.0,"net_annual_savings_dkk":128985654.0,"payback_years":3.37,"lcoe_dkk_per_mwh":339.87},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":1,"annual_generation_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":3.46,"grid_required_mwh":247342.62,"total_capex_dkk":62000000,"annual_opex_dkk":1175000.0,"annual_savings_dkk":13036518.5999999996,"net_annual_savings_dkk":11861518.5999999996,"payback_years":5.23,"lcoe_dkk_per_mwh":482.05},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":3,"annual_generation_mwh":26605.14,"annual_demand_mwh":256211.0,"coverage_percent":10.38,"grid_required_mwh":229605.86,"total_capex_dkk":156000000,"annual_opex_dkk":3525000.0,"annual_savings_dkk":39109555.799999997,"net_annual_savings_dkk":35584555.799999997,"payback_years":4.38,"lcoe_dkk_per_mwh":425.67},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":5,"annual_generation_mwh":44341.9,"annual_demand_mwh":256211.0,"coverage_percent":17.31,"grid_required_mwh":211869.1,"total_capex_dkk":250000000,"annual_opex_dkk":5875000.0,"annual_savings_dkk":65182593.0,"net_annual_savings_dkk":59307593.0,"payback_years":4.22,"lcoe_dkk_per_mwh":414.39},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":10,"annual_generation_mwh":88683.8,"annual_demand_mwh":256211.0,"coverage_percent":34.61,"grid_required_mwh":167527.2,"total_capex_dkk":485000000,"annual_opex_dkk":11750000.0,"annual_savings_dkk":130365186.0,"net_annual_savings_dkk":118615186.0,"payback_years":4.09,"lcoe_dkk_per_mwh":405.94},{"turbine":"Nordex N149 5.X","number_of_turbines":1,"annual_generation_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":3.95,"grid_required_mwh":246101.04,"total_capex_dkk":67000000,"annual_opex_dkk":1300000.0,"annual_savings_dkk":14861641.1999999993,"net_annual_savings_dkk":13561641.1999999993,"payback_years":4.94,"lcoe_dkk_per_mwh":459.94},{"turbine":"Nordex N149 5.X","number_of_turbines":3,"annual_generation_mwh":30329.88,"annual_demand_mwh":256211.0,"coverage_percent":11.84,"grid_required_mwh":225881.12,"total_capex_dkk":171000000,"annual_opex_dkk":3900000.0,"annual_savings_dkk":44584923.6000000015,"net_annual_savings_dkk":40684923.6000000015,"payback_years":4.2,"lcoe_dkk_per_mwh":410.49},{"turbine":"Nordex N149 5.X","number_of_turbines":5,"annual_generation_mwh":50549.8,"annual_demand_mwh":256211.0,"coverage_percent":19.73,"grid_required_mwh":205661.2,"total_capex_dkk":275000000,"annual_opex_dkk":6500000.0,"annual_savings_dkk":74308206.0,"net_annual_savings_dkk":67808206.0,"payback_years":4.06,"lcoe_dkk_per_mwh":400.6},{"turbine":"Nordex N149 5.X","number_of_turbines":10,"annual_generation_mwh":101099.6,"annual_demand_mwh":256211.0,"coverage_percent":39.46,"grid_required_mwh":155111.4,"total_capex_dkk":535000000,"annual_opex_dkk":13000000.0,"annual_savings_dkk":148616412.0,"net_annual_savings_dkk":135616412.0,"payback_years":3.94,"lcoe_dkk_per_mwh":393.18},{"turbine":"Enercon E-138 EP3","number_of_turbines":1,"annual_generation_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":3.06,"grid_required_mwh":248377.91,"total_capex_dkk":55000000,"annual_opex_dkk":1000000.0,"annual_savings_dkk":11514642.3000000007,"net_annual_savings_dkk":10514642.3000000007,"payback_years":5.23,"lcoe_dkk_per_mwh":478.74},{"turbine":"Enercon E-138 EP3","number_of_turbines":3,"annual_generation_mwh":23499.27,"annual_demand_mwh":256211.0,"coverage_percent":9.17,"grid_required_mwh":232711.73,"total_capex_dkk":135000000,"annual_opex_dkk":3000000.0,"annual_savings_dkk":34543926.8999999985,"net_annual_savings_dkk":31543926.8999999985,"payback_years":4.28,"lcoe_dkk_per_mwh":414.91},{"turbine":"Enercon E-138 EP3","number_of_turbines":5,"annual_generation_mwh":39165.45,"annual_demand_mwh":256211.0,"coverage_percent":15.29,"grid_required_mwh":217045.55,"total_capex_dkk":215000000,"annual_opex_dkk":5000000.0,"annual_savings_dkk":57573211.5,"net_annual_savings_dkk":52573211.5,"payback_years":4.09,"lcoe_dkk_per_mwh":402.14},{"turbine":"Enercon E-138 EP3","number_of_turbines":10,"annual_generation_mwh":78330.9,"annual_demand_mwh":256211.0,"coverage_percent":30.57,"grid_required_mwh":177880.1,"total_capex_dkk":415000000,"annual_opex_dkk":10000000.0,"annual_savings_dkk":115146423.0,"net_annual_savings_dkk":105146423.0,"payback_years":3.95,"lcoe_dkk_per_mwh":392.57}];
+        const economicsScenarios = [{"turbine":"Vestas V136 4.5 MW","number_of_turbines":1,"annual_generation_mwh":9488.82,"annual_demand_mwh":256211.0,"coverage_percent":3.7,"grid_required_mwh":246722.18,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":57000000,"annual_opex_dkk":1050000.0,"annual_savings_dkk":13948565.4000000004,"net_annual_savings_dkk":12898565.4000000004,"payback_years":4.42,"lcoe_dkk_per_mwh":411.01},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":3,"annual_generation_mwh":28466.46,"annual_demand_mwh":256211.0,"coverage_percent":11.11,"grid_required_mwh":227744.54,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":141000000,"annual_opex_dkk":3150000.0,"annual_savings_dkk":41845696.200000003,"net_annual_savings_dkk":38695696.200000003,"payback_years":3.64,"lcoe_dkk_per_mwh":358.32},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":5,"annual_generation_mwh":47444.1,"annual_demand_mwh":256211.0,"coverage_percent":18.52,"grid_required_mwh":208766.9,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":225000000,"annual_opex_dkk":5250000.0,"annual_savings_dkk":69742827.0,"net_annual_savings_dkk":64492827.0,"payback_years":3.49,"lcoe_dkk_per_mwh":347.78},{"turbine":"Vestas V136 4.5 MW","number_of_turbines":10,"annual_generation_mwh":94888.2,"annual_demand_mwh":256211.0,"coverage_percent":37.04,"grid_required_mwh":161322.8,"turbine_capex_per_unit_dkk":42000000,"total_capex_dkk":435000000,"annual_opex_dkk":10500000.0,"annual_savings_dkk":139485654.0,"net_annual_savings_dkk":128985654.0,"payback_years":3.37,"lcoe_dkk_per_mwh":339.87},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":1,"annual_generation_mwh":8868.38,"annual_demand_mwh":256211.0,"coverage_percent":3.46,"grid_required_mwh":247342.62,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":62000000,"annual_opex_dkk":1175000.0,"annual_savings_dkk":13036518.5999999996,"net_annual_savings_dkk":11861518.5999999996,"payback_years":5.23,"lcoe_dkk_per_mwh":482.05},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":3,"annual_generation_mwh":26605.14,"annual_demand_mwh":256211.0,"coverage_percent":10.38,"grid_required_mwh":229605.86,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":156000000,"annual_opex_dkk":3525000.0,"annual_savings_dkk":39109555.799999997,"net_annual_savings_dkk":35584555.799999997,"payback_years":4.38,"lcoe_dkk_per_mwh":425.67},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":5,"annual_generation_mwh":44341.9,"annual_demand_mwh":256211.0,"coverage_percent":17.31,"grid_required_mwh":211869.1,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":250000000,"annual_opex_dkk":5875000.0,"annual_savings_dkk":65182593.0,"net_annual_savings_dkk":59307593.0,"payback_years":4.22,"lcoe_dkk_per_mwh":414.39},{"turbine":"Siemens Gamesa SG 5.0-145","number_of_turbines":10,"annual_generation_mwh":88683.8,"annual_demand_mwh":256211.0,"coverage_percent":34.61,"grid_required_mwh":167527.2,"turbine_capex_per_unit_dkk":47000000,"total_capex_dkk":485000000,"annual_opex_dkk":11750000.0,"annual_savings_dkk":130365186.0,"net_annual_savings_dkk":118615186.0,"payback_years":4.09,"lcoe_dkk_per_mwh":405.94},{"turbine":"Nordex N149 5.X","number_of_turbines":1,"annual_generation_mwh":10109.96,"annual_demand_mwh":256211.0,"coverage_percent":3.95,"grid_required_mwh":246101.04,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":67000000,"annual_opex_dkk":1300000.0,"annual_savings_dkk":14861641.1999999993,"net_annual_savings_dkk":13561641.1999999993,"payback_years":4.94,"lcoe_dkk_per_mwh":459.94},{"turbine":"Nordex N149 5.X","number_of_turbines":3,"annual_generation_mwh":30329.88,"annual_demand_mwh":256211.0,"coverage_percent":11.84,"grid_required_mwh":225881.12,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":171000000,"annual_opex_dkk":3900000.0,"annual_savings_dkk":44584923.6000000015,"net_annual_savings_dkk":40684923.6000000015,"payback_years":4.2,"lcoe_dkk_per_mwh":410.49},{"turbine":"Nordex N149 5.X","number_of_turbines":5,"annual_generation_mwh":50549.8,"annual_demand_mwh":256211.0,"coverage_percent":19.73,"grid_required_mwh":205661.2,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":275000000,"annual_opex_dkk":6500000.0,"annual_savings_dkk":74308206.0,"net_annual_savings_dkk":67808206.0,"payback_years":4.06,"lcoe_dkk_per_mwh":400.6},{"turbine":"Nordex N149 5.X","number_of_turbines":10,"annual_generation_mwh":101099.6,"annual_demand_mwh":256211.0,"coverage_percent":39.46,"grid_required_mwh":155111.4,"turbine_capex_per_unit_dkk":52000000,"total_capex_dkk":535000000,"annual_opex_dkk":13000000.0,"annual_savings_dkk":148616412.0,"net_annual_savings_dkk":135616412.0,"payback_years":3.94,"lcoe_dkk_per_mwh":393.18},{"turbine":"Enercon E-138 EP3","number_of_turbines":1,"annual_generation_mwh":7833.09,"annual_demand_mwh":256211.0,"coverage_percent":3.06,"grid_required_mwh":248377.91,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":55000000,"annual_opex_dkk":1000000.0,"annual_savings_dkk":11514642.3000000007,"net_annual_savings_dkk":10514642.3000000007,"payback_years":5.23,"lcoe_dkk_per_mwh":478.74},{"turbine":"Enercon E-138 EP3","number_of_turbines":3,"annual_generation_mwh":23499.27,"annual_demand_mwh":256211.0,"coverage_percent":9.17,"grid_required_mwh":232711.73,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":135000000,"annual_opex_dkk":3000000.0,"annual_savings_dkk":34543926.8999999985,"net_annual_savings_dkk":31543926.8999999985,"payback_years":4.28,"lcoe_dkk_per_mwh":414.91},{"turbine":"Enercon E-138 EP3","number_of_turbines":5,"annual_generation_mwh":39165.45,"annual_demand_mwh":256211.0,"coverage_percent":15.29,"grid_required_mwh":217045.55,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":215000000,"annual_opex_dkk":5000000.0,"annual_savings_dkk":57573211.5,"net_annual_savings_dkk":52573211.5,"payback_years":4.09,"lcoe_dkk_per_mwh":402.14},{"turbine":"Enercon E-138 EP3","number_of_turbines":10,"annual_generation_mwh":78330.9,"annual_demand_mwh":256211.0,"coverage_percent":30.57,"grid_required_mwh":177880.1,"turbine_capex_per_unit_dkk":40000000,"total_capex_dkk":415000000,"annual_opex_dkk":10000000.0,"annual_savings_dkk":115146423.0,"net_annual_savings_dkk":105146423.0,"payback_years":3.95,"lcoe_dkk_per_mwh":392.57}];
 
         function formatNumber(value) {
             return Math.round(value).toLocaleString("de-DE");
@@ -740,10 +830,7 @@
             );
         }
 
-        function updatePlanner() {
-            const turbine = document.getElementById("turbineSelect").value;
-            const count = Number(document.getElementById("turbineCount").value) || 1;
-
+        function calculateScenario(turbine, count, electricityPrice, infrastructureCost) {
             const oneTurbineScenario = getOneTurbineScenario(turbine);
 
             const annualGeneration = oneTurbineScenario.annual_generation_mwh * count;
@@ -751,61 +838,110 @@
             const coverage = annualGeneration / annualDemand * 100;
             const gridRequired = Math.max(annualDemand - annualGeneration, 0);
 
-            const turbineCapexPerUnit = (
-                (oneTurbineScenario.total_capex_dkk - 15000000)
-                / oneTurbineScenario.number_of_turbines
-            );
-
+            const turbineCapexPerUnit = oneTurbineScenario.turbine_capex_per_unit_dkk;
             const turbineCapex = turbineCapexPerUnit * count;
-            const totalCapex = turbineCapex + 15000000;
+            const totalCapex = turbineCapex + infrastructureCost;
             const annualOpex = turbineCapex * 0.025;
-            const annualSavings = annualGeneration * 1470;
+            const annualSavings = annualGeneration * electricityPrice;
             const netAnnualSavings = annualSavings - annualOpex;
 
             const payback = netAnnualSavings > 0
                 ? totalCapex / netAnnualSavings
-                : 0;
+                : Infinity;
 
             const lcoe = annualGeneration > 0
                 ? (totalCapex + annualOpex * 20) /
                   (annualGeneration * 20)
-                : 0;
+                : Infinity;
 
             const costPerCoveredMwh = annualGeneration > 0
                 ? totalCapex / annualGeneration
-                : 0;
+                : Infinity;
+
+            return {
+                turbine: turbine,
+                count: count,
+                annualGeneration: annualGeneration,
+                annualDemand: annualDemand,
+                coverage: coverage,
+                gridRequired: gridRequired,
+                totalCapex: totalCapex,
+                annualOpex: annualOpex,
+                annualSavings: annualSavings,
+                netAnnualSavings: netAnnualSavings,
+                payback: payback,
+                lcoe: lcoe,
+                costPerCoveredMwh: costPerCoveredMwh
+            };
+        }
+
+        function getCurrentInputs() {
+            return {
+                turbine: document.getElementById("turbineSelect").value,
+                count: Number(document.getElementById("turbineCount").value) || 1,
+                electricityPrice: Number(document.getElementById("electricityPriceInput").value) || 0,
+                infrastructureCost: Number(document.getElementById("infrastructureCostInput").value) || 0
+            };
+        }
+
+        function updatePlanner() {
+            const inputs = getCurrentInputs();
+
+            const scenario = calculateScenario(
+                inputs.turbine,
+                inputs.count,
+                inputs.electricityPrice,
+                inputs.infrastructureCost
+            );
 
             document.getElementById("generationResult").textContent =
-                formatNumber(annualGeneration) + " MWh";
+                formatNumber(scenario.annualGeneration) + " MWh";
 
             document.getElementById("coverageResult").textContent =
-                coverage.toFixed(2) + "%";
+                scenario.coverage.toFixed(2) + "%";
 
             document.getElementById("gridResult").textContent =
-                formatNumber(gridRequired) + " MWh";
+                formatNumber(scenario.gridRequired) + " MWh";
 
             document.getElementById("capexResult").textContent =
-                formatNumber(totalCapex) + " DKK";
+                formatNumber(scenario.totalCapex) + " DKK";
 
             document.getElementById("savingsResult").textContent =
-                formatNumber(netAnnualSavings) + " DKK";
+                formatNumber(scenario.netAnnualSavings) + " DKK";
 
             document.getElementById("paybackResult").textContent =
-                payback.toFixed(2) + " years";
+                isFinite(scenario.payback)
+                    ? scenario.payback.toFixed(2) + " years"
+                    : "Not viable";
 
             document.getElementById("lcoeResult").textContent =
-                formatNumber(lcoe) + " DKK/MWh";
+                isFinite(scenario.lcoe)
+                    ? formatNumber(scenario.lcoe) + " DKK/MWh"
+                    : "N/A";
 
             document.getElementById("costCoveredResult").textContent =
-                formatNumber(costPerCoveredMwh) + " DKK/MWh";
+                isFinite(scenario.costPerCoveredMwh)
+                    ? formatNumber(scenario.costPerCoveredMwh) + " DKK/MWh"
+                    : "N/A";
 
-            updateSavingsChart(totalCapex, netAnnualSavings, annualSavings, annualOpex);
+            updateSavingsChart(
+                scenario.totalCapex,
+                scenario.netAnnualSavings,
+                scenario.annualSavings,
+                scenario.annualOpex
+            );
         }
 
         function updateSavingsChart(totalCapex, netAnnualSavings, annualSavings, annualOpex) {
             const chart = document.getElementById("savingsChart");
 
-            const maxValue = Math.max(totalCapex, annualSavings, annualOpex, Math.abs(netAnnualSavings), 1);
+            const maxValue = Math.max(
+                totalCapex,
+                annualSavings,
+                annualOpex,
+                Math.abs(netAnnualSavings),
+                1
+            );
 
             const items = [
                 ["Total CAPEX", totalCapex],
@@ -837,8 +973,114 @@
             chart.innerHTML = html;
         }
 
+        function optimizeDeployment() {
+            const inputs = getCurrentInputs();
+
+            const turbines = [...new Set(economicsScenarios.map(row => row.turbine))];
+            let allScenarios = [];
+
+            turbines.forEach(turbine => {
+                for (let count = 1; count <= 20; count++) {
+                    allScenarios.push(
+                        calculateScenario(
+                            turbine,
+                            count,
+                            inputs.electricityPrice,
+                            inputs.infrastructureCost
+                        )
+                    );
+                }
+            });
+
+            const viableScenarios = allScenarios.filter(row =>
+                isFinite(row.payback) && row.netAnnualSavings > 0
+            );
+
+            const maxCoverage = allScenarios.reduce((best, row) =>
+                row.coverage > best.coverage ? row : best
+            );
+
+            const fastestPayback = viableScenarios.length > 0
+                ? viableScenarios.reduce((best, row) =>
+                    row.payback < best.payback ? row : best
+                  )
+                : null;
+
+            const lowestLcoe = allScenarios.reduce((best, row) =>
+                row.lcoe < best.lcoe ? row : best
+            );
+
+            const lowestCostPerCoveredMwh = allScenarios.reduce((best, row) =>
+                row.costPerCoveredMwh < best.costPerCoveredMwh ? row : best
+            );
+
+            renderOptimizerResults(
+                maxCoverage,
+                fastestPayback,
+                lowestLcoe,
+                lowestCostPerCoveredMwh
+            );
+        }
+
+        function scenarioText(scenario) {
+            return `${scenario.count} × ${scenario.turbine}`;
+        }
+
+        function renderOptimizerResults(maxCoverage, fastestPayback, lowestLcoe, lowestCostPerCoveredMwh) {
+            const container = document.getElementById("optimizerResults");
+
+            let html = "";
+
+            html += `
+                <div class="optimizer-card">
+                    <span>Maximum coverage</span>
+                    <strong>${scenarioText(maxCoverage)}</strong>
+                    <small>${maxCoverage.coverage.toFixed(2)}% demand coverage · ${formatNumber(maxCoverage.annualGeneration)} MWh/year</small>
+                </div>
+            `;
+
+            if (fastestPayback) {
+                html += `
+                    <div class="optimizer-card">
+                        <span>Fastest payback</span>
+                        <strong>${scenarioText(fastestPayback)}</strong>
+                        <small>${fastestPayback.payback.toFixed(2)} years · ${formatNumber(fastestPayback.netAnnualSavings)} DKK net savings/year</small>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="optimizer-card">
+                        <span>Fastest payback</span>
+                        <strong>No viable scenario</strong>
+                        <small>Net annual savings are negative under the selected assumptions.</small>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="optimizer-card">
+                    <span>Lowest LCOE</span>
+                    <strong>${scenarioText(lowestLcoe)}</strong>
+                    <small>${formatNumber(lowestLcoe.lcoe)} DKK/MWh · ${formatNumber(lowestLcoe.totalCapex)} DKK CAPEX</small>
+                </div>
+            `;
+
+            html += `
+                <div class="optimizer-card">
+                    <span>Lowest cost per covered MWh</span>
+                    <strong>${scenarioText(lowestCostPerCoveredMwh)}</strong>
+                    <small>${formatNumber(lowestCostPerCoveredMwh.costPerCoveredMwh)} DKK/MWh · ${lowestCostPerCoveredMwh.coverage.toFixed(2)}% coverage</small>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
         document.getElementById("turbineSelect").addEventListener("change", updatePlanner);
         document.getElementById("turbineCount").addEventListener("input", updatePlanner);
+        document.getElementById("electricityPriceInput").addEventListener("input", updatePlanner);
+        document.getElementById("infrastructureCostInput").addEventListener("input", updatePlanner);
+        document.getElementById("optimizeButton").addEventListener("click", optimizeDeployment);
 
         updatePlanner();
     </script>
