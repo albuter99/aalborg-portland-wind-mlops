@@ -675,7 +675,7 @@ def main():
             </div>
 
             <div class="hero-panel">
-                <small>Best seasonal scenario</small>
+                <small>Maximum seasonal coverage</small>
                 <h2>{best_season_turbine}</h2>
                 <small>{best_season}</small>
                 <div class="big">{best_season_coverage:.2f}%</div>
@@ -699,9 +699,9 @@ def main():
             <div class="card kpi">
                 <div class="icon">↕</div>
                 <div>
-                    <div class="kpi-label">Coverage range</div>
+                    <div class="kpi-label">Demand sensitivity range</div>
                     <div class="kpi-value">{min_sensitivity:.2f}% - {max_sensitivity:.2f}%</div>
-                    <div class="kpi-note">Across demand sensitivity scenarios</div>
+                    <div class="kpi-note">Across low, base and high demand scenarios</div>
                 </div>
             </div>
 
@@ -770,7 +770,7 @@ def main():
         <section class="analysis-grid">
             <div class="card">
                 <h2>Seasonal coverage comparison</h2>
-                <div class="sub">Average coverage by season</div>
+                <div class="sub">Average seasonal coverage across turbine models</div>
 
                 <div class="bars">
                     {seasonal_bars}
