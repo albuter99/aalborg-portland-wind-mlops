@@ -6,12 +6,10 @@ DARK_COLOR = "#2b0014"
 ACCENT_COLOR = "#e4005a"
 LIGHT_BG = "#f7f5f6"
 
-
 ELECTRICITY_PRICE_DKK_PER_MWH = 1470
 FIXED_INFRASTRUCTURE_COST_DKK = 15_000_000
 OPEX_PERCENT_OF_CAPEX = 0.025
 PROJECT_LIFETIME_YEARS = 20
-
 
 TURBINE_CAPEX_DKK = {
     "Vestas V136 4.5 MW": 42_000_000,
@@ -46,13 +44,14 @@ def main():
     for _, row in summary_df.iterrows():
         turbine = row["turbine"]
         annual_generation_one_turbine = row["annual_generation_mwh"]
+        turbine_capex_per_unit = TURBINE_CAPEX_DKK[turbine]
 
-        for turbine_count in [1, 3, 5, 10]:
+        for turbine_count in range(1, 21):
             annual_generation = annual_generation_one_turbine * turbine_count
             coverage = annual_generation / annual_demand_mwh * 100
             grid_required = max(annual_demand_mwh - annual_generation, 0)
 
-            turbine_capex = TURBINE_CAPEX_DKK[turbine] * turbine_count
+            turbine_capex = turbine_capex_per_unit * turbine_count
             total_capex = turbine_capex + FIXED_INFRASTRUCTURE_COST_DKK
             annual_opex = turbine_capex * OPEX_PERCENT_OF_CAPEX
 
@@ -71,10 +70,11 @@ def main():
                 "turbine": turbine,
                 "number_of_turbines": turbine_count,
                 "annual_generation_mwh": round(annual_generation, 2),
+                "annual_generation_one_turbine_mwh": round(annual_generation_one_turbine, 2),
                 "annual_demand_mwh": round(annual_demand_mwh, 2),
                 "coverage_percent": round(coverage, 2),
                 "grid_required_mwh": round(grid_required, 2),
-                "turbine_capex_per_unit_dkk": TURBINE_CAPEX_DKK[turbine],
+                "turbine_capex_per_unit_dkk": turbine_capex_per_unit,
                 "total_capex_dkk": round(total_capex, 2),
                 "annual_opex_dkk": round(annual_opex, 2),
                 "annual_savings_dkk": round(annual_savings, 2),
@@ -90,28 +90,38 @@ def main():
         economics_df["net_annual_savings_dkk"] > 0
     ].sort_values("payback_years").iloc[0]
 
-    scenario_rows = ""
-    for _, row in economics_df.iterrows():
-        highlight = "highlight" if (
-            row["turbine"] == best_payback["turbine"]
-            and row["number_of_turbines"] == best_payback["number_of_turbines"]
-        ) else ""
+    turbine_mix_inputs = ""
 
-        scenario_rows += f"""
-        <tr class="{highlight}">
-            <td>{row["turbine"]}</td>
-            <td>{int(row["number_of_turbines"])}</td>
-            <td>{format_number(row["annual_generation_mwh"])} MWh</td>
-            <td>{row["coverage_percent"]:.2f}%</td>
-            <td>{format_number(row["total_capex_dkk"])} DKK</td>
-            <td>{row["payback_years"]:.2f} years</td>
-            <td>{format_number(row["lcoe_dkk_per_mwh"])} DKK/MWh</td>
-        </tr>
+    for _, row in summary_df.iterrows():
+        turbine = row["turbine"]
+        safe_id = (
+            turbine
+            .replace(" ", "_")
+            .replace(".", "")
+            .replace("-", "_")
+            .replace("/", "_")
+        )
+
+        turbine_mix_inputs += f"""
+        <div class="mix-row">
+            <div>
+                <label for="{safe_id}">{turbine}</label>
+                <small>
+                    {format_number(row["annual_generation_mwh"])} MWh/year per turbine ·
+                    {format_number(TURBINE_CAPEX_DKK[turbine])} DKK CAPEX per turbine
+                </small>
+            </div>
+            <input
+                id="{safe_id}"
+                class="turbine-count"
+                type="number"
+                min="0"
+                max="20"
+                value="0"
+                data-turbine="{turbine}"
+            >
+        </div>
         """
-
-    turbine_options = ""
-    for turbine in summary_df["turbine"].unique():
-        turbine_options += f'<option value="{turbine}">{turbine}</option>'
 
     economics_json = economics_df.to_json(orient="records")
 
@@ -304,41 +314,17 @@ def main():
             margin-bottom: 20px;
         }}
 
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }}
-
-        th {{
-            background: #f0ecee;
-            text-align: left;
-            padding: 13px 10px;
-        }}
-
-        td {{
-            padding: 14px 10px;
-            border-bottom: 1px solid #eee;
-        }}
-
-        tr.highlight td {{
-            color: var(--brand);
-            font-weight: 900;
-        }}
-
         label {{
             font-weight: 800;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }}
 
-        select,
         input {{
             width: 100%;
             padding: 13px;
             border-radius: 8px;
             border: 1px solid #ddd;
-            margin-bottom: 18px;
             font-size: 15px;
         }}
 
@@ -347,6 +333,28 @@ def main():
             border: 1px solid #eee;
             border-radius: 12px;
             padding: 24px;
+        }}
+
+        .mix-row {{
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 18px;
+            align-items: center;
+            margin-bottom: 16px;
+        }}
+
+        .mix-row small {{
+            color: #777;
+            font-size: 12px;
+            line-height: 1.35;
+        }}
+
+        .assumption-grid {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+            margin-bottom: 18px;
         }}
 
         .planner-results {{
@@ -409,14 +417,6 @@ def main():
             transition: width 0.25s ease;
         }}
 
-        .method-note {{
-            background: #faf7f8;
-            border-left: 5px solid var(--brand);
-            padding: 18px 20px;
-            border-radius: 10px;
-            line-height: 1.5;
-        }}
-
         .optimizer-button {{
             width: 100%;
             border: none;
@@ -427,11 +427,7 @@ def main():
             font-weight: 900;
             font-size: 15px;
             cursor: pointer;
-            margin-top: 4px;
-        }}
-
-        .optimizer-button:hover {{
-            opacity: 0.92;
+            margin-top: 8px;
         }}
 
         .optimizer-grid {{
@@ -468,6 +464,14 @@ def main():
             line-height: 1.35;
         }}
 
+        .method-note {{
+            background: #faf7f8;
+            border-left: 5px solid var(--brand);
+            padding: 18px 20px;
+            border-radius: 10px;
+            line-height: 1.5;
+        }}
+
         .tag {{
             display: inline-block;
             background: #faf7f8;
@@ -502,7 +506,8 @@ def main():
             .page-hero-grid,
             .kpi-grid,
             .grid,
-            .planner-results {{
+            .planner-results,
+            .assumption-grid {{
                 grid-template-columns: 1fr;
             }}
 
@@ -534,6 +539,11 @@ def main():
                 flex-wrap: wrap;
             }}
 
+            .mix-row {{
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }}
+
             .footer {{
                 padding: 28px 30px;
                 flex-direction: column;
@@ -563,16 +573,16 @@ def main():
             <div>
                 <h1>Wind deployment<br>economics</h1>
                 <p>
-                    Translate turbine generation, demand coverage and grid dependency into
-                    financial decision-support indicators.
+                    Build mixed turbine deployment scenarios and translate annual generation into
+                    CAPEX, savings, payback and grid dependency.
                 </p>
                 <p class="hero-note">
-                    Interactive economics turns the project into an industrial decision-support framework.
+                    Mixed-turbine planning turns the project into an industrial decision-support framework.
                 </p>
             </div>
 
             <div class="hero-panel">
-                <small>Fastest payback scenario</small>
+                <small>Default fastest payback scenario</small>
                 <h2>{best_payback["turbine"]}</h2>
                 <small>{int(best_payback["number_of_turbines"])} turbines</small>
                 <div class="big">{best_payback["payback_years"]:.1f}</div>
@@ -611,27 +621,27 @@ def main():
 
         <section class="grid">
             <div class="card">
-                <h2>Interactive deployment planner</h2>
+                <h2>Interactive mixed deployment planner</h2>
                 <div class="sub">
-                    Change deployment size, electricity price and infrastructure cost to test economic sensitivity.
+                    Combine turbine models and test how electricity price and infrastructure cost affect the business case.
                 </div>
 
                 <div class="planner-box">
-                    <label for="turbineSelect">Turbine model</label>
-                    <select id="turbineSelect">
-                        {turbine_options}
-                    </select>
+                    {turbine_mix_inputs}
 
-                    <label for="turbineCount">Number of turbines</label>
-                    <input id="turbineCount" type="number" min="1" max="20" value="1">
+                    <div class="assumption-grid">
+                        <div>
+                            <label for="electricityPriceInput">Electricity price DKK/MWh</label>
+                            <input id="electricityPriceInput" type="number" min="0" step="50" value="{ELECTRICITY_PRICE_DKK_PER_MWH}">
+                        </div>
 
-                    <label for="electricityPriceInput">Electricity price DKK/MWh</label>
-                    <input id="electricityPriceInput" type="number" min="0" step="50" value="{ELECTRICITY_PRICE_DKK_PER_MWH}">
+                        <div>
+                            <label for="infrastructureCostInput">Fixed infrastructure cost DKK</label>
+                            <input id="infrastructureCostInput" type="number" min="0" step="1000000" value="{FIXED_INFRASTRUCTURE_COST_DKK}">
+                        </div>
+                    </div>
 
-                    <label for="infrastructureCostInput">Fixed infrastructure cost DKK</label>
-                    <input id="infrastructureCostInput" type="number" min="0" step="1000000" value="{FIXED_INFRASTRUCTURE_COST_DKK}">
-
-                    <button class="optimizer-button" id="optimizeButton">
+                    <button class="optimizer-button" id="optimizeButton" type="button">
                         Optimize deployment
                     </button>
 
@@ -682,7 +692,7 @@ def main():
             <div class="card">
                 <h2>Savings versus investment</h2>
                 <div class="sub">
-                    Visual comparison of CAPEX and estimated annual savings for the selected assumptions.
+                    Visual comparison of CAPEX and estimated annual savings for the selected mixed deployment.
                 </div>
 
                 <div class="chart-box" id="savingsChart"></div>
@@ -693,14 +703,14 @@ def main():
             <div class="card">
                 <h2>Deployment optimizer</h2>
                 <div class="sub">
-                    Automatically searches turbine counts from 1 to 20 under the selected price and infrastructure assumptions.
+                    Searches all mixed-turbine combinations with up to 20 turbines in total.
                 </div>
 
                 <div class="optimizer-grid" id="optimizerResults">
                     <div class="optimizer-card">
                         <span>Instructions</span>
                         <strong>Click Optimize deployment</strong>
-                        <small>The optimizer will return the best scenario for coverage, payback, LCOE and cost per covered MWh.</small>
+                        <small>The optimizer returns the best mixed deployment for coverage, payback, LCOE and cost per covered MWh.</small>
                     </div>
                 </div>
             </div>
@@ -708,39 +718,14 @@ def main():
             <div class="card">
                 <h2>Decision-support interpretation</h2>
                 <p>
-                    This planner allows stakeholders to test how the business case changes when electricity prices
-                    or infrastructure costs change. This is closer to an industrial decision-support system than
-                    a static descriptive dashboard.
+                    This page no longer assumes one turbine type at a time. It lets stakeholders test mixed deployment
+                    strategies, price sensitivity and infrastructure-cost sensitivity in the same interface.
                 </p>
+                <span class="tag">Mixed deployment</span>
                 <span class="tag">Scenario optimization</span>
                 <span class="tag">Payback sensitivity</span>
-                <span class="tag">Infrastructure cost</span>
-                <span class="tag">Electricity price</span>
+                <span class="tag">Decision support</span>
             </div>
-        </section>
-
-        <section class="card" style="margin-bottom: 24px;">
-            <h2>Scenario comparison</h2>
-            <div class="sub">
-                Standard deployment sizes calculated with default assumptions.
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Turbine</th>
-                        <th>Units</th>
-                        <th>Annual generation</th>
-                        <th>Coverage</th>
-                        <th>CAPEX</th>
-                        <th>Payback</th>
-                        <th>LCOE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {scenario_rows}
-                </tbody>
-            </table>
         </section>
 
         <section class="grid">
@@ -756,14 +741,14 @@ def main():
             <div class="card">
                 <h2>Industrial decision-support value</h2>
                 <p>
-                    The economics page closes the framework by connecting technical performance, demand coverage,
-                    grid dependency and financial feasibility. The optimizer supports multiple decision objectives
-                    rather than assuming that one scenario is universally best.
+                    Economics closes the framework by connecting technical performance, demand coverage, grid dependency
+                    and financial feasibility. The optimizer supports multiple objectives because the best deployment
+                    depends on whether stakeholders prioritise coverage, payback or cost efficiency.
                 </p>
                 <span class="tag">CAPEX</span>
                 <span class="tag">Payback</span>
                 <span class="tag">LCOE</span>
-                <span class="tag">Decision support</span>
+                <span class="tag">Grid dependency</span>
             </div>
         </section>
 
@@ -776,6 +761,7 @@ def main():
 
     <script>
         const economicsScenarios = {economics_json};
+        const turbineNames = [...new Set(economicsScenarios.map(row => row.turbine))];
 
         function formatNumber(value) {{
             return Math.round(value).toLocaleString("de-DE");
@@ -787,17 +773,56 @@ def main():
             );
         }}
 
-        function calculateScenario(turbine, count, electricityPrice, infrastructureCost) {{
-            const oneTurbineScenario = getOneTurbineScenario(turbine);
+        function getCurrentInputs() {{
+            const counts = {{}};
 
-            const annualGeneration = oneTurbineScenario.annual_generation_mwh * count;
-            const annualDemand = oneTurbineScenario.annual_demand_mwh;
-            const coverage = annualGeneration / annualDemand * 100;
+            document.querySelectorAll(".turbine-count").forEach(input => {{
+                counts[input.dataset.turbine] = Number(input.value) || 0;
+            }});
+
+            return {{
+                counts: counts,
+                electricityPrice: Number(document.getElementById("electricityPriceInput").value) || 0,
+                infrastructureCost: Number(document.getElementById("infrastructureCostInput").value) || 0
+            }};
+        }}
+
+        function calculateMixedScenario(counts, electricityPrice, infrastructureCost) {{
+            let annualGeneration = 0;
+            let turbineCapex = 0;
+            let annualDemand = null;
+            let totalTurbines = 0;
+
+            turbineNames.forEach(turbine => {{
+                const count = Number(counts[turbine]) || 0;
+                const base = getOneTurbineScenario(turbine);
+
+                if (!base) {{
+                    return;
+                }}
+
+                if (annualDemand === null) {{
+                    annualDemand = base.annual_demand_mwh;
+                }}
+
+                annualGeneration += base.annual_generation_one_turbine_mwh * count;
+                turbineCapex += base.turbine_capex_per_unit_dkk * count;
+                totalTurbines += count;
+            }});
+
+            if (annualDemand === null) {{
+                annualDemand = 0;
+            }}
+
+            const coverage = annualDemand > 0
+                ? annualGeneration / annualDemand * 100
+                : 0;
+
             const gridRequired = Math.max(annualDemand - annualGeneration, 0);
+            const totalCapex = totalTurbines > 0
+                ? turbineCapex + infrastructureCost
+                : 0;
 
-            const turbineCapexPerUnit = oneTurbineScenario.turbine_capex_per_unit_dkk;
-            const turbineCapex = turbineCapexPerUnit * count;
-            const totalCapex = turbineCapex + infrastructureCost;
             const annualOpex = turbineCapex * {OPEX_PERCENT_OF_CAPEX};
             const annualSavings = annualGeneration * electricityPrice;
             const netAnnualSavings = annualSavings - annualOpex;
@@ -816,8 +841,8 @@ def main():
                 : Infinity;
 
             return {{
-                turbine: turbine,
-                count: count,
+                counts: counts,
+                totalTurbines: totalTurbines,
                 annualGeneration: annualGeneration,
                 annualDemand: annualDemand,
                 coverage: coverage,
@@ -832,21 +857,11 @@ def main():
             }};
         }}
 
-        function getCurrentInputs() {{
-            return {{
-                turbine: document.getElementById("turbineSelect").value,
-                count: Number(document.getElementById("turbineCount").value) || 1,
-                electricityPrice: Number(document.getElementById("electricityPriceInput").value) || 0,
-                infrastructureCost: Number(document.getElementById("infrastructureCostInput").value) || 0
-            }};
-        }}
-
         function updatePlanner() {{
             const inputs = getCurrentInputs();
 
-            const scenario = calculateScenario(
-                inputs.turbine,
-                inputs.count,
+            const scenario = calculateMixedScenario(
+                inputs.counts,
                 inputs.electricityPrice,
                 inputs.infrastructureCost
             );
@@ -930,24 +945,59 @@ def main():
             chart.innerHTML = html;
         }}
 
-        function optimizeDeployment() {{
-            const inputs = getCurrentInputs();
+        function generateCombinations(maxTurbines) {{
+            const combinations = [];
 
-            const turbines = [...new Set(economicsScenarios.map(row => row.turbine))];
-            let allScenarios = [];
+            for (let v = 0; v <= maxTurbines; v++) {{
+                for (let s = 0; s <= maxTurbines - v; s++) {{
+                    for (let n = 0; n <= maxTurbines - v - s; n++) {{
+                        for (let e = 0; e <= maxTurbines - v - s - n; e++) {{
+                            const total = v + s + n + e;
 
-            turbines.forEach(turbine => {{
-                for (let count = 1; count <= 20; count++) {{
-                    allScenarios.push(
-                        calculateScenario(
-                            turbine,
-                            count,
-                            inputs.electricityPrice,
-                            inputs.infrastructureCost
-                        )
-                    );
+                            if (total === 0) {{
+                                continue;
+                            }}
+
+                            const counts = {{}};
+                            counts[turbineNames[0]] = v;
+                            counts[turbineNames[1]] = s;
+                            counts[turbineNames[2]] = n;
+                            counts[turbineNames[3]] = e;
+
+                            combinations.push(counts);
+                        }}
+                    }}
+                }}
+            }}
+
+            return combinations;
+        }}
+
+        function scenarioLabel(scenario) {{
+            const parts = [];
+
+            turbineNames.forEach(turbine => {{
+                const count = scenario.counts[turbine] || 0;
+
+                if (count > 0) {{
+                    parts.push(`${{count}} × ${{turbine}}`);
                 }}
             }});
+
+            return parts.join(" + ");
+        }}
+
+        function optimizeDeployment() {{
+            const inputs = getCurrentInputs();
+            const combinations = generateCombinations(20);
+
+            const allScenarios = combinations.map(counts =>
+                calculateMixedScenario(
+                    counts,
+                    inputs.electricityPrice,
+                    inputs.infrastructureCost
+                )
+            );
 
             const viableScenarios = allScenarios.filter(row =>
                 isFinite(row.payback) && row.netAnnualSavings > 0
@@ -979,10 +1029,6 @@ def main():
             );
         }}
 
-        function scenarioText(scenario) {{
-            return `${{scenario.count}} × ${{scenario.turbine}}`;
-        }}
-
         function renderOptimizerResults(maxCoverage, fastestPayback, lowestLcoe, lowestCostPerCoveredMwh) {{
             const container = document.getElementById("optimizerResults");
 
@@ -991,8 +1037,8 @@ def main():
             html += `
                 <div class="optimizer-card">
                     <span>Maximum coverage</span>
-                    <strong>${{scenarioText(maxCoverage)}}</strong>
-                    <small>${{maxCoverage.coverage.toFixed(2)}}% demand coverage · ${{formatNumber(maxCoverage.annualGeneration)}} MWh/year</small>
+                    <strong>${{scenarioLabel(maxCoverage)}}</strong>
+                    <small>${{maxCoverage.coverage.toFixed(2)}}% coverage · ${{formatNumber(maxCoverage.annualGeneration)}} MWh/year</small>
                 </div>
             `;
 
@@ -1000,7 +1046,7 @@ def main():
                 html += `
                     <div class="optimizer-card">
                         <span>Fastest payback</span>
-                        <strong>${{scenarioText(fastestPayback)}}</strong>
+                        <strong>${{scenarioLabel(fastestPayback)}}</strong>
                         <small>${{fastestPayback.payback.toFixed(2)}} years · ${{formatNumber(fastestPayback.netAnnualSavings)}} DKK net savings/year</small>
                     </div>
                 `;
@@ -1017,7 +1063,7 @@ def main():
             html += `
                 <div class="optimizer-card">
                     <span>Lowest LCOE</span>
-                    <strong>${{scenarioText(lowestLcoe)}}</strong>
+                    <strong>${{scenarioLabel(lowestLcoe)}}</strong>
                     <small>${{formatNumber(lowestLcoe.lcoe)}} DKK/MWh · ${{formatNumber(lowestLcoe.totalCapex)}} DKK CAPEX</small>
                 </div>
             `;
@@ -1025,7 +1071,7 @@ def main():
             html += `
                 <div class="optimizer-card">
                     <span>Lowest cost per covered MWh</span>
-                    <strong>${{scenarioText(lowestCostPerCoveredMwh)}}</strong>
+                    <strong>${{scenarioLabel(lowestCostPerCoveredMwh)}}</strong>
                     <small>${{formatNumber(lowestCostPerCoveredMwh.costPerCoveredMwh)}} DKK/MWh · ${{lowestCostPerCoveredMwh.coverage.toFixed(2)}}% coverage</small>
                 </div>
             `;
@@ -1033,8 +1079,10 @@ def main():
             container.innerHTML = html;
         }}
 
-        document.getElementById("turbineSelect").addEventListener("change", updatePlanner);
-        document.getElementById("turbineCount").addEventListener("input", updatePlanner);
+        document.querySelectorAll(".turbine-count").forEach(input => {{
+            input.addEventListener("input", updatePlanner);
+        }});
+
         document.getElementById("electricityPriceInput").addEventListener("input", updatePlanner);
         document.getElementById("infrastructureCostInput").addEventListener("input", updatePlanner);
         document.getElementById("optimizeButton").addEventListener("click", optimizeDeployment);
