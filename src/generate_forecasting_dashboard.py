@@ -5,6 +5,15 @@ BRAND_COLOR = "#a0003f"
 ACCENT_COLOR = "#e4005a"
 LIGHT_BG = "#f7f5f6"
 
+TURBINE_RATED_POWER_MW = {
+    "Vestas V136 4.5 MW": 4.5,
+    "Siemens Gamesa SG 5.0-145": 5.0,
+    "Nordex N149 5.X": 5.7,
+    "Enercon E-138 EP3": 4.26
+}
+
+CO2_AVOIDED_T_PER_MWH = 0.3
+
 
 def format_number(value):
     return f"{value:,.0f}".replace(",", ".")
@@ -28,7 +37,7 @@ def main():
         ascending=False
     ).iloc[0]
 
-    average_coverage = scenario_df["coverage_percent"].mean()
+    max_coverage = scenario_df["coverage_percent"].max()
 
     model_rows = ""
     for _, row in model_df.iterrows():
@@ -53,6 +62,18 @@ def main():
             & (scenario_df["number_of_turbines"] == 1)
         ].iloc[0]
 
+        rated_power = TURBINE_RATED_POWER_MW.get(turbine, 1)
+        capacity_factor = (
+            one_turbine["forecast_generation_mwh"] /
+            (168 * rated_power)
+        ) * 100
+
+        grid_required = one_turbine.get(
+            "grid_required_mwh",
+            one_turbine["estimated_7d_demand_mwh"] -
+            one_turbine["forecast_generation_mwh"]
+        )
+
         safe_id = (
             turbine
             .replace(" ", "_")
@@ -65,8 +86,9 @@ def main():
         <tr>
             <td><strong>{turbine}</strong></td>
             <td>{format_number(one_turbine["forecast_generation_mwh"])} MWh</td>
+            <td>{capacity_factor:.1f}%</td>
             <td>{one_turbine["coverage_percent"]:.2f}%</td>
-            <td>{format_number(one_turbine.get("grid_required_mwh", one_turbine["estimated_7d_demand_mwh"] - one_turbine["forecast_generation_mwh"]))} MWh</td>
+            <td>{format_number(grid_required)} MWh</td>
         </tr>
         """
 
@@ -358,7 +380,7 @@ def main():
 
         .result {{
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 16px;
             margin-top: 22px;
         }}
@@ -390,6 +412,13 @@ def main():
             border: 1px solid #eee;
             border-radius: 12px;
             padding: 20px;
+        }}
+
+        .chart-assumption {{
+            margin-top: 16px;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
         }}
 
         .bar-row {{
@@ -545,7 +574,7 @@ def main():
             </div>
 
             <div class="hero-panel">
-                <small>Expected 7-day generation</small>
+                <small>Maximum 7-day generation scenario</small>
                 <div class="big">{format_number(best_scenario["forecast_generation_mwh"])}</div>
                 <small>MWh under the maximum generation scenario</small>
 
@@ -562,7 +591,7 @@ def main():
 
         <section class="kpi-grid">
             <div class="card">
-                <div class="kpi-label">Best generation scenario</div>
+                <div class="kpi-label">Maximum generation scenario</div>
                 <div class="kpi-value">{format_number(best_scenario["forecast_generation_mwh"])} MWh</div>
                 <div class="kpi-note">
                     {int(best_scenario["number_of_turbines"])} turbines, {best_scenario["turbine"]}
@@ -570,9 +599,11 @@ def main():
             </div>
 
             <div class="card">
-                <div class="kpi-label">Average scenario coverage</div>
-                <div class="kpi-value">{average_coverage:.2f}%</div>
-                <div class="kpi-note">Across all turbine and deployment scenarios</div>
+                <div class="kpi-label">Maximum forecasted coverage</div>
+                <div class="kpi-value">{max_coverage:.2f}%</div>
+                <div class="kpi-note">
+                    Best deployment scenario across all turbine configurations
+                </div>
             </div>
 
             <div class="card">
@@ -591,12 +622,18 @@ def main():
             <div class="line-chart-wrapper">
                 <canvas id="forecastProfileChart"></canvas>
             </div>
+
+            <p class="chart-assumption">
+                <strong>Assumption:</strong>
+                Industrial electricity demand is assumed constant during the 7-day forecasting horizon
+                and represents the calibrated average industrial load derived from the annual demand model.
+            </p>
         </section>
 
         <section class="card" style="margin-bottom: 24px;">
             <h2>Turbine forecast comparison</h2>
             <div class="sub">
-                Expected 7-day generation, demand coverage and grid dependency for one installed turbine.
+                Expected 7-day generation, capacity factor, demand coverage and grid dependency for one installed turbine.
             </div>
 
             <table>
@@ -604,6 +641,7 @@ def main():
                     <tr>
                         <th>Turbine model</th>
                         <th>7-day generation</th>
+                        <th>Capacity factor</th>
                         <th>7-day demand coverage</th>
                         <th>Grid required</th>
                     </tr>
@@ -618,7 +656,7 @@ def main():
             <div class="card">
                 <h2>Interactive stakeholder calculator</h2>
                 <div class="sub">
-                    Combine several turbine models and estimate demand, wind generation, grid dependency and coverage.
+                    Combine several turbine models and estimate demand, wind generation, grid dependency, coverage and CO₂ avoided.
                 </div>
 
                 <div class="interactive-box">
@@ -643,6 +681,11 @@ def main():
                         <div class="result-card">
                             <span>Demand coverage</span>
                             <strong id="coverageResult">-</strong>
+                        </div>
+
+                        <div class="result-card">
+                            <span>CO₂ avoided</span>
+                            <strong id="co2Result">-</strong>
                         </div>
                     </div>
                 </div>
@@ -733,20 +776,20 @@ def main():
 
         <section class="grid">
             <div class="card">
-                <h2>LSTM feasibility</h2>
+                <h2>Future forecasting extensions</h2>
                 <p>
                     LSTM models are widely used for sequential forecasting, but they require measured historical
                     production data, heavier dependencies and more careful training. For this lightweight GitHub
                     Actions pipeline, the operational forecast is based on physical power curves, while Linear
                     Regression, Random Forest and XGBoost are compared as surrogate models.
                 </p>
-                <span class="tag">LSTM considered</span>
+                <span class="tag">Advanced forecasting</span>
                 <span class="tag">Measured production unavailable</span>
                 <span class="tag">Future work</span>
             </div>
 
             <div class="card">
-                <h2>Operational value</h2>
+                <h2>Decision-support value</h2>
                 <p>
                     The 168-hour forecast profile makes the dashboard more useful for planning because it shows when
                     wind generation is expected to be closer to or further from industrial electricity demand.
@@ -767,6 +810,7 @@ def main():
     <script>
         const scenarios = {scenario_json};
         const hourlyProfile = {hourly_profile_json};
+        const co2AvoidedPerMwh = {CO2_AVOIDED_T_PER_MWH};
 
         function formatNumber(value) {{
             return Math.round(value).toLocaleString("de-DE");
@@ -814,6 +858,7 @@ def main():
 
             const coverage = demand > 0 ? totalGeneration / demand * 100 : 0;
             const gridRequired = Math.max(demand - totalGeneration, 0);
+            const co2Avoided = totalGeneration * co2AvoidedPerMwh;
 
             document.getElementById("demandResult").textContent =
                 formatNumber(demand) + " MWh";
@@ -826,6 +871,9 @@ def main():
 
             document.getElementById("coverageResult").textContent =
                 coverage.toFixed(2) + "%";
+
+            document.getElementById("co2Result").textContent =
+                co2Avoided.toFixed(1) + " t";
 
             updateMixChart(contributions, totalGeneration);
         }}
