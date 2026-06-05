@@ -539,9 +539,9 @@
         </div>
 
         <div class="hero-card">
-            <small>Single-turbine contribution</small>
+            <small>Maximum demand coverage</small>
             <h2>Nordex N149 5.X</h2>
-            <small>can supply up to</small>
+            <small>best-performing turbine model can supply</small>
             <div class="big">4.0%</div>
             <small>of annual electricity demand</small>
         </div>
@@ -562,7 +562,7 @@
             <div class="card kpi">
                 <div class="icon">≈</div>
                 <div>
-                    <div class="kpi-label">Single-turbine contribution</div>
+                    <div class="kpi-label">Maximum demand coverage</div>
                     <div class="kpi-value">4.0%</div>
                     <div class="kpi-note">Nordex N149 5.X</div>
                 </div>
@@ -571,9 +571,9 @@
             <div class="card kpi">
                 <div class="icon">▥</div>
                 <div>
-                    <div class="kpi-label">Annual generation</div>
+                    <div class="kpi-label">Maximum annual generation</div>
                     <div class="kpi-value">10.110 MWh</div>
-                    <div class="kpi-note">Best turbine scenario</div>
+                    <div class="kpi-note">Best-performing turbine model</div>
                 </div>
             </div>
 
@@ -606,9 +606,11 @@
                     </div>
 
                     <div class="demand-kpi">
-                        <span>Calibration error</span>
-                        <strong>0.0000%</strong>
-                        <small>Difference between reported and synthetic annual totals</small>
+                        <span>Calibration status</span>
+                        <strong>100% aligned</strong>
+                        <small>
+                            Synthetic annual demand calibrated to Aalborg Portland reported consumption
+                        </small>
                     </div>
                 </div>
             </div>
@@ -618,6 +620,11 @@
                 <div class="sub">
                     Monthly aggregation of the calibrated hourly demand profile.
                     This makes the demand assumption visible instead of only describing it in text.
+
+                    <br><br>
+
+                    <strong>Assumption:</strong>
+                    The synthetic demand profile assumes relatively stable industrial operations throughout the year.
                 </div>
 
                 <div class="monthly-bars">
@@ -784,7 +791,10 @@
 
             <div class="card">
                 <h2>Demand vs wind generation</h2>
-                <div class="sub">Hourly comparison for the first 14 days of 2025</div>
+                <div class="sub">
+                    Comparison between industrial electricity demand and wind generation
+                    during the first 14 days of the analysis period.
+                </div>
                 <div class="legend">
                     <span>Demand MW</span>
                     <span class="generation">Nordex N149 5.X MW</span>
@@ -1831,7 +1841,7 @@
                 <div class="pipeline-step">
                     <span class="status-dot"></span>
                     <strong>Dashboard generation</strong>
-                    <p>Active</p>
+                    <p>Completed</p>
                 </div>
 
                 <div class="pipeline-step">
@@ -1850,6 +1860,11 @@
                     <p>
                         This dashboard estimates physical on-site electricity coverage using
                         real hourly wind data and a calibrated synthetic industrial demand profile.
+
+                        <br><br>
+
+                        The framework is intended for industrial decision support and scenario
+                        assessment rather than precise energy production forecasting.
                     </p>
                 </div>
             </div>
@@ -1859,8 +1874,9 @@
                 <div>
                     <h2>Method</h2>
                     <p>
-                        The hourly demand profile is synthetic because public hourly consumption is not available,
-                        but its annual total is calibrated to Aalborg Portland's reported electricity consumption.
+                        The hourly demand profile is synthetic because public hourly electricity
+                        consumption data is not available, but its annual total is calibrated to
+                        Aalborg Portland's reported electricity consumption.
                     </p>
                 </div>
             </div>
