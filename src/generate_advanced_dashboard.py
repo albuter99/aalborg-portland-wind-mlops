@@ -34,6 +34,9 @@ def main():
         .groupby("season")
         .agg(
             average_coverage=("seasonal_coverage_percent", "mean"),
+            min_coverage=("seasonal_coverage_percent", "min"),
+            max_coverage=("seasonal_coverage_percent", "max"),
+            std_coverage=("seasonal_coverage_percent", "std"),
             total_generation=("seasonal_generation_mwh", "sum")
         )
         .reindex(season_order)
@@ -56,6 +59,9 @@ def main():
             <td>{row["season"]}</td>
             <td>{format_number(row["total_generation"])} MWh</td>
             <td>{row["average_coverage"]:.2f}%</td>
+            <td>{row["min_coverage"]:.2f}%</td>
+            <td>{row["max_coverage"]:.2f}%</td>
+            <td>{row["std_coverage"]:.2f}%</td>
         </tr>
         """
 
@@ -82,6 +88,42 @@ def main():
             <div class="bar-value">{row["average_coverage"]:.2f}%</div>
             <div class="bar" style="height:{height}px;"></div>
             <div class="bar-label">{row["season"]}</div>
+        </div>
+        """
+
+    seasonal_ranges = ""
+    max_range_value = season_summary["max_coverage"].max()
+
+    for _, row in season_summary.iterrows():
+        left = row["min_coverage"] / max_range_value * 100
+        width = (
+            (row["max_coverage"] - row["min_coverage"])
+            / max_range_value * 100
+        )
+        avg_position = row["average_coverage"] / max_range_value * 100
+
+        seasonal_ranges += f"""
+        <div class="range-row">
+            <div class="range-header">
+                <strong>{row["season"]}</strong>
+                <span>
+                    min {row["min_coverage"]:.2f}% ·
+                    avg {row["average_coverage"]:.2f}% ·
+                    max {row["max_coverage"]:.2f}%
+                </span>
+            </div>
+
+            <div class="range-track">
+                <div
+                    class="range-bar"
+                    style="left:{left:.2f}%; width:{width:.2f}%;">
+                </div>
+
+                <div
+                    class="range-average"
+                    style="left:{avg_position:.2f}%;">
+                </div>
+            </div>
         </div>
         """
 
@@ -415,6 +457,89 @@ def main():
             line-height: 1.25;
         }}
 
+        .range-card {{
+            min-height: 360px;
+        }}
+
+        .range-row {{
+            margin-bottom: 26px;
+        }}
+
+        .range-header {{
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }}
+
+        .range-header strong {{
+            color: var(--dark);
+            font-size: 14px;
+        }}
+
+        .range-header span {{
+            color: #666;
+            text-align: right;
+        }}
+
+        .range-track {{
+            position: relative;
+            height: 17px;
+            background: #eee;
+            border-radius: 999px;
+            overflow: visible;
+        }}
+
+        .range-bar {{
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background: rgba(228, 0, 90, 0.34);
+            border-radius: 999px;
+        }}
+
+        .range-average {{
+            position: absolute;
+            top: -5px;
+            width: 5px;
+            height: 27px;
+            background: #8b0037;
+            border-radius: 999px;
+            box-shadow: 0 0 0 4px rgba(139, 0, 55, 0.12);
+        }}
+
+        .range-legend {{
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            font-size: 12px;
+            color: #666;
+        }}
+
+        .range-legend span {{
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }}
+
+        .legend-range-box {{
+            width: 22px;
+            height: 10px;
+            background: rgba(228, 0, 90, 0.34);
+            border-radius: 999px;
+            display: inline-block;
+        }}
+
+        .legend-average-box {{
+            width: 5px;
+            height: 18px;
+            background: #8b0037;
+            border-radius: 999px;
+            display: inline-block;
+        }}
+
         .insight-box {{
             background: #faf7f8;
             border-left: 5px solid var(--brand);
@@ -594,24 +719,27 @@ def main():
             <div>
                 <h2>Seasonal performance</h2>
                 <p>
-                    Wind generation is not constant throughout the year. This section compares seasonal production
-                    and identifies when on-site wind is most valuable for industrial electricity coverage.
+                    Wind generation is not constant throughout the year. This section compares average seasonal production,
+                    the minimum and maximum turbine outcomes, and the uncertainty range across turbine models.
                 </p>
             </div>
-            <span class="status-pill">Seasonal analysis active</span>
+            <span class="status-pill">Seasonal uncertainty active</span>
         </div>
 
         <section class="analysis-grid">
             <div class="card">
                 <h2>Season summary</h2>
-                <div class="sub">Average coverage across all turbine models</div>
+                <div class="sub">Average, minimum, maximum and standard deviation across turbine models</div>
 
                 <table>
                     <thead>
                         <tr>
                             <th>Season</th>
                             <th>Total generation</th>
-                            <th>Average coverage</th>
+                            <th>Average</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Std</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -621,11 +749,25 @@ def main():
 
                 <div class="insight-box">
                     <strong>Interpretation:</strong>
-                    Winter shows the strongest seasonal performance, while summer is weaker.
-                    This supports seasonal analysis instead of relying only on annual averages.
+                    The seasonal averages show the central tendency, while the min-max range captures the variation
+                    across turbine models. This makes the seasonal analysis more transparent than reporting averages alone.
                 </div>
             </div>
 
+            <div class="card range-card">
+                <h2>Seasonal uncertainty range</h2>
+                <div class="sub">Minimum, average and maximum coverage by season</div>
+
+                {seasonal_ranges}
+
+                <div class="range-legend">
+                    <span><i class="legend-range-box"></i>Min-max range</span>
+                    <span><i class="legend-average-box"></i>Average coverage</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="analysis-grid">
             <div class="card">
                 <h2>Seasonal coverage comparison</h2>
                 <div class="sub">Average coverage by season</div>
@@ -634,9 +776,7 @@ def main():
                     {seasonal_bars}
                 </div>
             </div>
-        </section>
 
-        <section class="analysis-grid">
             <div class="card">
                 <h2>Best turbine by season</h2>
                 <div class="sub">{best_season_turbine} seasonal behaviour</div>
@@ -654,19 +794,33 @@ def main():
                     </tbody>
                 </table>
             </div>
+        </section>
 
+        <section class="analysis-grid">
             <div class="card module-card">
                 <h2>Why this matters</h2>
                 <p>
                     A cement facility operates continuously, but wind generation varies strongly by season.
-                    Seasonal analysis helps identify periods where on-site wind generation is more likely to
-                    reduce grid dependency and periods where complementary energy solutions may be required.
+                    Adding minimum, average and maximum seasonal coverage makes the analysis more robust and
+                    shows how dependent the conclusions are on turbine selection.
                 </p>
 
                 <span class="tag">Industrial demand</span>
                 <span class="tag">Seasonality</span>
-                <span class="tag">Renewable variability</span>
+                <span class="tag">Uncertainty</span>
                 <span class="tag">Decision support</span>
+            </div>
+
+            <div class="card module-card">
+                <h2>Robustness interpretation</h2>
+                <p>
+                    The range chart should be read as a model-comparison interval. A narrow range means turbine models
+                    behave similarly during that season, while a wider range indicates stronger turbine-specific variation.
+                </p>
+
+                <span class="tag">Min-max range</span>
+                <span class="tag">Average coverage</span>
+                <span class="tag">Model comparison</span>
             </div>
         </section>
 
@@ -715,7 +869,7 @@ def main():
                 <h2>Methodology value</h2>
                 <p>
                     The advanced analytics layer improves the project by moving beyond single annual KPIs
-                    and introducing scenario-based assessment.
+                    and introducing seasonal uncertainty, sensitivity testing and scenario-based assessment.
                 </p>
                 <span class="tag">Scenario analysis</span>
                 <span class="tag">Robustness</span>
@@ -726,7 +880,7 @@ def main():
                 <h2>Forecasting connection</h2>
                 <p>
                     The seasonal and sensitivity results provide context for the forecasting module,
-                    where short-term wind generation is estimated using weather forecasts and model comparison.
+                    where short-term wind generation is estimated using weather forecasts and physical power curves.
                 </p>
                 <span class="tag">7-day forecast</span>
                 <span class="tag">Operational planning</span>
