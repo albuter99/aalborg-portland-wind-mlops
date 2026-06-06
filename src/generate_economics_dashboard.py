@@ -417,19 +417,6 @@ def main():
             transition: width 0.25s ease;
         }}
 
-        .optimizer-button {{
-            width: 100%;
-            border: none;
-            border-radius: 10px;
-            padding: 14px;
-            background: linear-gradient(90deg, #8b0037, #e4005a);
-            color: white;
-            font-weight: 900;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 8px;
-        }}
-
         .optimizer-grid {{
             display: grid;
             grid-template-columns: 1fr;
@@ -582,11 +569,12 @@ def main():
             </div>
 
             <div class="hero-panel">
-                <small>Default fastest payback scenario</small>
+                <small>Reference payback scenario</small>
                 <h2>{best_payback["turbine"]}</h2>
                 <small>{int(best_payback["number_of_turbines"])} turbines</small>
                 <div class="big">{best_payback["payback_years"]:.1f}</div>
                 <small>years estimated payback</small>
+                <small>{best_payback["coverage_percent"]:.2f}% estimated demand coverage</small>
             </div>
         </div>
     </section>
@@ -641,10 +629,6 @@ def main():
                         </div>
                     </div>
 
-                    <button class="optimizer-button" id="optimizeButton" type="button">
-                        Optimize deployment
-                    </button>
-
                     <div class="planner-results">
                         <div class="result-card">
                             <span>Annual generation</span>
@@ -657,7 +641,7 @@ def main():
                         </div>
 
                         <div class="result-card">
-                            <span>Grid dependency</span>
+                            <span>Annual grid electricity required</span>
                             <strong id="gridResult">-</strong>
                         </div>
 
@@ -667,7 +651,7 @@ def main():
                         </div>
 
                         <div class="result-card">
-                            <span>Annual net savings</span>
+                            <span>Estimated annual net savings</span>
                             <strong id="savingsResult">-</strong>
                         </div>
 
@@ -701,16 +685,18 @@ def main():
 
         <section class="grid">
             <div class="card">
-                <h2>Deployment optimizer</h2>
+                <h2>Recommended scenarios under current assumptions</h2>
                 <div class="sub">
-                    Searches all mixed-turbine combinations with up to 20 turbines in total.
+                    Automatically evaluates every deployment combination and highlights the most attractive scenarios according to different objectives.
                 </div>
 
                 <div class="optimizer-grid" id="optimizerResults">
                     <div class="optimizer-card">
-                        <span>Instructions</span>
-                        <strong>Click Optimize deployment</strong>
-                        <small>The optimizer returns the best mixed deployment for coverage, payback, LCOE and cost per covered MWh.</small>
+                        <span>Automatic analysis</span>
+                        <strong>Results update automatically</strong>
+                        <small>
+                            Recommended scenarios are recalculated whenever assumptions or turbine quantities change.
+                        </small>
                     </div>
                 </div>
             </div>
@@ -735,6 +721,12 @@ def main():
                     Avoided electricity purchases are estimated by multiplying annual wind generation by the selected
                     electricity price. CAPEX includes turbine investment plus a fixed infrastructure proxy for grid
                     connection, transformer and integration. OPEX is modelled as a fixed annual percentage of turbine CAPEX.
+
+                    <br><br>
+
+                    <strong>Disclaimer:</strong>
+                    Economic outputs are simplified scenario estimates intended for decision-support and educational purposes.
+                    They should not be interpreted as investment advice.
                 </div>
             </div>
 
@@ -902,6 +894,8 @@ def main():
                 scenario.annualSavings,
                 scenario.annualOpex
             );
+
+            optimizeDeployment();
         }}
 
         function updateSavingsChart(totalCapex, netAnnualSavings, annualSavings, annualOpex) {{
@@ -919,7 +913,7 @@ def main():
                 ["Total CAPEX", totalCapex],
                 ["Annual gross savings", annualSavings],
                 ["Annual OPEX", annualOpex],
-                ["Annual net savings", netAnnualSavings]
+                ["Estimated annual net savings", netAnnualSavings]
             ];
 
             let html = "";
@@ -1036,7 +1030,7 @@ def main():
 
             html += `
                 <div class="optimizer-card">
-                    <span>Maximum coverage</span>
+                    <span>🥇 Maximum coverage</span>
                     <strong>${{scenarioLabel(maxCoverage)}}</strong>
                     <small>${{maxCoverage.coverage.toFixed(2)}}% coverage · ${{formatNumber(maxCoverage.annualGeneration)}} MWh/year</small>
                 </div>
@@ -1045,7 +1039,7 @@ def main():
             if (fastestPayback) {{
                 html += `
                     <div class="optimizer-card">
-                        <span>Fastest payback</span>
+                        <span>🥈 Fastest payback</span>
                         <strong>${{scenarioLabel(fastestPayback)}}</strong>
                         <small>${{fastestPayback.payback.toFixed(2)}} years · ${{formatNumber(fastestPayback.netAnnualSavings)}} DKK net savings/year</small>
                     </div>
@@ -1053,7 +1047,7 @@ def main():
             }} else {{
                 html += `
                     <div class="optimizer-card">
-                        <span>Fastest payback</span>
+                        <span>🥈 Fastest payback</span>
                         <strong>No viable scenario</strong>
                         <small>Net annual savings are negative under the selected assumptions.</small>
                     </div>
@@ -1062,7 +1056,7 @@ def main():
 
             html += `
                 <div class="optimizer-card">
-                    <span>Lowest LCOE</span>
+                    <span>🥉 Lowest LCOE</span>
                     <strong>${{scenarioLabel(lowestLcoe)}}</strong>
                     <small>${{formatNumber(lowestLcoe.lcoe)}} DKK/MWh · ${{formatNumber(lowestLcoe.totalCapex)}} DKK CAPEX</small>
                 </div>
@@ -1085,7 +1079,6 @@ def main():
 
         document.getElementById("electricityPriceInput").addEventListener("input", updatePlanner);
         document.getElementById("infrastructureCostInput").addEventListener("input", updatePlanner);
-        document.getElementById("optimizeButton").addEventListener("click", optimizeDeployment);
 
         updatePlanner();
     </script>
