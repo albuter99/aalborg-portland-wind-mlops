@@ -1,169 +1,169 @@
 timestamp,forecast_generation_mwh,estimated_demand_mwh,coverage_percent,grid_required_mwh,reference_turbine,reference_turbine_count,forecast_method
-2026-06-22 00:00:00,10.2038,29.2478,34.89,19.044,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 01:00:00,14.5388,29.2478,49.71,14.7091,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 02:00:00,14.1312,29.2478,48.32,15.1167,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 03:00:00,12.5023,29.2478,42.75,16.7455,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 04:00:00,11.141,29.2478,38.09,18.1068,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 05:00:00,9.0181,29.2478,30.83,20.2297,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 06:00:00,5.7484,29.2478,19.65,23.4994,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 07:00:00,2.4065,29.2478,8.23,26.8414,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 08:00:00,2.4564,29.2478,8.4,26.7914,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 09:00:00,1.6384,29.2478,5.6,27.6094,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 10:00:00,0.3925,29.2478,1.34,28.8553,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 11:00:00,0.0643,29.2478,0.22,29.1835,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 12:00:00,0.6083,29.2478,2.08,28.6395,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 13:00:00,0.5601,29.2478,1.91,28.6877,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 14:00:00,0.6183,29.2478,2.11,28.6295,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 15:00:00,0.793,29.2478,2.71,28.4548,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 16:00:00,0.5887,29.2478,2.01,28.6591,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 17:00:00,1.9009,29.2478,6.5,27.3469,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 18:00:00,3.0234,29.2478,10.34,26.2245,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 19:00:00,2.4817,29.2478,8.48,26.7662,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 20:00:00,1.083,29.2478,3.7,28.1649,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 21:00:00,0.5887,29.2478,2.01,28.6591,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 22:00:00,0.6805,29.2478,2.33,28.5674,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-22 23:00:00,1.4716,29.2478,5.03,27.7762,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 00:00:00,2.7436,29.2478,9.38,26.5042,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 01:00:00,1.5628,29.2478,5.34,27.685,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 02:00:00,1.4896,29.2478,5.09,27.7583,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 03:00:00,1.35,29.2478,4.62,27.8978,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 04:00:00,0.8915,29.2478,3.05,28.3563,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 05:00:00,1.1124,29.2478,3.8,28.1355,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 06:00:00,1.0976,29.2478,3.75,28.1502,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 07:00:00,0.2511,29.2478,0.86,28.9967,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 08:00:00,0.06,29.2478,0.21,29.1879,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 09:00:00,0.0786,29.2478,0.27,29.1693,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 10:00:00,0.7241,29.2478,2.48,28.5237,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 11:00:00,1.6967,29.2478,5.8,27.5512,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 12:00:00,3.4461,29.2478,11.78,25.8018,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 13:00:00,4.187,29.2478,14.32,25.0608,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 14:00:00,6.9798,29.2478,23.86,22.268,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 15:00:00,12.5023,29.2478,42.75,16.7455,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 16:00:00,13.1072,29.2478,44.81,16.1406,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 17:00:00,14.9541,29.2478,51.13,14.2937,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 18:00:00,9.2596,29.2478,31.66,19.9882,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 19:00:00,5.8375,29.2478,19.96,23.4103,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 20:00:00,3.9064,29.2478,13.36,25.3414,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 21:00:00,2.2607,29.2478,7.73,26.9872,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 22:00:00,1.4361,29.2478,4.91,27.8117,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-23 23:00:00,2.8533,29.2478,9.76,26.3945,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 00:00:00,2.4065,29.2478,8.23,26.8414,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 01:00:00,2.7166,29.2478,9.29,26.5312,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 02:00:00,3.3524,29.2478,11.46,25.8955,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 03:00:00,4.0803,29.2478,13.95,25.1676,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 04:00:00,4.9466,29.2478,16.91,24.3012,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 05:00:00,4.6326,29.2478,15.84,24.6152,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 06:00:00,4.2956,29.2478,14.69,24.9522,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 07:00:00,6.297,29.2478,21.53,22.9508,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 08:00:00,0.463,29.2478,1.58,28.7848,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 09:00:00,0.2511,29.2478,0.86,28.9967,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 10:00:00,0.8169,29.2478,2.79,28.4309,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 11:00:00,1.1728,29.2478,4.01,28.0751,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 12:00:00,0.9705,29.2478,3.32,28.2773,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 13:00:00,2.19,29.2478,7.49,27.0578,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 14:00:00,3.7376,29.2478,12.78,25.5103,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 15:00:00,4.4807,29.2478,15.32,24.7671,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 16:00:00,3.2604,29.2478,11.15,25.9875,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 17:00:00,3.1404,29.2478,10.74,26.1075,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 18:00:00,3.8383,29.2478,13.12,25.4095,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 19:00:00,3.5095,29.2478,12.0,25.7384,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 20:00:00,2.0532,29.2478,7.02,27.1946,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 21:00:00,2.7708,29.2478,9.47,26.4771,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 22:00:00,6.1104,29.2478,20.89,23.1374,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-24 23:00:00,8.6637,29.2478,29.62,20.5841,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 00:00:00,11.2794,29.2478,38.56,17.9684,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 01:00:00,12.2804,29.2478,41.99,16.9674,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 02:00:00,11.8445,29.2478,40.5,17.4034,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 03:00:00,10.466,29.2478,35.78,18.7818,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 04:00:00,13.339,29.2478,45.61,15.9089,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 05:00:00,13.4168,29.2478,45.87,15.831,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 06:00:00,10.8,29.2478,36.93,18.4478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 07:00:00,7.8187,29.2478,26.73,21.4292,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 08:00:00,2.5071,29.2478,8.57,26.7408,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 09:00:00,2.2845,29.2478,7.81,26.9633,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 10:00:00,4.0451,29.2478,13.83,25.2027,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 11:00:00,4.8272,29.2478,16.5,24.4206,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 12:00:00,5.401,29.2478,18.47,23.8468,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 13:00:00,4.5184,29.2478,15.45,24.7294,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 14:00:00,5.4865,29.2478,18.76,23.7613,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 15:00:00,5.2744,29.2478,18.03,23.9734,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 16:00:00,4.2592,29.2478,14.56,24.9886,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 17:00:00,3.1701,29.2478,10.84,26.0777,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 18:00:00,2.1668,29.2478,7.41,27.081,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 19:00:00,1.5628,29.2478,5.34,27.685,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 20:00:00,1.1124,29.2478,3.8,28.1355,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 21:00:00,1.0685,29.2478,3.65,28.1794,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 22:00:00,1.2674,29.2478,4.33,27.9805,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-25 23:00:00,1.384,29.2478,4.73,27.8638,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 00:00:00,1.2195,29.2478,4.17,28.0284,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 01:00:00,0.9842,29.2478,3.36,28.2637,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 02:00:00,0.6805,29.2478,2.33,28.5674,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 03:00:00,0.4798,29.2478,1.64,28.768,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 04:00:00,0.2916,29.2478,1.0,28.9562,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 05:00:00,0.1163,29.2478,0.4,29.1315,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 06:00:00,0.0083,29.2478,0.03,29.2395,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 07:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 08:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 09:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 10:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 11:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 12:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 13:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 14:00:00,0.0095,29.2478,0.03,29.2383,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 15:00:00,0.0977,29.2478,0.33,29.1502,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 16:00:00,0.4229,29.2478,1.45,28.8249,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 17:00:00,1.0976,29.2478,3.75,28.1502,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 18:00:00,2.2369,29.2478,7.65,27.0109,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 19:00:00,4.8272,29.2478,16.5,24.4206,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 20:00:00,8.7808,29.2478,30.02,20.467,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 21:00:00,11.7015,29.2478,40.01,17.5464,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 22:00:00,13.6522,29.2478,46.68,15.5956,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-26 23:00:00,14.9541,29.2478,51.13,14.2937,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 00:00:00,14.6212,29.2478,49.99,14.6266,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 01:00:00,13.8106,29.2478,47.22,15.4372,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 02:00:00,12.207,29.2478,41.74,17.0408,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 03:00:00,10.5988,29.2478,36.24,18.6491,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 04:00:00,8.9584,29.2478,30.63,20.2894,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 05:00:00,7.7644,29.2478,26.55,21.4835,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 06:00:00,7.4439,29.2478,25.45,21.804,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 07:00:00,7.5497,29.2478,25.81,21.6981,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 08:00:00,6.2032,29.2478,21.21,23.0446,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 09:00:00,3.1701,29.2478,10.84,26.0777,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 10:00:00,0.9305,29.2478,3.18,28.3173,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 11:00:00,0.2977,29.2478,1.02,28.9501,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 12:00:00,0.3166,29.2478,1.08,28.9312,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 13:00:00,0.7466,29.2478,2.55,28.5012,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 14:00:00,1.0398,29.2478,3.56,28.208,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 15:00:00,0.7812,29.2478,2.67,28.4666,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 16:00:00,0.3852,29.2478,1.32,28.8626,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 17:00:00,0.0736,29.2478,0.25,29.1742,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 18:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 19:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 20:00:00,0.0222,29.2478,0.08,29.2257,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 21:00:00,0.0621,29.2478,0.21,29.1857,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 22:00:00,0.05,29.2478,0.17,29.1978,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-27 23:00:00,0.1265,29.2478,0.43,29.1214,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 00:00:00,1.5815,29.2478,5.41,27.6664,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 01:00:00,2.0309,29.2478,6.94,27.2169,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 02:00:00,2.1437,29.2478,7.33,27.1041,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 03:00:00,1.5443,29.2478,5.28,27.7036,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 04:00:00,0.5985,29.2478,2.05,28.6493,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 05:00:00,0.123,29.2478,0.42,29.1248,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 06:00:00,0.0049,29.2478,0.02,29.2429,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 07:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 08:00:00,0.0,29.2478,0.0,29.2478,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 09:00:00,0.0003,29.2478,0.0,29.2476,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 10:00:00,0.0463,29.2478,0.16,29.2015,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 11:00:00,0.4467,29.2478,1.53,28.8011,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 12:00:00,1.5628,29.2478,5.34,27.685,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 13:00:00,3.3834,29.2478,11.57,25.8644,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 14:00:00,5.0272,29.2478,17.19,24.2206,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 15:00:00,5.5729,29.2478,19.05,23.6749,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 16:00:00,5.5729,29.2478,19.05,23.6749,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 17:00:00,4.7879,29.2478,16.37,24.46,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 18:00:00,3.9064,29.2478,13.36,25.3414,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 19:00:00,2.7981,29.2478,9.57,26.4497,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 20:00:00,1.9222,29.2478,6.57,27.3257,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 21:00:00,1.1575,29.2478,3.96,28.0904,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 22:00:00,0.5056,29.2478,1.73,28.7422,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
-2026-06-28 23:00:00,0.1564,29.2478,0.53,29.0914,Siemens Gamesa SG 5.0-145,10,Physical turbine power curve
+2026-06-29 00:00:00,4.9667,29.2478,16.98,24.2812,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 01:00:00,6.3037,29.2478,21.55,22.9441,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 02:00:00,4.6025,29.2478,15.74,24.6453,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 03:00:00,3.771,29.2478,12.89,25.4769,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 04:00:00,2.9396,29.2478,10.05,26.3083,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 05:00:00,3.4393,29.2478,11.76,25.8085,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 06:00:00,1.6799,29.2478,5.74,27.5679,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 07:00:00,0.6638,29.2478,2.27,28.584,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 08:00:00,0.5887,29.2478,2.01,28.6591,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 09:00:00,1.4551,29.2478,4.97,27.7928,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 10:00:00,1.7164,29.2478,5.87,27.5314,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 11:00:00,1.9668,29.2478,6.72,27.2811,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 12:00:00,3.2107,29.2478,10.98,26.0371,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 13:00:00,4.6739,29.2478,15.98,24.574,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 14:00:00,5.876,29.2478,20.09,23.3718,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 15:00:00,6.0874,29.2478,20.81,23.1604,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 16:00:00,8.5395,29.2478,29.2,20.7084,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 17:00:00,11.2497,29.2478,38.46,17.9981,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 18:00:00,8.8103,29.2478,30.12,20.4376,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 19:00:00,9.8914,29.2478,33.82,19.3564,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 20:00:00,9.541,29.2478,32.62,19.7069,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 21:00:00,10.433,29.2478,35.67,18.8148,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 22:00:00,5.1941,29.2478,17.76,24.0537,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-29 23:00:00,5.0417,29.2478,17.24,24.2061,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 00:00:00,4.6381,29.2478,15.86,24.6097,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 01:00:00,3.3524,29.2478,11.46,25.8955,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 02:00:00,3.9927,29.2478,13.65,25.2551,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 03:00:00,3.1003,29.2478,10.6,26.1475,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 04:00:00,2.0278,29.2478,6.93,27.22,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 05:00:00,1.2217,29.2478,4.18,28.0261,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 06:00:00,0.6736,29.2478,2.3,28.5742,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 07:00:00,1.0147,29.2478,3.47,28.2331,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 08:00:00,0.5887,29.2478,2.01,28.6591,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 09:00:00,0.8555,29.2478,2.92,28.3924,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 10:00:00,0.745,29.2478,2.55,28.5028,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 11:00:00,1.81,29.2478,6.19,27.4378,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 12:00:00,3.0461,29.2478,10.41,26.2017,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 13:00:00,4.0904,29.2478,13.99,25.1575,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 14:00:00,2.8613,29.2478,9.78,26.3865,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 15:00:00,0.5887,29.2478,2.01,28.6591,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 16:00:00,0.0416,29.2478,0.14,29.2063,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 17:00:00,0.048,29.2478,0.16,29.1998,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 18:00:00,0.0043,29.2478,0.01,29.2435,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 19:00:00,0.0015,29.2478,0.01,29.2463,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 20:00:00,0.0076,29.2478,0.03,29.2402,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 21:00:00,0.028,29.2478,0.1,29.2198,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 22:00:00,0.0416,29.2478,0.14,29.2063,Nordex N149 5.X,10,Physical turbine power curve
+2026-06-30 23:00:00,0.0145,29.2478,0.05,29.2334,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 00:00:00,0.057,29.2478,0.19,29.1908,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 01:00:00,0.0416,29.2478,0.14,29.2063,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 02:00:00,0.1069,29.2478,0.37,29.1409,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 03:00:00,0.2384,29.2478,0.82,29.0095,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 04:00:00,0.3386,29.2478,1.16,28.9092,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 05:00:00,0.2055,29.2478,0.7,29.0423,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 06:00:00,0.0958,29.2478,0.33,29.152,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 07:00:00,0.0497,29.2478,0.17,29.1981,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 08:00:00,0.1678,29.2478,0.57,29.08,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 09:00:00,0.2239,29.2478,0.77,29.024,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 10:00:00,1.1081,29.2478,3.79,28.1397,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 11:00:00,1.9668,29.2478,6.72,27.2811,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 12:00:00,2.2403,29.2478,7.66,27.0075,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 13:00:00,2.8355,29.2478,9.69,26.4123,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 14:00:00,3.74,29.2478,12.79,25.5079,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 15:00:00,4.4969,29.2478,15.38,24.751,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 16:00:00,4.6025,29.2478,15.74,24.6453,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 17:00:00,7.3167,29.2478,25.02,21.9311,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 18:00:00,9.2553,29.2478,31.64,19.9925,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 19:00:00,6.9367,29.2478,23.72,22.3111,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 20:00:00,5.6289,29.2478,19.25,23.6189,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 21:00:00,3.648,29.2478,12.47,25.5998,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 22:00:00,3.648,29.2478,12.47,25.5998,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-01 23:00:00,2.9396,29.2478,10.05,26.3083,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 00:00:00,2.3747,29.2478,8.12,26.8731,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 01:00:00,2.7844,29.2478,9.52,26.4634,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 02:00:00,3.6177,29.2478,12.37,25.6301,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 03:00:00,4.0904,29.2478,13.99,25.1575,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 04:00:00,4.8924,29.2478,16.73,24.3555,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 05:00:00,5.1557,29.2478,17.63,24.0921,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 06:00:00,5.3496,29.2478,18.29,23.8983,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 07:00:00,7.6604,29.2478,26.19,21.5875,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 08:00:00,11.0576,29.2478,37.81,18.1902,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 09:00:00,9.9506,29.2478,34.02,19.2972,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 10:00:00,8.0147,29.2478,27.4,21.2332,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 11:00:00,6.3917,29.2478,21.85,22.8561,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 12:00:00,4.2566,29.2478,14.55,24.9912,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 13:00:00,16.5534,29.2478,56.6,12.6945,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 14:00:00,12.312,29.2478,42.1,16.9358,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 15:00:00,3.865,29.2478,13.21,25.3829,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 16:00:00,17.2289,29.2478,58.91,12.0189,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 17:00:00,29.6731,29.2478,101.45,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 18:00:00,31.6842,29.2478,108.33,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 19:00:00,46.3431,29.2478,158.45,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 20:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 21:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 22:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-02 23:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 00:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 01:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 02:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 03:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 04:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 05:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 06:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 07:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 08:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 09:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 10:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 11:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 12:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 13:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 14:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 15:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 16:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 17:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 18:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 19:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 20:00:00,36.9624,29.2478,126.38,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 21:00:00,27.3977,29.2478,93.67,1.8501,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 22:00:00,22.4791,29.2478,76.86,6.7687,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-03 23:00:00,20.5931,29.2478,70.41,8.6547,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 00:00:00,21.1768,29.2478,72.4,8.071,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 01:00:00,23.6219,29.2478,80.76,5.6259,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 02:00:00,25.1315,29.2478,85.93,4.1163,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 03:00:00,26.2483,29.2478,89.74,2.9995,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 04:00:00,26.3618,29.2478,90.13,2.886,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 05:00:00,23.202,29.2478,79.33,6.0459,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 06:00:00,15.2557,29.2478,52.16,13.9922,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 07:00:00,8.1698,29.2478,27.93,21.0781,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 08:00:00,4.8924,29.2478,16.73,24.3555,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 09:00:00,4.8555,29.2478,16.6,24.3923,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 10:00:00,6.0874,29.2478,20.81,23.1604,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 11:00:00,6.0447,29.2478,20.67,23.2031,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 12:00:00,3.8021,29.2478,13.0,25.4457,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 13:00:00,1.6981,29.2478,5.81,27.5497,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 14:00:00,0.5363,29.2478,1.83,28.7115,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 15:00:00,0.0515,29.2478,0.18,29.1963,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 16:00:00,0.0,29.2478,0.0,29.2478,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 17:00:00,0.0,29.2478,0.0,29.2478,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 18:00:00,0.0317,29.2478,0.11,29.2161,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 19:00:00,0.5978,29.2478,2.04,28.65,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 20:00:00,2.2845,29.2478,7.81,26.9633,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 21:00:00,5.0041,29.2478,17.11,24.2437,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 22:00:00,9.6568,29.2478,33.02,19.591,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-04 23:00:00,14.8645,29.2478,50.82,14.3833,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 00:00:00,9.7151,29.2478,33.22,19.5327,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 01:00:00,11.444,29.2478,39.13,17.8038,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 02:00:00,11.9732,29.2478,40.94,17.2747,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 03:00:00,9.5988,29.2478,32.82,19.649,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 04:00:00,6.5701,29.2478,22.46,22.6778,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 05:00:00,5.1176,29.2478,17.5,24.1303,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 06:00:00,5.0041,29.2478,17.11,24.2437,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 07:00:00,6.1303,29.2478,20.96,23.1176,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 08:00:00,7.0776,29.2478,24.2,22.1702,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 09:00:00,8.1698,29.2478,27.93,21.0781,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 10:00:00,12.3805,29.2478,42.33,16.8673,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 11:00:00,26.7042,29.2478,91.3,2.5437,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 12:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 13:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 14:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 15:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 16:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 17:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 18:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 19:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 20:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 21:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 22:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
+2026-07-05 23:00:00,57.0,29.2478,194.89,0.0,Nordex N149 5.X,10,Physical turbine power curve
