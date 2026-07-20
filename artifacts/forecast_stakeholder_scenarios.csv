@@ -1,21 +1,21 @@
 turbine,number_of_turbines,forecast_generation_mwh,estimated_7d_demand_mwh,grid_required_mwh,coverage_percent,forecast_method
-Vestas V136 4.5 MW,1,16.87,4913.64,4896.77,0.34,Physical turbine power curve
-Vestas V136 4.5 MW,2,33.73,4913.64,4879.9,0.69,Physical turbine power curve
-Vestas V136 4.5 MW,3,50.6,4913.64,4863.04,1.03,Physical turbine power curve
-Vestas V136 4.5 MW,5,84.33,4913.64,4829.3,1.72,Physical turbine power curve
-Vestas V136 4.5 MW,10,168.66,4913.64,4744.97,3.43,Physical turbine power curve
-Siemens Gamesa SG 5.0-145,1,20.93,4913.64,4892.71,0.43,Physical turbine power curve
-Siemens Gamesa SG 5.0-145,2,41.86,4913.64,4871.78,0.85,Physical turbine power curve
-Siemens Gamesa SG 5.0-145,3,62.79,4913.64,4850.85,1.28,Physical turbine power curve
-Siemens Gamesa SG 5.0-145,5,104.64,4913.64,4808.99,2.13,Physical turbine power curve
-Siemens Gamesa SG 5.0-145,10,209.29,4913.64,4704.35,4.26,Physical turbine power curve
-Nordex N149 5.X,1,16.76,4913.64,4896.88,0.34,Physical turbine power curve
-Nordex N149 5.X,2,33.51,4913.64,4880.12,0.68,Physical turbine power curve
-Nordex N149 5.X,3,50.27,4913.64,4863.37,1.02,Physical turbine power curve
-Nordex N149 5.X,5,83.78,4913.64,4829.85,1.71,Physical turbine power curve
-Nordex N149 5.X,10,167.57,4913.64,4746.07,3.41,Physical turbine power curve
-Enercon E-138 EP3,1,15.95,4913.64,4897.69,0.32,Physical turbine power curve
-Enercon E-138 EP3,2,31.89,4913.64,4881.74,0.65,Physical turbine power curve
-Enercon E-138 EP3,3,47.84,4913.64,4865.79,0.97,Physical turbine power curve
-Enercon E-138 EP3,5,79.74,4913.64,4833.9,1.62,Physical turbine power curve
-Enercon E-138 EP3,10,159.47,4913.64,4754.16,3.25,Physical turbine power curve
+Vestas V136 4.5 MW,1,92.45,4913.64,4821.19,1.88,Physical turbine power curve
+Vestas V136 4.5 MW,2,184.9,4913.64,4728.74,3.76,Physical turbine power curve
+Vestas V136 4.5 MW,3,277.35,4913.64,4636.29,5.64,Physical turbine power curve
+Vestas V136 4.5 MW,5,462.25,4913.64,4451.39,9.41,Physical turbine power curve
+Vestas V136 4.5 MW,10,924.5,4913.64,3989.14,18.81,Physical turbine power curve
+Siemens Gamesa SG 5.0-145,1,114.72,4913.64,4798.92,2.33,Physical turbine power curve
+Siemens Gamesa SG 5.0-145,2,229.43,4913.64,4684.2,4.67,Physical turbine power curve
+Siemens Gamesa SG 5.0-145,3,344.15,4913.64,4569.48,7.0,Physical turbine power curve
+Siemens Gamesa SG 5.0-145,5,573.59,4913.64,4340.05,11.67,Physical turbine power curve
+Siemens Gamesa SG 5.0-145,10,1147.17,4913.64,3766.46,23.35,Physical turbine power curve
+Nordex N149 5.X,1,91.85,4913.64,4821.79,1.87,Physical turbine power curve
+Nordex N149 5.X,2,183.7,4913.64,4729.94,3.74,Physical turbine power curve
+Nordex N149 5.X,3,275.55,4913.64,4638.09,5.61,Physical turbine power curve
+Nordex N149 5.X,5,459.25,4913.64,4454.39,9.35,Physical turbine power curve
+Nordex N149 5.X,10,918.49,4913.64,3995.14,18.69,Physical turbine power curve
+Enercon E-138 EP3,1,75.28,4913.64,4838.36,1.53,Physical turbine power curve
+Enercon E-138 EP3,2,150.55,4913.64,4763.09,3.06,Physical turbine power curve
+Enercon E-138 EP3,3,225.83,4913.64,4687.81,4.6,Physical turbine power curve
+Enercon E-138 EP3,5,376.38,4913.64,4537.26,7.66,Physical turbine power curve
+Enercon E-138 EP3,10,752.75,4913.64,4160.89,15.32,Physical turbine power curve
