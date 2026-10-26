@@ -1,13 +1,13 @@
 scenario,turbine,annual_generation_mwh,scenario_demand_mwh,coverage_percent
-Low demand (-10%),Vestas V136 4.5 MW,9488.82,230589.9,4.12
-Base demand,Vestas V136 4.5 MW,9488.82,256211.0,3.7
-High demand (+10%),Vestas V136 4.5 MW,9488.82,281832.1,3.37
-Low demand (-10%),Siemens Gamesa SG 5.0-145,8868.38,230589.9,3.85
-Base demand,Siemens Gamesa SG 5.0-145,8868.38,256211.0,3.46
-High demand (+10%),Siemens Gamesa SG 5.0-145,8868.38,281832.1,3.15
-Low demand (-10%),Nordex N149 5.X,10109.96,230589.9,4.38
-Base demand,Nordex N149 5.X,10109.96,256211.0,3.95
-High demand (+10%),Nordex N149 5.X,10109.96,281832.1,3.59
-Low demand (-10%),Enercon E-138 EP3,7833.09,230589.9,3.4
-Base demand,Enercon E-138 EP3,7833.09,256211.0,3.06
-High demand (+10%),Enercon E-138 EP3,7833.09,281832.1,2.78
+Low demand (-10%),Vestas V136 4.5 MW,9487.02,230589.9,4.11
+Base demand,Vestas V136 4.5 MW,9487.02,256211.0,3.7
+High demand (+10%),Vestas V136 4.5 MW,9487.02,281832.1,3.37
+Low demand (-10%),Siemens Gamesa SG 5.0-145,8865.74,230589.9,3.84
+Base demand,Siemens Gamesa SG 5.0-145,8865.74,256211.0,3.46
+High demand (+10%),Siemens Gamesa SG 5.0-145,8865.74,281832.1,3.15
+Low demand (-10%),Nordex N149 5.X,10106.94,230589.9,4.38
+Base demand,Nordex N149 5.X,10106.94,256211.0,3.94
+High demand (+10%),Nordex N149 5.X,10106.94,281832.1,3.59
+Low demand (-10%),Enercon E-138 EP3,7830.86,230589.9,3.4
+Base demand,Enercon E-138 EP3,7830.86,256211.0,3.06
+High demand (+10%),Enercon E-138 EP3,7830.86,281832.1,2.78
